@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <!-- Helper guides or chains for 5 columns -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <!-- Row 1 -->
+    <Button android:id="@+id/btnInv" style="@style/CalcButton.Function" android:text="2nd"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toTopOf="parent" />
+    <Button android:id="@+id/btnDeg" style="@style/CalcButton.Function" android:text="deg"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toTopOf="parent" />
+    <Button android:id="@+id/btnSin" style="@style/CalcButton.Function" android:text="sin"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toTopOf="parent" />
+    <Button android:id="@+id/btnCos" style="@style/CalcButton.Function" android:text="cos"
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toTopOf="parent" />
+    <Button android:id="@+id/btnTan" style="@style/CalcButton.Function" android:text="tan"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Row 2 -->
+    <Button android:id="@+id/btnPower" style="@style/CalcButton.Function" android:text="x^y"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnInv" />
+    <Button android:id="@+id/btnLog" style="@style/CalcButton.Function" android:text="log"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btnDeg" />
+    <Button android:id="@+id/btnLn" style="@style/CalcButton.Function" android:text="ln"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btnSin" />
+    <Button android:id="@+id/btnParOpen" style="@style/CalcButton.Function" android:text="("
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btnCos" />
+    <Button android:id="@+id/btnParClose" style="@style/CalcButton.Function" android:text=")"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnTan" />
+
+    <!-- Row 3 -->
+    <Button android:id="@+id/btnSqrt" style="@style/CalcButton.Function" android:text="√"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnPower" />
+    <Button android:id="@+id/btnACSci" style="@style/CalcButton.Function" android:text="AC"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btnLog" />
+    <!-- Backspace as ImageView? No, let's use a themed button with an icon or stay consistent. User said "update image view instead of button". -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnBackspaceSciContainer"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_calc_function"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btnLn">
+        <ImageView
+            android:id="@+id/btnBackspaceSci"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/text_result"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button android:id="@+id/btnPercentSci" style="@style/CalcButton.Function" android:text="%"
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btnParOpen" />
+    <Button android:id="@+id/btnDivSci" style="@style/CalcButton.Function" android:text="÷" android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnParClose" />
+
+    <!-- Row 4 -->
+    <Button android:id="@+id/btnFact" style="@style/CalcButton.Function" android:text="x!"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnSqrt" />
+    <Button android:id="@+id/btn7Sci" style="@style/CalcButton.Number" android:text="7"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btnACSci" />
+    <Button android:id="@+id/btn8Sci" style="@style/CalcButton.Number" android:text="8"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btnBackspaceSciContainer" />
+    <Button android:id="@+id/btn9Sci" style="@style/CalcButton.Number" android:text="9"
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btnPercentSci" />
+    <Button android:id="@+id/btnMulSci" style="@style/CalcButton.Function" android:text="×" android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnDivSci" />
+
+    <!-- Row 5 -->
+    <Button android:id="@+id/btnInvX" style="@style/CalcButton.Function" android:text="1/x"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnFact" />
+    <Button android:id="@+id/btn4Sci" style="@style/CalcButton.Number" android:text="4"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btn7Sci" />
+    <Button android:id="@+id/btn5Sci" style="@style/CalcButton.Number" android:text="5"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btn8Sci" />
+    <Button android:id="@+id/btn6Sci" style="@style/CalcButton.Number" android:text="6"
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btn9Sci" />
+    <Button android:id="@+id/btnMinusSci" style="@style/CalcButton.Function" android:text="−" android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnMulSci" />
+
+    <!-- Row 6 -->
+    <Button android:id="@+id/btnPi" style="@style/CalcButton.Function" android:text="π"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnInvX" />
+    <Button android:id="@+id/btn1Sci" style="@style/CalcButton.Number" android:text="1"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btn4Sci" />
+    <Button android:id="@+id/btn2Sci" style="@style/CalcButton.Number" android:text="2"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btn5Sci" />
+    <Button android:id="@+id/btn3Sci" style="@style/CalcButton.Number" android:text="3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btn6Sci" />
+    <Button android:id="@+id/btnPlusSci" style="@style/CalcButton.Function" android:text="+" android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnMinusSci" />
+
+    <!-- Row 7 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnToggleContainer"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_calc_function"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline1" app:layout_constraintTop_toBottomOf="@+id/btnPi">
+        <ImageView
+            android:id="@+id/btnToggle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_calc"
+            android:tint="@color/text_result"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button android:id="@+id/btnE" style="@style/CalcButton.Number" android:text="e"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" app:layout_constraintEnd_toStartOf="@+id/guideline2" app:layout_constraintTop_toBottomOf="@+id/btn1Sci" />
+    <Button android:id="@+id/btn0Sci" style="@style/CalcButton.Number" android:text="0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintTop_toBottomOf="@+id/btn2Sci" />
+    <Button android:id="@+id/btnDotSci" style="@style/CalcButton.Number" android:text="."
+        app:layout_constraintStart_toStartOf="@+id/guideline3" app:layout_constraintEnd_toStartOf="@+id/guideline4" app:layout_constraintTop_toBottomOf="@+id/btn3Sci" />
+    <Button android:id="@+id/btnEqualSci" style="@style/CalcButton.Equals" android:text="=" android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnPlusSci" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
