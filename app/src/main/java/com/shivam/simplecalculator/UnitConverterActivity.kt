@@ -12,5 +12,13 @@ class UnitConverterActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnBack).setOnClickListener {
             finish()
         }
+
+        findViewById<android.view.View>(R.id.btnAge).setOnClickListener {
+            startActivity(android.content.Intent(this, AgeCalculatorActivity::class.java))
+        }
+
+        findViewById<android.view.View>(R.id.btnBmi).setOnClickListener {
+            startActivity(android.content.Intent(this, BmiCalculatorActivity::class.java))
+        }
     }
 }

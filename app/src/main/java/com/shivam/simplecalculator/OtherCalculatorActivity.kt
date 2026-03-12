@@ -18,5 +18,9 @@ class OtherCalculatorActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.btnUnitConverter).setOnClickListener {
             startActivity(Intent(this, UnitConverterActivity::class.java))
         }
+
+        findViewById<LinearLayout>(R.id.btnFinancial).setOnClickListener {
+            startActivity(Intent(this, GstCalculatorActivity::class.java))
+        }
     }
 }
