@@ -78,10 +78,6 @@ class BmiCalculatorActivity : AppCompatActivity() {
             }
             updateDisplay()
         }
-
-        numpad.btnGo.setOnClickListener {
-            calculateBmi()
-        }
     }
 
     private fun appendChar(char: String) {

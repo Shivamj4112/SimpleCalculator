@@ -99,6 +99,11 @@ class MainActivity : AppCompatActivity() {
             binding.historyView.root.visibility = View.VISIBLE
         }
 
+        binding.btnSettings.setOnClickListener {
+            val intent = android.content.Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.historyView.btnCloseHistory.setOnClickListener {
             if (historyAdapter.isSelectionMode) {
                 historyAdapter.toggleSelectionMode()

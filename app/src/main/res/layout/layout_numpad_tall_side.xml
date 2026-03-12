@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:padding="12dp"
+    android:background="#f2f5f8">
+
+    <!-- Numbers in 3 columns, Actions in 4th column -->
+    
+    <!-- Row 1 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn7"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="7"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn8"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="8"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn9"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="9"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <!-- Tall AC Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAC"
+        android:layout_width="75dp"
+        android:layout_height="162dp"
+        android:layout_margin="6dp"
+        android:layout_rowSpan="2"
+        android:background="@drawable/bg_rounded_button"
+        android:backgroundTint="#d2d9df"
+        android:text="AC"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:textAllCaps="false" />
+
+    <!-- Row 2 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn4"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="4"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn5"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="5"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn6"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="6"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <!-- Row 3 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="1"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn2"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="2"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn3"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_rounded_button"
+        android:text="3"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <!-- Tall Backspace Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDel"
+        android:layout_width="75dp"
+        android:layout_height="162dp"
+        android:layout_margin="6dp"
+        android:layout_rowSpan="2"
+        android:background="@drawable/bg_rounded_button"
+        android:backgroundTint="#d2d9df"
+        android:drawableTop="@drawable/ic_backspace"
+        android:paddingTop="68dp" />
+
+    <!-- Row 4 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn0"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:layout_column="1"
+        android:background="@drawable/bg_rounded_button"
+        android:text="0"
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDot"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="6dp"
+        android:layout_column="2"
+        android:background="@drawable/bg_rounded_button"
+        android:text="."
+        android:textColor="#000"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-light" />
+
+</GridLayout>

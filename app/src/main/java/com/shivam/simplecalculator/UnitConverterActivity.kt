@@ -20,5 +20,9 @@ class UnitConverterActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.btnBmi).setOnClickListener {
             startActivity(android.content.Intent(this, BmiCalculatorActivity::class.java))
         }
+
+        findViewById<android.view.View>(R.id.btnArea).setOnClickListener {
+            startActivity(android.content.Intent(this, AreaCalculatorActivity::class.java))
+        }
     }
 }

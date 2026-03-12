@@ -27,6 +27,9 @@
         <activity android:name=".BmiCalculatorActivity" />
         <activity android:name=".AgeCalculatorActivity" />
         <activity android:name=".GstCalculatorActivity" />
+        <activity android:name=".FinancialActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".AreaCalculatorActivity" />
     </application>
 
 </manifest>

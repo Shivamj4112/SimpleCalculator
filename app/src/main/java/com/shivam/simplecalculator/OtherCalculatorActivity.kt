@@ -20,7 +20,7 @@ class OtherCalculatorActivity : AppCompatActivity() {
         }
 
         findViewById<LinearLayout>(R.id.btnFinancial).setOnClickListener {
-            startActivity(Intent(this, GstCalculatorActivity::class.java))
+            startActivity(Intent(this, FinancialActivity::class.java))
         }
     }
 }
