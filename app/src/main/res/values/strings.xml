@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Simple Calculator</string>
+    <string name="selected">%1$d Selected</string>
+    <string name="select_items">Select Items</string>
+    <string name="history">History</string>
+    <string name="other_calculator">Other calculator</string>
 </resources>

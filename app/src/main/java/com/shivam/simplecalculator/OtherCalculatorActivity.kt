@@ -2,24 +2,29 @@ package com.shivam.simplecalculator
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.LinearLayout
+import com.shivam.simplecalculator.databinding.ActivityOtherCalculatorBinding
 
-class OtherCalculatorActivity : AppCompatActivity() {
+
+class OtherCalculatorActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityOtherCalculatorBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_other_calculator)
+        binding = ActivityOtherCalculatorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 
-        findViewById<LinearLayout>(R.id.btnUnitConverter).setOnClickListener {
+        binding.btnUnitConverter.setOnClickListener {
             startActivity(Intent(this, UnitConverterActivity::class.java))
         }
 
-        findViewById<LinearLayout>(R.id.btnFinancial).setOnClickListener {
+        binding.btnFinancial.setOnClickListener {
             startActivity(Intent(this, FinancialActivity::class.java))
         }
     }

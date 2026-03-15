@@ -10,14 +10,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.shivam.simplecalculator.databinding.ActivityAgeCalculatorBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class AgeCalculatorActivity : AppCompatActivity() {
+class AgeCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAgeCalculatorBinding
     private var dobCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }

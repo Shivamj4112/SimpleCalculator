@@ -2,9 +2,9 @@ package com.shivam.simplecalculator
 
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 
-class UnitConverterActivity : AppCompatActivity() {
+
+class UnitConverterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_unit_converter)

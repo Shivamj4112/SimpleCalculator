@@ -2,12 +2,12 @@ package com.shivam.simplecalculator
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.core.content.ContextCompat
 import com.shivam.simplecalculator.databinding.ActivityGstCalculatorBinding
 import java.util.Locale
 
-class GstCalculatorActivity : AppCompatActivity() {
+class GstCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGstCalculatorBinding
     private var originalPrice = ""

@@ -3,9 +3,7 @@ package com.shivam.simplecalculator
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -25,7 +23,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     
@@ -64,7 +62,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateHistorySelectionUI(count: Int) {
         if (historyAdapter.isSelectionMode) {
-            binding.historyView.tvHistoryTitle.text = if (count > 0) "$count Selected" else "Select Items"
+            binding.historyView.tvHistoryTitle.text = if (count > 0) getString(
+                R.string.selected,
+                count
+            ) else getString(R.string.select_items)
             binding.historyView.cbSelectAll.visibility = View.VISIBLE
             binding.historyView.btnClearHistory.visibility = View.GONE
             binding.historyView.selectionActionBar.visibility = View.VISIBLE
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             // Update Checkbox state
             binding.historyView.cbSelectAll.isChecked = count > 0 && count == historyAdapter.currentList.size
         } else {
-            binding.historyView.tvHistoryTitle.text = "History"
+            binding.historyView.tvHistoryTitle.text = getString(R.string.history)
             binding.historyView.cbSelectAll.visibility = View.GONE
             binding.historyView.cbSelectAll.isChecked = false
             binding.historyView.btnClearHistory.visibility = View.VISIBLE
@@ -267,7 +268,7 @@ class MainActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.expression.collect { expr ->
-                        binding.tvExpression.text = expr
+                        binding.tvExpression.setText(expr)
                     }
                 }
                 launch {

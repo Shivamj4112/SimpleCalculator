@@ -1,12 +1,9 @@
 package com.shivam.simplecalculator
 
 import android.os.Bundle
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.shivam.simplecalculator.databinding.ActivityAreaCalculatorBinding
-import java.util.*
 
-class AreaCalculatorActivity : AppCompatActivity() {
+class AreaCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAreaCalculatorBinding
     private var currentInput = "0"

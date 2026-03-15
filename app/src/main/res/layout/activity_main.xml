@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/calc_bg"
+    android:background="@color/bg_color"
     tools:context=".MainActivity">
 
 
@@ -12,6 +12,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,21 +20,19 @@
             android:id="@+id/btnMenu"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="9dp"
+            android:padding="6dp"
             android:src="@drawable/ic_menu"
-            android:tint="@color/text_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <ImageView
             android:id="@+id/btnResize"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="9dp"
+            android:padding="7dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_resize"
-            android:tint="@color/text_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnScientific"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +41,9 @@
             android:id="@+id/btnScientific"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="9dp"
+            android:padding="6dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_calc"
-            android:tint="@color/text_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnHistoryMenu"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,9 +52,9 @@
             android:id="@+id/btnHistoryMenu"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="9dp"
+            android:padding="6dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_history"
-            android:tint="@color/text_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSettings"
             app:layout_constraintTop_toTopOf="parent" />
@@ -64,9 +63,8 @@
             android:id="@+id/btnSettings"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="9dp"
+            android:padding="6dp"
             android:src="@drawable/ic_settings"
-            android:tint="@color/text_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,54 +72,81 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/displayContainer"
+    <ScrollView
+        android:id="@+id/svContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="bottom|end"
-        android:orientation="vertical"
-        android:padding="24dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackspace"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <TextView
-            android:id="@+id/tvExpression"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/text_expression"
-            android:textSize="40sp"
-            tools:text="7,861÷5" />
+        <LinearLayout
+            android:id="@+id/displayContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="bottom|end"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_result"
-            android:textSize="62sp"
-            tools:text="= 1,572.2" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/tvExpression"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:hint="0"
+                android:textColor="@color/text_expression"
+                android:textSize="32sp"
+                tools:text="7,861÷5" />
+
+            <EditText
+                android:id="@+id/tvError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/red"
+                android:textSize="35sp"
+                android:background="@null"
+                android:visibility="gone"
+                tools:text="Input Error" />
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_color"
+                android:textSize="53sp"
+                tools:text="= 1,572.2" />
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <ImageView
         android:id="@+id/btnBackspace"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        android:padding="9dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:padding="4dp"
         android:src="@drawable/ic_backspace"
-        app:layout_constraintTop_toBottomOf="@id/displayContainer"
         app:layout_constraintBottom_toTopOf="@+id/keyboardContainer"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/svContainer" />
 
     <FrameLayout
         android:id="@+id/keyboardContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBackspace">
 
         <include
             android:id="@+id/standardKeyboard"
-            layout="@layout/layout_standard_pad"
+            layout="@layout/layout_standard_pad1"
             android:visibility="visible" />
 
         <include

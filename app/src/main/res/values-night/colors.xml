@@ -5,16 +5,16 @@
     
     <!-- Calculator Colors -->
     <color name="primaryColor">#5B5B5B</color>
-    <color name="bg_color">#F1F2F3</color>
-    <color name="text_color">#0F0F0F</color>
-    <color name="keypad_number_bg">#FFFFFF</color>
-    <color name="keypad_expression_bg">#D2D3DA</color>
-    <color name="text_expression">#919192</color>
+    <color name="bg_color">#161616</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="keypad_number_bg">#242424</color>
+    <color name="keypad_expression_bg">#5B5B5B</color>
+    <color name="text_expression">#696969</color>
     <color name="red">#EF4444</color>
-
 
     <color name="btn_number">#FFFFFF</color>
     <color name="btn_function">#D2D3D8</color>
     <color name="text_result">#000000</color>
     <color name="blue_link">#1A73E8</color>
+
 </resources>

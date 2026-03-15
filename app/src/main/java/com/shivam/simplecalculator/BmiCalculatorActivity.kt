@@ -12,11 +12,11 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+
 import com.shivam.simplecalculator.databinding.ActivityBmiCalculatorBinding
 import java.util.Locale
 
-class BmiCalculatorActivity : AppCompatActivity() {
+class BmiCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityBmiCalculatorBinding
     private var isWeightFocused = true

@@ -1,88 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#FAFAFA"
-    android:padding="16dp">
+    android:background="@color/bg_color">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other calculator"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            style="@style/ScreenTitle"
+            android:text="@string/other_calculator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/btnUnitConverter"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:scaleType=""
+        android:src="@drawable/img_unit_converter"
+        app:layout_constraintEnd_toStartOf="@+id/btnFinancial"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clActionBar" />
 
-        <LinearLayout
-            android:id="@+id/btnUnitConverter"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="140dp"
-            android:orientation="vertical"
-            android:background="@drawable/bg_calc_function"
-            android:backgroundTint="#FFB020"
-            android:gravity="center"
-            android:layout_marginEnd="8dp">
+    <ImageView
+        android:id="@+id/btnFinancial"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/img_financial"
+        app:layout_constraintBottom_toBottomOf="@+id/btnUnitConverter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnUnitConverter"
+        app:layout_constraintTop_toTopOf="@+id/btnUnitConverter" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_calc" 
-                android:tint="#FFF"/>
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unit converter"
-                android:textColor="#FFF"
-                android:textSize="16sp"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnFinancial"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="140dp"
-            android:orientation="vertical"
-            android:background="@drawable/bg_calc_function"
-            android:backgroundTint="#60D291"
-            android:gravity="center"
-            android:layout_marginStart="8dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_calc"
-                android:tint="#FFF"/>
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Financial &amp; GST"
-                android:textColor="#FFF"
-                android:textSize="16sp"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
