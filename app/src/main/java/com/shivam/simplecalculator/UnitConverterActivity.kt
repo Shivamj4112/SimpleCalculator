@@ -2,26 +2,30 @@ package com.shivam.simplecalculator
 
 import android.os.Bundle
 import android.widget.ImageView
-
+import com.shivam.simplecalculator.databinding.ActivityUnitConverterBinding
 
 class UnitConverterActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityUnitConverterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_unit_converter)
+        binding = ActivityUnitConverterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 
-        findViewById<android.view.View>(R.id.btnAge).setOnClickListener {
+        binding.btnAge.setOnClickListener {
             startActivity(android.content.Intent(this, AgeCalculatorActivity::class.java))
         }
 
-        findViewById<android.view.View>(R.id.btnBmi).setOnClickListener {
+        binding.btnBmi.setOnClickListener {
             startActivity(android.content.Intent(this, BmiCalculatorActivity::class.java))
         }
 
-        findViewById<android.view.View>(R.id.btnArea).setOnClickListener {
+        binding.btnArea.setOnClickListener {
             startActivity(android.content.Intent(this, AreaCalculatorActivity::class.java))
         }
     }

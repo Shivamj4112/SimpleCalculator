@@ -52,7 +52,7 @@ class GstCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
-                val char = (it as Button).text.toString()
+                val char = getButtonText(it)
                 if (char == "." && originalPrice.contains(".")) return@setOnClickListener
                 originalPrice += char
                 updateDisplay()

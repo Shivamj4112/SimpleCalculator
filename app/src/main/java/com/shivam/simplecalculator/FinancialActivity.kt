@@ -5,15 +5,20 @@ import android.os.Bundle
 import android.widget.ImageView
 
 import androidx.cardview.widget.CardView
+import com.shivam.simplecalculator.databinding.ActivityFinancialBinding
 
 class FinancialActivity : BaseActivity() {
+
+    private lateinit var binding : ActivityFinancialBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_financial)
+        binding = ActivityFinancialBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
 
-        findViewById<CardView>(R.id.btnGstScreen).setOnClickListener {
+        binding.btnGstScreen.setOnClickListener {
             startActivity(Intent(this, GstCalculatorActivity::class.java))
         }
     }

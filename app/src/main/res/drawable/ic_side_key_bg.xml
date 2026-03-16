@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="448dp"
+    android:viewportWidth="200"
+    android:viewportHeight="448">
+  <path
+      android:pathData="M100,0L100,0A100,100 0,0 1,200 100L200,348A100,100 0,0 1,100 448L100,448A100,100 0,0 1,0 348L0,100A100,100 0,0 1,100 0z"
+      android:fillColor="@color/keypad_expression_bg"/>
+</vector>

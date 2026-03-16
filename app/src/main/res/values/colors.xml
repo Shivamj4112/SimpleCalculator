@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     
     <!-- Calculator Colors -->
     <color name="primaryColor">#5B5B5B</color>
     <color name="bg_color">#F1F2F3</color>
     <color name="text_color">#0F0F0F</color>
+    <color name="sub_text_color">#5B5B5B</color>
     <color name="keypad_number_bg">#FFFFFF</color>
     <color name="keypad_expression_bg">#D2D3DA</color>
     <color name="text_expression">#919192</color>
     <color name="red">#EF4444</color>
+    <color name="unit_converter_icon_color">#505050</color>
+    <color name="light_grey">#DDDDDD</color>
+    <color name="age_calculator_stroke_color">#6E6E6E</color>
 
 
     <color name="btn_number">#FFFFFF</color>

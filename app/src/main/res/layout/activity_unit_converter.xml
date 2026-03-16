@@ -1,335 +1,332 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5"
-    android:padding="16dp">
+    android:background="@color/bg_color">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unit converter"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            style="@style/ScreenTitle"
+            android:text="@string/unit_converter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/clActionBar">
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:useDefaultMargins="true"
             android:alignmentMode="alignBounds"
-            android:columnOrderPreserved="false">
+            android:layout_marginHorizontal="10dp"
+            android:columnCount="3"
+            android:columnOrderPreserved="false"
+            android:useDefaultMargins="true">
 
             <!-- Age -->
             <LinearLayout
                 android:id="@+id/btnAge"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_age"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/age"
+                    android:textColor="@color/unit_converter_icon_color" />
+
             </LinearLayout>
 
             <!-- Area -->
             <LinearLayout
                 android:id="@+id/btnArea"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_area"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Area"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/area"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- BMI -->
             <LinearLayout
                 android:id="@+id/btnBmi"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_bmi"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BMI"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/bmi"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Data -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_data"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Data"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/data"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Date -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_date"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/date"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Discount -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_discount"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Discount"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/discount"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Length -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_length"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Length"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/length"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Mass -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_mass"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mass"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/mass"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Numeral -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_numeral"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Numeral"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/numeral"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Speed -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_speed"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Speed"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/speed"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Temperature -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_temperature"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temperature"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/temperature"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Time -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_time"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Time"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/time"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
             <!-- Volume -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@drawable/img_unit_converter_bg"
                 android:gravity="center"
-                android:background="@drawable/bg_grid_item"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_calc"
-                    android:tint="#757575" />
+                    style="@style/UnitConverterIcon"
+                    android:src="@drawable/ic_unit_volume"
+                    app:tint="@color/unit_converter_icon_color" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volume"
-                    android:textColor="#424242"
-                    android:layout_marginTop="8dp" />
+                    style="@style/UnitConverterText"
+                    android:text="@string/volume"
+                    android:textColor="@color/unit_converter_icon_color" />
             </LinearLayout>
 
         </GridLayout>
     </ScrollView>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

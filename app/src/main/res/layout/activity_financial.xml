@@ -4,62 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAFAFA"
-    android:padding="16dp">
+    android:background="@color/bg_color">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Financial &amp; GST"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            style="@style/ScreenTitle"
+            android:text="@string/financial_gst"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/btnGstScreen"
+        android:id="@+id/btnCurrencyScreen"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="14dp"
+        android:layout_height="68dp"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="18dp"
         app:cardElevation="0dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_calc"
-                android:tint="#60D291" />
+                android:src="@drawable/ic_currency"/>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="GST"
-                android:textColor="#000"
-                android:textSize="18sp"
+                android:text="@string/currency"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/unit_converter_icon_color"
+                android:textSize="16sp"
                 android:layout_marginStart="16dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnGstScreen"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_resize"
-                android:rotation="90"
-                android:tint="#CCC" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_gst"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/gst"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/unit_converter_icon_color"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

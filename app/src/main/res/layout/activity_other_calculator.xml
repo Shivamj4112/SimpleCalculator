@@ -42,7 +42,6 @@
         android:layout_height="140dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:scaleType=""
         android:src="@drawable/img_unit_converter"
         app:layout_constraintEnd_toStartOf="@+id/btnFinancial"
         app:layout_constraintStart_toStartOf="parent"

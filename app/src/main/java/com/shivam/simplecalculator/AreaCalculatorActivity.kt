@@ -43,7 +43,7 @@ class AreaCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
-                onDigitPressed(button.text.toString())
+                onDigitPressed(getButtonText(button))
             }
         }
 

@@ -11,6 +11,10 @@ import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
 import com.shivam.simplecalculator.databinding.ActivityAgeCalculatorBinding
+import androidx.core.graphics.drawable.toDrawable
+import android.content.Intent
+import android.provider.CalendarContract
+import android.view.View
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -19,7 +23,7 @@ import java.util.concurrent.TimeUnit
 class AgeCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAgeCalculatorBinding
-    private var dobCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
+    private var dobCalendar = Calendar.getInstance()
     private var todayCalendar = Calendar.getInstance()
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.US)
 
@@ -37,8 +41,8 @@ class AgeCalculatorActivity : BaseActivity() {
         binding.cardDob.setOnClickListener { showDatePicker(true) }
         binding.cardToday.setOnClickListener { showDatePicker(false) }
         
-        binding.btnAddCalendar.setOnClickListener { /* TODO */ }
-        binding.btnShare.setOnClickListener { /* TODO */ }
+        binding.btnAddCalendar.setOnClickListener { addToCalendar() }
+        binding.btnShare.setOnClickListener { shareAgeDetails() }
     }
 
     private fun updateDisplay() {
@@ -48,8 +52,18 @@ class AgeCalculatorActivity : BaseActivity() {
     }
 
     private fun calculateAge() {
+        val sameDay = dobCalendar.get(Calendar.YEAR) == todayCalendar.get(Calendar.YEAR) &&
+                dobCalendar.get(Calendar.DAY_OF_YEAR) == todayCalendar.get(Calendar.DAY_OF_YEAR)
+
+        if (sameDay) {
+            binding.mcvBirthDayResult.visibility = android.view.View.GONE
+            return
+        } else {
+            binding.mcvBirthDayResult.visibility = android.view.View.VISIBLE
+        }
+
         if (dobCalendar.after(todayCalendar)) {
-            binding.tvYears.text = "0"
+            binding.tvYearsNumber.text = "0"
             binding.tvMonthsDays.text = "Error\nInvalid Date"
             return
         }
@@ -69,7 +83,7 @@ class AgeCalculatorActivity : BaseActivity() {
             months += 12
         }
 
-        binding.tvYears.text = years.toString()
+        binding.tvYearsNumber.text = years.toString()
         binding.tvMonthsDays.text = "$months Month\n$days Day"
 
         // Next Birthday
@@ -114,6 +128,46 @@ class AgeCalculatorActivity : BaseActivity() {
         binding.tvSumMinutes.text = "Minutes\n$totalMinutes"
     }
 
+    private fun addToCalendar() {
+        val nextBirthday = dobCalendar.clone() as Calendar
+        nextBirthday.set(Calendar.YEAR, todayCalendar.get(Calendar.YEAR))
+        if (nextBirthday.before(todayCalendar) || nextBirthday == todayCalendar) {
+            nextBirthday.add(Calendar.YEAR, 1)
+        }
+
+        val intent = Intent(Intent.ACTION_INSERT).apply {
+            data = CalendarContract.Events.CONTENT_URI
+            putExtra(CalendarContract.Events.TITLE, "Birthday")
+            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, nextBirthday.timeInMillis)
+            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, nextBirthday.timeInMillis + 60 * 60 * 1000) // 1 hour duration
+            putExtra(CalendarContract.Events.ALL_DAY, true)
+        }
+        startActivity(intent)
+    }
+
+    private fun shareAgeDetails() {
+        val ageStr = "${binding.tvYearsNumber.text} Years, ${binding.tvMonthsDays.text.toString().replace("\n", " ")}"
+        val nextBirthdayStr = "Next Birthday in: ${binding.tvNextBirthdayCountdown.text.toString().replace("\n", " ")}"
+        val summaryStr = "Summary:\n" +
+                "Total Years: ${binding.tvSumYears.text}\n" +
+                "Total Months: ${binding.tvSumMonths.text}\n" +
+                "Total Weeks: ${binding.tvSumWeeks.text}\n" +
+                "Total Days: ${binding.tvSumDaysFull.text.toString().replace("Days\n", "")}\n" +
+                "Total Hours: ${binding.tvSumHours.text.toString().replace("Hours\n", "")}\n" +
+                "Total Minutes: ${binding.tvSumMinutes.text.toString().replace("Minutes\n", "")}"
+
+        val shareContent = "My Age Details:\n\n$ageStr\n$nextBirthdayStr\n\n$summaryStr"
+
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareContent)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
     private fun showDatePicker(isDob: Boolean) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_date_picker, null)
         val dialog = Dialog(this)
@@ -121,7 +175,7 @@ class AgeCalculatorActivity : BaseActivity() {
         dialog.window?.let { window ->
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             window.setGravity(Gravity.BOTTOM)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
 
         val title = dialogView.findViewById<TextView>(R.id.tvPickerTitle)

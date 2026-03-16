@@ -60,7 +60,7 @@ class BmiCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
-                appendChar((it as Button).text.toString())
+                appendChar(getButtonText(it))
             }
         }
 
