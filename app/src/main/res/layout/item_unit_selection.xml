@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOptionRoot"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginStart="10dp"
+    android:gravity="center_vertical"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/ivOptionIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="2dp"
+        android:src="@drawable/ic_unchecked"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/tvOptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:layout_marginStart="8dp" />
+</LinearLayout>
