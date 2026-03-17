@@ -3,115 +3,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8">
+    android:background="@color/bg_color">
 
-    <LinearLayout
-        android:id="@+id/header"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            style="@style/ScreenTitle"
+            android:text="@string/settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_color"
             android:orientation="vertical">
 
             <!-- Personalization -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Personalization"
-                android:textColor="#888"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/personalization"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp" />
 
-            <include layout="@layout/item_settings_row" android:id="@+id/itemLanguage" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemTheme" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemScientific" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemNumbering" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemVibration" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemRadians" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemParentheses" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemModulo" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemLockScreen" />
+            <include
+                android:id="@+id/itemLanguage"
+                layout="@layout/item_settings_row" />
 
-            <!-- Formatting -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Formatting"
-                android:textColor="#888"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+            <include
+                android:id="@+id/itemTheme"
+                layout="@layout/item_settings_row" />
 
-            <include layout="@layout/item_settings_row" android:id="@+id/itemDecimalPlaces" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemScientificNotation" />
-
-            <!-- Advance -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Advance"
-                android:textColor="#888"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-            <include layout="@layout/item_settings_row" android:id="@+id/itemLongPressCopy" />
-            <include layout="@layout/item_settings_row" android:id="@+id/itemKeepAwake" />
+            <include
+                android:id="@+id/itemVibration"
+                layout="@layout/item_settings_row" />
 
             <!-- Caller settings -->
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Caller settings"
-                android:textColor="#888"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/caller_settings"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp" />
 
-            <include layout="@layout/item_settings_row" android:id="@+id/itemCallerSettings" />
+            <include
+                android:id="@+id/itemCallerSettings"
+                layout="@layout/item_settings_row" />
 
             <!-- Others -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Others"
-                android:textColor="#888"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/others"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp" />
+
+            <include
+                android:id="@+id/itemShareApp"
+                layout="@layout/item_settings_row" />
+
+            <include
+                android:id="@+id/itemRateUs"
+                layout="@layout/item_settings_row" />
+
+            <include
+                android:id="@+id/itemPrivacyPolicy"
+                layout="@layout/item_settings_row" />
+
 
         </LinearLayout>
     </ScrollView>

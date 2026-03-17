@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_color"
+    tools:context=".ConverterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clActionBar"
@@ -27,8 +29,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvConverterTitle"
             style="@style/ScreenTitle"
-            android:text="@string/bmi"
+            android:text="Converter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -44,9 +47,9 @@
         android:paddingHorizontal="16dp"
         app:layout_constraintTop_toBottomOf="@id/clActionBar">
 
-        <!-- Weight -->
+        <!-- Top Input -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardWeight"
+            android:id="@+id/cardTopInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -60,55 +63,61 @@
                 android:paddingVertical="13dp">
 
                 <LinearLayout
-                    android:id="@+id/llWeightLabel"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/llTopLabel"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginEnd="10dp"
                     android:gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintEnd_toStartOf="@+id/llTopValueBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/tvTopLabelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Weight"
                         android:fontFamily="@font/inter_medium"
+                        android:text="From"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <ImageView
-                        android:id="@+id/ivWeightDropdown"
+                        android:id="@+id/ivTopDropdown"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_arrow_down"
-                        android:layout_marginStart="4dp" />
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_arrow_down" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llTopValueBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
                     android:gravity="end"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llTopLabel"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/tvWeightValue"
+                        android:id="@+id/tvTopValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0"
                         android:fontFamily="@font/inter_medium"
+                        android:text="@string/_0"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/tvWeightUnit"
+                        android:id="@+id/tvTopUnit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kilograms"
                         android:fontFamily="@font/inter_medium"
+                        android:text="Unit"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -116,9 +125,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Height -->
+        <!-- Bottom Input -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardHeight"
+            android:id="@+id/cardBottomInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="14dp"
@@ -131,7 +140,7 @@
                 android:paddingVertical="13dp">
 
                 <LinearLayout
-                    android:id="@+id/llHeightLabel"
+                    android:id="@+id/llBottomLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -141,15 +150,16 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
+                        android:id="@+id/tvBottomLabelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Height"
+                        android:text="To"
                         android:fontFamily="@font/inter_medium"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <ImageView
-                        android:id="@+id/ivHeightDropdown"
+                        android:id="@+id/ivBottomDropdown"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_arrow_down"
@@ -166,7 +176,7 @@
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
-                        android:id="@+id/tvHeightValue"
+                        android:id="@+id/tvBottomValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -175,10 +185,10 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/tvHeightUnit"
+                        android:id="@+id/tvBottomUnit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Centimeters"
+                        android:text="Unit"
                         android:fontFamily="@font/inter_medium"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="12sp" />
@@ -200,38 +210,40 @@
         app:layout_constraintBottom_toTopOf="@id/numpadDivider">
 
         <TextView
-            android:id="@+id/tvBmiResultValue"
+            android:id="@+id/tvResultValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.0"
             android:textSize="36sp"
             android:textColor="@color/text_color"
-            android:fontFamily="@font/inter_semibold" />
+            android:fontFamily="@font/inter_semibold"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/tvBmiResultLabel"
+            android:id="@+id/tvResultLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/normal"
             android:fontFamily="@font/inter_medium"
             android:textSize="18sp"
-            android:textColor="@color/unit_converter_icon_color" />
+            android:textColor="@color/unit_converter_icon_color"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <View
         android:id="@+id/numpadDivider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/age_calculator_stroke_color"
-        app:layout_constraintBottom_toTopOf="@id/numpad"
-        app:layout_constraintTop_toBottomOf="@+id/resultContainer" />
+        app:layout_constraintBottom_toTopOf="@id/numpad" />
 
     <include
         android:id="@+id/numpad"
-        layout="@layout/layout_numpad_gst"
+        layout="@layout/layout_numpad_bmi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

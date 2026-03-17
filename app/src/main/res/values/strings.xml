@@ -33,4 +33,19 @@
     <string name="currency">Currency</string>
     <string name="_0">0</string>
     <string name="normal">Normal</string>
+    <string name="settings">Settings</string>
+    <string name="app_language">App language</string>
+    <string name="choose_theme">Choose theme</string>
+    <string name="vibration">Vibration</string>
+    <string name="caller_settings">Caller Settings</string>
+    <string name="vibrate_when_a_button_is_pressed">vibrate when a button is pressed</string>
+    <string name="system_default">System default</string>
+    <string name="english">English</string>
+    <string name="personalization">Personalization</string>
+    <string name="others">Others</string>
+    <string name="share_app">Share app</string>
+    <string name="rate_us">Rate us</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="weight">Weight</string>
+    <string name="kilograms">Kilograms</string>
 </resources>

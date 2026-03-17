@@ -119,6 +119,7 @@
 
             <!-- Data -->
             <LinearLayout
+                android:id="@+id/btnData"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -140,6 +141,7 @@
 
             <!-- Date -->
             <LinearLayout
+                android:id="@+id/btnDate"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -161,6 +163,7 @@
 
             <!-- Discount -->
             <LinearLayout
+                android:id="@+id/btnDiscount"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -182,6 +185,7 @@
 
             <!-- Length -->
             <LinearLayout
+                android:id="@+id/btnLength"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -203,6 +207,7 @@
 
             <!-- Mass -->
             <LinearLayout
+                android:id="@+id/btnMass"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -224,6 +229,7 @@
 
             <!-- Numeral -->
             <LinearLayout
+                android:id="@+id/btnNumeral"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -245,6 +251,7 @@
 
             <!-- Speed -->
             <LinearLayout
+                android:id="@+id/btnSpeed"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -266,6 +273,7 @@
 
             <!-- Temperature -->
             <LinearLayout
+                android:id="@+id/btnTemperature"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -287,6 +295,7 @@
 
             <!-- Time -->
             <LinearLayout
+                android:id="@+id/btnTime"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"
@@ -308,6 +317,7 @@
 
             <!-- Volume -->
             <LinearLayout
+                android:id="@+id/btnVolume"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
                 android:layout_columnWeight="1"

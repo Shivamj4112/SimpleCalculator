@@ -93,7 +93,6 @@ class MainActivity : BaseActivity() {
         }
 
         binding.btnResize.setOnClickListener {
-            toggleScientificMode()
         }
 
         binding.btnHistoryMenu.setOnClickListener {
