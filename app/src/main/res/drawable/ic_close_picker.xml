@@ -8,13 +8,13 @@
         android:pathData="M0,0h80v80h-80z"/>
     <path
         android:pathData="M40,40m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"
-        android:fillColor="#EDEDED"/>
+        android:fillColor="@color/gst_selection_bg"/>
     <path
         android:pathData="M52.001,28.002L40.002,40.002M40.002,40.002L28.002,52.001M40.002,40.002L52.001,52.001M40.002,40.002L28.002,28.002"
         android:strokeLineJoin="round"
         android:strokeWidth="4"
-        android:fillColor="#00000000"
-        android:strokeColor="#0F0F0F"
+        android:fillColor="@color/text_color"
+        android:strokeColor="@color/text_color"
         android:strokeLineCap="round"/>
   </group>
 </vector>

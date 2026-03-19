@@ -7,20 +7,16 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
 import com.shivam.simplecalculator.databinding.ActivityMainBinding
 import com.shivam.simplecalculator.ui.CalculatorViewModel
-import com.shivam.simplecalculator.ui.HistoryAdapter
+import com.shivam.simplecalculator.services.FloatingCalculatorService
+import android.provider.Settings
+import android.net.Uri
+import android.widget.Toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import android.app.Dialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
-import android.view.ViewGroup
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -29,56 +25,31 @@ class MainActivity : BaseActivity() {
     
     private val viewModel: CalculatorViewModel by viewModels()
 
-    private lateinit var historyAdapter: HistoryAdapter
     private var isScientificMode = false
+
+    private val historyLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val expr = result.data?.getStringExtra("EXTRA_EXPRESSION")
+            if (expr != null) {
+                viewModel.clear()
+                viewModel.append(expr)
+            }
+        }
+    }
+
+    private fun startFloatingService() {
+        val intent = Intent(this, FloatingCalculatorService::class.java)
+        startService(intent)
+        moveTaskToBack(true) // Minimize the app
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupRecyclerView()
         setupListeners()
         setupObservers()
-    }
-
-    private fun setupRecyclerView() {
-        historyAdapter = HistoryAdapter(
-            onItemClick = { history ->
-                binding.historyView.root.visibility = View.GONE
-            },
-            onItemLongClick = {
-                // Handled in adapter, selection mode toggled
-            },
-            onSelectionChange = { count ->
-                updateHistorySelectionUI(count)
-            }
-        )
-        binding.historyView.rvHistory.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = historyAdapter
-        }
-    }
-
-    private fun updateHistorySelectionUI(count: Int) {
-        if (historyAdapter.isSelectionMode) {
-            binding.historyView.tvHistoryTitle.text = if (count > 0) getString(
-                R.string.selected,
-                count
-            ) else getString(R.string.select_items)
-            binding.historyView.cbSelectAll.visibility = View.VISIBLE
-            binding.historyView.btnClearHistory.visibility = View.GONE
-            binding.historyView.selectionActionBar.visibility = View.VISIBLE
-            
-            // Update Checkbox state
-            binding.historyView.cbSelectAll.isChecked = count > 0 && count == historyAdapter.currentList.size
-        } else {
-            binding.historyView.tvHistoryTitle.text = getString(R.string.history)
-            binding.historyView.cbSelectAll.visibility = View.GONE
-            binding.historyView.cbSelectAll.isChecked = false
-            binding.historyView.btnClearHistory.visibility = View.VISIBLE
-            binding.historyView.selectionActionBar.visibility = View.GONE
-        }
     }
 
     private fun setupListeners() {
@@ -93,56 +64,23 @@ class MainActivity : BaseActivity() {
         }
 
         binding.btnResize.setOnClickListener {
+            if (Settings.canDrawOverlays(this)) {
+                startFloatingService()
+            } else {
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName"))
+                startActivity(intent)
+                Toast.makeText(this, "Please grant permission to resize app", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnHistoryMenu.setOnClickListener {
-            binding.historyView.root.visibility = View.VISIBLE
+            historyLauncher.launch(Intent(this, HistoryActivity::class.java))
         }
 
         binding.btnSettings.setOnClickListener {
             val intent = android.content.Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-        }
-
-        binding.historyView.btnCloseHistory.setOnClickListener {
-            if (historyAdapter.isSelectionMode) {
-                historyAdapter.toggleSelectionMode()
-            } else {
-                binding.historyView.root.visibility = View.GONE
-            }
-        }
-
-        binding.historyView.btnClearHistory.setOnClickListener {
-            showClearHistoryDialog(false)
-        }
-
-        binding.historyView.cbSelectAll.setOnClickListener {
-            historyAdapter.selectAll()
-        }
-
-        binding.historyView.actionDelete.setOnClickListener {
-            showClearHistoryDialog(true)
-        }
-
-        binding.historyView.actionCopy.setOnClickListener {
-            val selected = historyAdapter.getSelectedItems()
-            if (selected.isNotEmpty()) {
-                val text = selected.joinToString("\n") { "${it.expression}=${it.result}" }
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("History", text)
-                clipboard.setPrimaryClip(clip)
-                historyAdapter.toggleSelectionMode()
-            }
-        }
-
-        binding.historyView.actionRecalculate.setOnClickListener {
-            val selected = historyAdapter.getSelectedItems()
-            if (selected.size == 1) {
-                viewModel.clear()
-                viewModel.append(selected.first().expression)
-                historyAdapter.toggleSelectionMode()
-                binding.historyView.root.visibility = View.GONE
-            }
         }
 
         binding.btnBackspace.setOnClickListener {
@@ -280,39 +218,7 @@ class MainActivity : BaseActivity() {
                         }
                     }
                 }
-                launch {
-                    viewModel.history.collect { historyList ->
-                        historyAdapter.submitList(historyList)
-                    }
-                }
             }
         }
-    }
-
-    private fun showClearHistoryDialog(isSelectionMode: Boolean) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_clear_history, null)
-        val dialog = Dialog(this)
-        dialog.setContentView(dialogView)
-        dialog.window?.let { window ->
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            window.setGravity(Gravity.BOTTOM)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
-
-        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            if (isSelectionMode) {
-                val ids = historyAdapter.selectedItemIds.toList()
-                viewModel.deleteHistoryItems(ids)
-                historyAdapter.toggleSelectionMode()
-            } else {
-                viewModel.clearHistory()
-            }
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 }

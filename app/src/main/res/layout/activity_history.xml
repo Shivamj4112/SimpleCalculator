@@ -4,49 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F4F6"
+    android:background="@color/bg_color"
     android:clickable="true"
     android:focusable="true">
 
-    <LinearLayout
-        android:id="@+id/historyToolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
+        android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/btnCloseHistory"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvHistoryTitle"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginStart="8dp" />
+            style="@style/ScreenTitle"
+            android:text="@string/history"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cbSelectAll"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <CheckBox
             android:id="@+id/cbSelectAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/historyToolbar"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
         app:layout_constraintBottom_toTopOf="@id/bottomActionContainer"
         tools:listitem="@layout/item_history" />
 
@@ -61,11 +72,11 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_margin="16dp"
-            android:text="Clear History"
+            android:text="@string/clear_history"
             android:textAllCaps="false"
             android:textSize="18sp"
-            android:backgroundTint="#5B5B5B"
-            android:textColor="#FFF" />
+            android:backgroundTint="@color/primaryColor"
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:id="@+id/selectionActionBar"
@@ -91,7 +102,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recalculate"
+                    android:text="@string/recalculate"
                     android:textSize="12sp"
                     android:textColor="#000"
                     android:layout_marginTop="4dp" />
@@ -111,7 +122,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Copy"
+                    android:text="@string/copy"
                     android:textSize="12sp"
                     android:textColor="#000"
                     android:layout_marginTop="4dp" />
@@ -131,7 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textSize="12sp"
                     android:textColor="#000"
                     android:layout_marginTop="4dp" />

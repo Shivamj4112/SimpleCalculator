@@ -1,7 +1,6 @@
 package com.shivam.simplecalculator
 
 import android.os.Bundle
-import android.widget.ImageView
 import com.shivam.simplecalculator.databinding.ActivityUnitConverterBinding
 
 class UnitConverterActivity : BaseActivity() {
@@ -23,7 +22,10 @@ class UnitConverterActivity : BaseActivity() {
 
         binding.btnBmi.setOnClickListener {
             val intent = android.content.Intent(this, ConverterActivity::class.java)
-            intent.putExtra(ConverterActivity.EXTRA_TYPE, com.shivam.simplecalculator.models.ConverterType.BMI.name)
+            intent.putExtra(
+                ConverterActivity.EXTRA_TYPE,
+                com.shivam.simplecalculator.models.ConverterType.BMI.name
+            )
             startActivity(intent)
         }
 

@@ -156,12 +156,4 @@
 
     </FrameLayout>
 
-    <!-- Overlay History View -->
-    <include
-        android:id="@+id/historyView"
-        layout="@layout/layout_history"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

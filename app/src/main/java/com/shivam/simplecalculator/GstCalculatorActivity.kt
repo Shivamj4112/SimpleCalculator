@@ -54,6 +54,7 @@ class GstCalculatorActivity : BaseActivity() {
             button.setOnClickListener {
                 val char = getButtonText(it)
                 if (char == "." && originalPrice.contains(".")) return@setOnClickListener
+                if (originalPrice.length >= 20) return@setOnClickListener
                 originalPrice += char
                 updateDisplay()
             }
@@ -73,7 +74,7 @@ class GstCalculatorActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        binding.tvOriginalPrice.text = if (originalPrice.isEmpty()) "0" else originalPrice
+        binding.tvOriginalPrice.text = originalPrice.ifEmpty { "0" }
         calculateGst()
     }
 
@@ -92,7 +93,7 @@ class GstCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             if (rateMap[button] == selectedGstRate) {
-                button.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.primaryColor))
                 button.setTextColor(ContextCompat.getColor(this, android.R.color.white))
             } else {
                 button.setBackgroundColor(Color.parseColor("#F0F0F0"))
@@ -102,13 +103,27 @@ class GstCalculatorActivity : BaseActivity() {
     }
 
     private fun calculateGst() {
-        val price = originalPrice.toDoubleOrNull() ?: 0.0
-        val gstTotal = price * selectedGstRate / 100.0
-        val finalPrice = price + gstTotal
-        val halfGst = gstTotal / 2.0
+        if (originalPrice.isEmpty() || originalPrice == ".") {
+            binding.tvFinalPrice.text = "0.00"
+            binding.tvGstSummary.text = "CGST/SGST\n0.00"
+            return
+        }
 
-        binding.tvFinalPrice.text = String.format(Locale.US, "%.2f", finalPrice)
-        binding.tvGstSummary.text = String.format(Locale.US, "CGST/SGST: %.2f", halfGst)
+        try {
+            val price = java.math.BigDecimal(originalPrice)
+            val gstRate = java.math.BigDecimal(selectedGstRate.toString())
+            val hundred = java.math.BigDecimal("100")
+            
+            val gstTotal = price.multiply(gstRate).divide(hundred, 2, java.math.RoundingMode.HALF_UP)
+            val finalPrice = price.add(gstTotal)
+            val halfGst = gstTotal.divide(java.math.BigDecimal("2"), 2, java.math.RoundingMode.HALF_UP)
+
+            binding.tvFinalPrice.text = String.format(Locale.US, "%.2f", finalPrice.toDouble())
+            binding.tvGstSummary.text = String.format(Locale.US, "CGST/SGST\n%.2f", halfGst.toDouble())
+        } catch (e: Exception) {
+            binding.tvFinalPrice.text = "Error"
+            binding.tvGstSummary.text = "CGST/SGST\n0.00"
+        }
     }
 
     // Helper for non-context Color.parseColor

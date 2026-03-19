@@ -8,9 +8,18 @@ import androidx.core.view.WindowInsetsControllerCompat
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
+        val theme = sharedPreferences.getInt("prefs_theme", 0)
+        when (theme) {
+            0 -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            1 -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+            2 -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
+
+        super.onCreate(savedInstanceState)
         window.statusBarColor = getColor(R.color.bg_color)
         window.navigationBarColor = getColor(R.color.bg_color)
-        super.onCreate(savedInstanceState)
 
         setAutoDarkStatusBarIconColor()
     }

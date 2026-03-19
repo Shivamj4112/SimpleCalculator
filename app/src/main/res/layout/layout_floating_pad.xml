@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <!-- Row 1: AC, (), %, / -->
+    <FrameLayout
+        android:id="@+id/btnAC"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnPar"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_ac" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnPar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnPercent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btnAC"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_par" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnPercent"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnDiv"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btnPar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_percentage" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnDiv"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btnPercent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_division" />
+    </FrameLayout>
+
+    <!-- Row 2: 7, 8, 9, x -->
+    <FrameLayout
+        android:id="@+id/btn7"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn8"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAC">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="7" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn8"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn7"
+        app:layout_constraintEnd_toStartOf="@+id/btn9"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn7"
+        app:layout_constraintTop_toTopOf="@+id/btn7">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="8" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn9"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn8"
+        app:layout_constraintEnd_toStartOf="@+id/btnMul"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn8"
+        app:layout_constraintTop_toTopOf="@+id/btn7">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="9" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnMul"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn9"
+        app:layout_constraintTop_toTopOf="@+id/btn7">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_multiplication" />
+    </FrameLayout>
+
+    <!-- Row 3: 4, 5, 6, - -->
+    <FrameLayout
+        android:id="@+id/btn4"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn7">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="4" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn5"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn4"
+        app:layout_constraintEnd_toStartOf="@+id/btn6"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn4"
+        app:layout_constraintTop_toTopOf="@+id/btn4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="5" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn6"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn5"
+        app:layout_constraintEnd_toStartOf="@+id/btnMinus"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn5"
+        app:layout_constraintTop_toTopOf="@+id/btn4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="6" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnMinus"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn6"
+        app:layout_constraintTop_toTopOf="@+id/btn4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_subtraction" />
+    </FrameLayout>
+
+    <!-- Row 4: 1, 2, 3, + -->
+    <FrameLayout
+        android:id="@+id/btn1"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn2"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="1" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn1"
+        app:layout_constraintEnd_toStartOf="@+id/btn3"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn1"
+        app:layout_constraintTop_toTopOf="@+id/btn1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="2" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn3"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn2"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlus"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn2"
+        app:layout_constraintTop_toTopOf="@+id/btn1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="3" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnPlus"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/btn3"
+        app:layout_constraintTop_toTopOf="@+id/btn1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_expression_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_addition" />
+    </FrameLayout>
+
+    <!-- Row 5: 00, 0, ., = -->
+    <FrameLayout
+        android:id="@+id/btn00"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn1"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/btn1"
+        app:layout_constraintTop_toBottomOf="@+id/btn1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="00" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn0"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn00"
+        app:layout_constraintEnd_toEndOf="@+id/btn2"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/btn2"
+        app:layout_constraintTop_toTopOf="@+id/btn00">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="0" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnDot"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn0"
+        app:layout_constraintEnd_toEndOf="@+id/btn3"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/btn3"
+        app:layout_constraintTop_toTopOf="@+id/btn00">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_button_bg"
+            app:tint="@color/keypad_number_bg" />
+
+        <TextView
+            style="@style/keypadBgStyle"
+            android:text="." />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnEqual"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDot"
+        app:layout_constraintEnd_toEndOf="@+id/btnPlus"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/btnPlus"
+        app:layout_constraintTop_toTopOf="@+id/btn00">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tint="@color/primaryColor"
+            android:src="@drawable/ic_button_bg" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_equal"
+            app:tint="@color/white" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

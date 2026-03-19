@@ -36,7 +36,7 @@
 
             <TextView
                 style="@style/keypadBgStyle"
-                android:text="7"
+                android:text="@string/_7"
                 android:layout_gravity="center"/>
         </FrameLayout>
 
@@ -58,7 +58,7 @@
 
             <TextView
                 style="@style/keypadBgStyle"
-                android:text="8"
+                android:text="@string/_8"
                 android:layout_gravity="center"/>
         </FrameLayout>
 
@@ -104,7 +104,7 @@
 
             <TextView
                 style="@style/keypadBgStyle"
-                android:text="4"
+                android:text="@string/_4"
                 android:layout_gravity="center"/>
         </FrameLayout>
 
@@ -128,7 +128,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="5" />
+                android:text="@string/_5" />
         </FrameLayout>
 
         <FrameLayout
@@ -151,7 +151,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="6" />
+                android:text="@string/_6" />
         </FrameLayout>
 
         <!-- ROW 1 2 3 -->
@@ -174,7 +174,7 @@
 
             <TextView
                 style="@style/keypadBgStyle"
-                android:text="1"
+                android:text="@string/_1"
                 android:layout_gravity="center"/>
         </FrameLayout>
 
@@ -198,7 +198,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="2" />
+                android:text="@string/_2" />
         </FrameLayout>
 
         <FrameLayout
@@ -221,7 +221,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="3" />
+                android:text="@string/_3" />
         </FrameLayout>
 
         <!-- ROW 0 . -->
@@ -245,7 +245,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="0" />
+                android:text="@string/_0" />
         </FrameLayout>
 
         <FrameLayout
@@ -268,7 +268,7 @@
             <TextView
                 style="@style/keypadBgStyle"
                 android:layout_gravity="center"
-                android:text="." />
+                android:text="@string/dot" />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,7 +95,7 @@ class ConverterActivity : BaseActivity() {
             updateFocus()
         }
 
-        binding.ivTopDropdown.setOnClickListener { showUnitDialog(true) }
+        binding.llTopLabel.setOnClickListener { showUnitDialog(true) }
         binding.ivBottomDropdown.setOnClickListener { showUnitDialog(false) }
 
         val numpad = binding.numpad

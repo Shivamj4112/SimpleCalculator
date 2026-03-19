@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
 
     <application
         android:name=".CalculatorApp"
@@ -29,6 +31,13 @@
         <activity android:name=".FinancialActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AreaCalculatorActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".ChooseThemeActivity" />
+
+        <service
+            android:name=".services.FloatingCalculatorService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
