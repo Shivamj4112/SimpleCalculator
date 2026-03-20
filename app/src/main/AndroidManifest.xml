@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -33,6 +34,7 @@
         <activity android:name=".AreaCalculatorActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".ChooseThemeActivity" />
+        <activity android:name=".ui.currency.CurrencyActivity" />
 
         <service
             android:name=".services.FloatingCalculatorService"

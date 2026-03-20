@@ -5,9 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [CalculationHistory::class], version = 1, exportSchema = false)
+import com.shivam.simplecalculator.models.CurrencyModel
+import com.shivam.simplecalculator.data.db.CurrencyDao
+import com.shivam.simplecalculator.data.db.Metadata
+import com.shivam.simplecalculator.data.db.MetadataDao
+
+@Database(entities = [CalculationHistory::class, CurrencyModel::class, Metadata::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
+    abstract fun currencyDao(): CurrencyDao
+    abstract fun metadataDao(): MetadataDao
 
     companion object {
         @Volatile
@@ -19,7 +26,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "calculator_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }

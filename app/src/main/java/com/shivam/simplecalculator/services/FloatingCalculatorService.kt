@@ -13,7 +13,8 @@ import android.widget.ImageView
 import com.shivam.simplecalculator.MainActivity
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.LayoutFloatingCalculatorBinding
-import com.shivam.simplecalculator.util.MathEvaluator
+import com.shivam.simplecalculator.util.CalculatorEngine
+import com.shivam.simplecalculator.util.ExpressionManager
 import com.shivam.simplecalculator.data.HistoryRepository
 import com.shivam.simplecalculator.data.CalculationHistory
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +35,10 @@ class FloatingCalculatorService : Service() {
     private lateinit var floatingView: View
     private lateinit var binding: LayoutFloatingCalculatorBinding
     
-    private var expression = ""
-    private var result = ""
+    private val expressionManager = ExpressionManager()
+    private var resultDisplay = ""
+    private var isCalculated = false
+
     private val formatter = DecimalFormat("#.##########")
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
@@ -138,62 +141,102 @@ class FloatingCalculatorService : Service() {
         pad.btnAC.setOnClickListener { clear() }
         pad.btnEqual.setOnClickListener { calculate() }
         
+        // Handling parenthese logic correctly from generic button
         var parCount = 0
         pad.btnPar.setOnClickListener { 
             if (parCount % 2 == 0) append("(") else append(")")
             parCount++
+            // Note: expression Manager handles multiple ( and ) efficiently too!
         }
     }
 
     private fun append(char: String) {
-        if (result == "Input Error" || result == "Divide by zero") {
-            result = ""
+        if (resultDisplay == "Invalid Expression" || resultDisplay == "Cannot divide by zero") {
+            resultDisplay = ""
         }
         
-        // Match logic from ViewModel
-        if (result.isNotEmpty() && !char.matches(Regex("[+\\-×÷%^]"))) {
-            expression = ""
-            result = ""
+        if (isCalculated) {
+            if (!char.matches(Regex("[+\\-×÷%^]"))) {
+                expressionManager.clear()
+            } else {
+                expressionManager.setExpression(resultDisplay.replace(",", ""))
+            }
+            isCalculated = false
         }
 
-        if (result.isNotEmpty() && char.matches(Regex("[+\\-×÷%^]"))) {
-            expression = result + char
-            result = ""
-        } else {
-            expression += char
-        }
-        
-        updateDisplay()
+        expressionManager.append(char)
+        updateRealTimeResult()
     }
 
     private fun clear() {
-        expression = ""
-        result = ""
+        expressionManager.clear()
+        resultDisplay = ""
+        isCalculated = false
+        updateDisplay()
+    }
+
+    private fun updateRealTimeResult() {
+        if (expressionManager.expression.isEmpty()) {
+            resultDisplay = ""
+            updateDisplay()
+            return
+        }
+        
+        val resultAttempt = CalculatorEngine.evaluate(expressionManager.expression, true)
+        if (resultAttempt.isSuccess) {
+            val res = resultAttempt.getOrNull() ?: 0.0
+            resultDisplay = formatter.format(res)
+        } else {
+            resultDisplay = ""
+        }
         updateDisplay()
     }
 
     private fun calculate() {
-        if (expression.isEmpty()) return
-        try {
-            val res = MathEvaluator.evaluate(expression, true) // Default to deg in floating mode for simplicity
-            result = formatter.format(res)
+        if (expressionManager.expression.isEmpty()) return
+        
+        val resultAttempt = CalculatorEngine.evaluate(expressionManager.expression, true)
+        if (resultAttempt.isSuccess) {
+            val res = resultAttempt.getOrNull() ?: 0.0
+            resultDisplay = formatter.format(res)
             
-            // Save to DB
+            isCalculated = true
+            
+            expressionManager.setExpression(autoCloseBrackets(expressionManager.expression))
+            
             serviceScope.launch {
                 repository.insert(CalculationHistory(
-                    expression = this@FloatingCalculatorService.expression,
-                    result = this@FloatingCalculatorService.result
+                    expression = expressionManager.expression,
+                    result = resultDisplay
                 ))
             }
-        } catch (e: Exception) {
-            result = "Input Error"
+        } else {
+            val error = resultAttempt.exceptionOrNull()
+            resultDisplay = error?.message ?: "Invalid Expression"
+            isCalculated = true
         }
         updateDisplay()
     }
+    
+    private fun autoCloseBrackets(expr: String): String {
+        var newExpr = expr
+        val openCount = newExpr.count { it == '(' }
+        val closeCount = newExpr.count { it == ')' }
+        if (openCount > closeCount) {
+            newExpr += ")".repeat(openCount - closeCount)
+        }
+        return newExpr
+    }
 
     private fun updateDisplay() {
-        binding.tvExpression.text = expression
-        binding.tvResult.text = result
+        binding.tvExpression.text = expressionManager.expression
+        binding.tvResult.text = resultDisplay
+        
+        if (resultDisplay == "Invalid Expression" || resultDisplay == "Cannot divide by zero") {
+            binding.tvResult.setTextColor(Color.RED)
+        } else {
+            binding.tvResult.setTextColor(Color.BLACK)
+        }
     }
 
     override fun onDestroy() {

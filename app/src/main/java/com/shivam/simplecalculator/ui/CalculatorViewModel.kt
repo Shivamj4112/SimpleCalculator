@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shivam.simplecalculator.data.CalculationHistory
 import com.shivam.simplecalculator.data.HistoryRepository
-import com.shivam.simplecalculator.util.MathEvaluator
+import com.shivam.simplecalculator.util.CalculatorEngine
+import com.shivam.simplecalculator.util.ExpressionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class CalculatorViewModel @Inject constructor(
     private val repository: HistoryRepository
 ) : ViewModel() {
+
+    private val expressionManager = ExpressionManager()
 
     private val _expression = MutableStateFlow("")
     val expression: StateFlow<String> = _expression.asStateFlow()
@@ -31,58 +34,105 @@ class CalculatorViewModel @Inject constructor(
     val history = repository.getAllHistory()
 
     private val formatter = DecimalFormat("#.##########")
+    
+    private var isCalculated = false
 
     fun append(char: String) {
-        if (_result.value == "Input Error" || _result.value == "Divide by zero") {
+        if (_result.value == "Invalid Expression" || _result.value == "Cannot divide by zero") {
             _result.value = ""
         }
         
-        // Auto-clear if result was present and user types a number (starts a new calculation)
-        if (_result.value.isNotEmpty() && !char.matches(Regex("[+\\-×÷%^]"))) {
-            _expression.value = ""
-            _result.value = ""
+        // Auto-clear if result was present and user types a number or function
+        if (isCalculated) {
+            if (!char.matches(Regex("[+\\-×÷%^]"))) {
+                expressionManager.clear()
+            } else {
+                // Keep the result as the new expression base
+                expressionManager.setExpression(_result.value.replace(",", ""))
+            }
+            isCalculated = false
         }
 
-        if (_result.value.isNotEmpty() && char.matches(Regex("[+\\-×÷%^]"))) {
-            // Append operator to old result
-            _expression.value = _result.value + char
-            _result.value = ""
-            return
-        }
-
-        _expression.value += char
+        expressionManager.append(char)
+        _expression.value = expressionManager.expression
+        
+        updateRealTimeResult()
     }
 
     fun backspace() {
-        val current = _expression.value
-        if (current.isNotEmpty()) {
-            _expression.value = current.dropLast(1)
+        if (isCalculated) {
+            isCalculated = false
         }
+        expressionManager.backspace()
+        _expression.value = expressionManager.expression
+        updateRealTimeResult()
     }
 
     fun clear() {
+        expressionManager.clear()
         _expression.value = ""
         _result.value = ""
+        isCalculated = false
+    }
+
+    fun setExpression(expr: String) {
+        expressionManager.setExpression(expr)
+        _expression.value = expressionManager.expression
+        isCalculated = false
+        updateRealTimeResult()
+    }
+
+    private fun updateRealTimeResult() {
+        if (expressionManager.expression.isEmpty()) {
+            _result.value = ""
+            return
+        }
+        val resultAttempt = CalculatorEngine.evaluate(expressionManager.expression, isDegMode)
+        if (resultAttempt.isSuccess) {
+            val res = resultAttempt.getOrNull() ?: 0.0
+            _result.value = formatter.format(res)
+        } else {
+            // Keep previous valid Real Time result if invalid currently, or show empty
+            _result.value = ""
+        }
     }
 
     fun calculate() {
-        if (_expression.value.isEmpty()) return
+        if (expressionManager.expression.isEmpty()) return
 
-        try {
-            val res = MathEvaluator.evaluate(_expression.value, isDegMode)
+        val resultAttempt = CalculatorEngine.evaluate(expressionManager.expression, isDegMode)
+        if (resultAttempt.isSuccess) {
+            val res = resultAttempt.getOrNull() ?: 0.0
             val parsedResult = formatter.format(res)
             _result.value = parsedResult
             
-            // Save to DB
+            isCalculated = true
+            
+            // Auto close brackets visually in expression
+            expressionManager.setExpression(autoCloseBrackets(expressionManager.expression))
+            _expression.value = expressionManager.expression
+            
             viewModelScope.launch {
                 repository.insert(CalculationHistory(
-                    expression = _expression.value,
+                    expression = expressionManager.expression,
                     result = parsedResult
                 ))
             }
-        } catch (e: ArithmeticException) {
-            _result.value = "Input Error"
+        } else {
+            val error = resultAttempt.exceptionOrNull()
+            _result.value = error?.message ?: "Invalid Expression"
+            isCalculated = true
         }
+    }
+
+    private fun autoCloseBrackets(expr: String): String {
+        var newExpr = expr
+        val openCount = newExpr.count { it == '(' }
+        val closeCount = newExpr.count { it == ')' }
+        if (openCount > closeCount) {
+            newExpr += ")".repeat(openCount - closeCount)
+        }
+        return newExpr
     }
 
     fun clearHistory() {

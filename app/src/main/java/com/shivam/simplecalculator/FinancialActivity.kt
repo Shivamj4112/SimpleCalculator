@@ -18,6 +18,10 @@ class FinancialActivity : BaseActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
+        binding.btnCurrencyScreen.setOnClickListener {
+            startActivity(Intent(this, com.shivam.simplecalculator.ui.currency.CurrencyActivity::class.java))
+        }
+
         binding.btnGstScreen.setOnClickListener {
             startActivity(Intent(this, GstCalculatorActivity::class.java))
         }

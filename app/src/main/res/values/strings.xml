@@ -76,4 +76,12 @@
     <string name="_28_percentage">28%</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+    <string name="exchange_rates_are_provided_by_webull_connect_nto_the_network_to_get_the_latest_info">Exchange rates are provided by webull. connect\nto the network to get the latest info.</string>
+    <string name="inr">INR</string>
+    <string name="indian_rupee">Indian rupee</string>
+    <string name="united_states_dollar">United States Dollar</string>
+    <string name="euro">Euro</string>
+    <string name="eur">EUR</string>
+    <string name="usd">USD</string>
+    <string name="select_currency">Select Currency</string>
 </resources>

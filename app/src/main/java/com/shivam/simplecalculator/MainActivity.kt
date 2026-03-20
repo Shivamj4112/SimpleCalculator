@@ -32,7 +32,7 @@ class MainActivity : BaseActivity() {
             val expr = result.data?.getStringExtra("EXTRA_EXPRESSION")
             if (expr != null) {
                 viewModel.clear()
-                viewModel.append(expr)
+                viewModel.setExpression(expr)
             }
         }
     }

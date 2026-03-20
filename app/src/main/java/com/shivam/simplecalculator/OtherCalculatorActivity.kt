@@ -27,5 +27,6 @@ class OtherCalculatorActivity : BaseActivity() {
         binding.btnFinancial.setOnClickListener {
             startActivity(Intent(this, FinancialActivity::class.java))
         }
+
     }
 }
