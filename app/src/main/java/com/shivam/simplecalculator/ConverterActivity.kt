@@ -107,17 +107,20 @@ class ConverterActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
+                com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
                 appendChar(getButtonText(it))
             }
         }
 
         numpad.btnAC.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             inputValue = ""
             outputValue = ""
             updateDisplay()
         }
 
         numpad.btnDel.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             if (isTopFocused) {
                 if (inputValue.isNotEmpty()) inputValue = inputValue.dropLast(1)
             } else {
@@ -127,6 +130,7 @@ class ConverterActivity : BaseActivity() {
         }
 
         numpad.btnGo.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             calculateResult()
         }
     }

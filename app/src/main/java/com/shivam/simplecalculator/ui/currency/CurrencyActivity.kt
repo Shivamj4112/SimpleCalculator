@@ -10,6 +10,8 @@ import com.shivam.simplecalculator.BaseActivity
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityCurrencyConverterBinding
 import com.shivam.simplecalculator.models.CurrencyModel
+import com.shivam.simplecalculator.util.LoadingDialog
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -18,12 +20,14 @@ class CurrencyActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCurrencyConverterBinding
     private val viewModel: CurrencyViewModel by viewModels()
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCurrencyConverterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loadingDialog = LoadingDialog(this)
         setupListeners()
         observeState()
     }
@@ -46,16 +50,19 @@ class CurrencyActivity : BaseActivity() {
 
         numberButtons.forEach { button ->
             button.setOnClickListener {
+                com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
                 val char = getButtonText(it)
                 handleInput(char)
             }
         }
 
         numpad.btnAC.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             viewModel.onInputAmountChanged("0")
         }
 
         numpad.btnDel.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             val current = viewModel.uiState.value.inputAmount
             if (current.isNotEmpty() && current != "0") {
                 val newAmount = if (current.length == 1) "0" else current.dropLast(1)
@@ -84,9 +91,27 @@ class CurrencyActivity : BaseActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
                     updateUI(state)
+                    
+                    if (state.isLoading) {
+                        loadingDialog.show()
+                    } else {
+                        loadingDialog.dismiss()
+                    }
+
+                    state.error?.let { errorMsg ->
+                        showErrorSnackbar(errorMsg)
+                    }
                 }
             }
         }
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
+            .setAction("Retry") {
+                viewModel.fetchCurrencies()
+            }
+            .show()
     }
 
     private fun updateUI(state: CurrencyState) {
@@ -110,9 +135,7 @@ class CurrencyActivity : BaseActivity() {
         binding.tvConverted2FullName.text = state.convertedCurrency2?.let { 
             "${it.currencyName} (${it.currencySign}) - ${it.countryName ?: ""}" 
         } ?: "Select Currency"
-        
-        // Highlight active input (always base for now as per requirements)
-        binding.cardBase.setCardBackgroundColor(getColor(R.color.gst_selection_bg))
+
     }
 
     private fun showBottomSheet(position: Int) {
@@ -124,7 +147,7 @@ class CurrencyActivity : BaseActivity() {
             else -> null
         }
         
-        val bottomSheet = CurrencyBottomSheetFragment(
+        val bottomSheet = CurrencyBottomSheetFragment.newInstance(
             state.currencies,
             selected
         ) { currency ->

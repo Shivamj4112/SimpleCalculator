@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.shivam.simplecalculator.data.repository.CurrencyRepository
 import com.shivam.simplecalculator.models.CurrencyModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.shivam.simplecalculator.util.NetworkUtils
 import java.util.Locale
 import javax.inject.Inject
 
@@ -22,7 +25,8 @@ data class CurrencyState(
     val inputAmount: String = "1",
     val result1: String = "0",
     val result2: String = "0",
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val error: String? = null
 )
 
 @HiltViewModel
@@ -37,12 +41,33 @@ class CurrencyViewModel @Inject constructor(
         fetchCurrencies()
     }
 
-    private fun fetchCurrencies() {
+    fun fetchCurrencies() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            
+            // Check internet connection
+            val hasInternet = withContext(Dispatchers.IO) {
+                NetworkUtils.hasInternetAccess()
+            }
+
+            if (!hasInternet) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = "No internet connection"
+                )
+                return@launch
+            }
+
             repository.getCurrencies()
-                .catch { _uiState.value = _uiState.value.copy(isLoading = false) }
-                .onCompletion { _uiState.value = _uiState.value.copy(isLoading = false) }
+                .catch { e -> 
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false, 
+                        error = e.message ?: "An error occurred"
+                    ) 
+                }
+                .onCompletion { 
+                    _uiState.value = _uiState.value.copy(isLoading = false) 
+                }
                 .collect { currencies ->
                     if (currencies.isNotEmpty()) {
                         val base = _uiState.value.baseCurrency ?: currencies.find { it.currencyCode == "INR" } ?: currencies[0]
@@ -54,9 +79,15 @@ class CurrencyViewModel @Inject constructor(
                             baseCurrency = base,
                             convertedCurrency1 = c1,
                             convertedCurrency2 = c2,
-                            isLoading = false
+                            isLoading = false,
+                            error = null
                         )
                         calculateRates()
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false,
+                            error = "No internet connection"
+                        )
                     }
                 }
         }

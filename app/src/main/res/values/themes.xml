@@ -5,6 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:layoutDirection">locale</item>
 
     </style>
 

@@ -56,10 +56,10 @@ class AgeCalculatorActivity : BaseActivity() {
                 dobCalendar.get(Calendar.DAY_OF_YEAR) == todayCalendar.get(Calendar.DAY_OF_YEAR)
 
         if (sameDay) {
-            binding.mcvBirthDayResult.visibility = android.view.View.GONE
+            binding.mcvBirthDayResult.visibility = View.GONE
             return
         } else {
-            binding.mcvBirthDayResult.visibility = android.view.View.VISIBLE
+            binding.mcvBirthDayResult.visibility = View.VISIBLE
         }
 
         if (dobCalendar.after(todayCalendar)) {

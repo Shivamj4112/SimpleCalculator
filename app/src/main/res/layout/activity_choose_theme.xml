@@ -83,8 +83,8 @@
 
                     <ImageView
                         android:id="@+id/ivLightSelected"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_rounded_checked" />
                 </LinearLayout>
@@ -124,8 +124,8 @@
 
                     <ImageView
                         android:id="@+id/ivDarkSelected"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_rounded_unchecked" />
                 </LinearLayout>
@@ -157,9 +157,9 @@
 
                 <ImageView
                     android:id="@+id/ivSystemDefaultToggle"
-                    android:layout_width="48dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_unchecked" />
+                    android:layout_width="40dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_toggle_on" />
             </LinearLayout>
 
         </LinearLayout>

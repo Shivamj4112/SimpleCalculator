@@ -84,34 +84,36 @@ class MainActivity : BaseActivity() {
         }
 
         binding.btnBackspace.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             viewModel.backspace()
         }
 
         // Standard Keyboard
-        binding.standardKeyboard.btn0.setOnClickListener { viewModel.append("0") }
-        binding.standardKeyboard.btn00.setOnClickListener { viewModel.append("00") }
-        binding.standardKeyboard.btn1.setOnClickListener { viewModel.append("1") }
-        binding.standardKeyboard.btn2.setOnClickListener { viewModel.append("2") }
-        binding.standardKeyboard.btn3.setOnClickListener { viewModel.append("3") }
-        binding.standardKeyboard.btn4.setOnClickListener { viewModel.append("4") }
-        binding.standardKeyboard.btn5.setOnClickListener { viewModel.append("5") }
-        binding.standardKeyboard.btn6.setOnClickListener { viewModel.append("6") }
-        binding.standardKeyboard.btn7.setOnClickListener { viewModel.append("7") }
-        binding.standardKeyboard.btn8.setOnClickListener { viewModel.append("8") }
-        binding.standardKeyboard.btn9.setOnClickListener { viewModel.append("9") }
+        binding.standardKeyboard.btn0.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("0") }
+        binding.standardKeyboard.btn00.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("00") }
+        binding.standardKeyboard.btn1.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("1") }
+        binding.standardKeyboard.btn2.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("2") }
+        binding.standardKeyboard.btn3.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("3") }
+        binding.standardKeyboard.btn4.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("4") }
+        binding.standardKeyboard.btn5.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("5") }
+        binding.standardKeyboard.btn6.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("6") }
+        binding.standardKeyboard.btn7.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("7") }
+        binding.standardKeyboard.btn8.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("8") }
+        binding.standardKeyboard.btn9.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("9") }
         
-        binding.standardKeyboard.btnDot.setOnClickListener { viewModel.append(".") }
-        binding.standardKeyboard.btnPlus.setOnClickListener { viewModel.append("+") }
-        binding.standardKeyboard.btnMinus.setOnClickListener { viewModel.append("−") }
-        binding.standardKeyboard.btnMul.setOnClickListener { viewModel.append("×") }
-        binding.standardKeyboard.btnDiv.setOnClickListener { viewModel.append("÷") }
-        binding.standardKeyboard.btnPercent.setOnClickListener { viewModel.append("%") }
+        binding.standardKeyboard.btnDot.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append(".") }
+        binding.standardKeyboard.btnPlus.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("+") }
+        binding.standardKeyboard.btnMinus.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("−") }
+        binding.standardKeyboard.btnMul.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("×") }
+        binding.standardKeyboard.btnDiv.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("÷") }
+        binding.standardKeyboard.btnPercent.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("%") }
         
-        binding.standardKeyboard.btnAC.setOnClickListener { viewModel.clear() }
-        binding.standardKeyboard.btnEqual.setOnClickListener { viewModel.calculate() }
+        binding.standardKeyboard.btnAC.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.clear() }
+        binding.standardKeyboard.btnEqual.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.calculate() }
         
         var parCount = 0
         binding.standardKeyboard.btnPar.setOnClickListener { 
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             if (parCount % 2 == 0) {
                 viewModel.append("(")
             } else {
@@ -122,40 +124,40 @@ class MainActivity : BaseActivity() {
         
         // Scientific Keyboard Setup (snake_case IDs in XML -> camelCase in Binding)
         val sci = binding.scientificKeyboard
-        sci.btn0Sci.setOnClickListener { viewModel.append("0") }
-        sci.btn1Sci.setOnClickListener { viewModel.append("1") }
-        sci.btn2Sci.setOnClickListener { viewModel.append("2") }
-        sci.btn3Sci.setOnClickListener { viewModel.append("3") }
-        sci.btn4Sci.setOnClickListener { viewModel.append("4") }
-        sci.btn5Sci.setOnClickListener { viewModel.append("5") }
-        sci.btn6Sci.setOnClickListener { viewModel.append("6") }
-        sci.btn7Sci.setOnClickListener { viewModel.append("7") }
-        sci.btn8Sci.setOnClickListener { viewModel.append("8") }
-        sci.btn9Sci.setOnClickListener { viewModel.append("9") }
+        sci.btn0Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("0") }
+        sci.btn1Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("1") }
+        sci.btn2Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("2") }
+        sci.btn3Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("3") }
+        sci.btn4Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("4") }
+        sci.btn5Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("5") }
+        sci.btn6Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("6") }
+        sci.btn7Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("7") }
+        sci.btn8Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("8") }
+        sci.btn9Sci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("9") }
         
-        sci.btnDotSci.setOnClickListener { viewModel.append(".") }
-        sci.btnPlusSci.setOnClickListener { viewModel.append("+") }
-        sci.btnMinusSci.setOnClickListener { viewModel.append("−") }
-        sci.btnMulSci.setOnClickListener { viewModel.append("×") }
-        sci.btnDivSci.setOnClickListener { viewModel.append("÷") }
-        sci.btnPercentSci.setOnClickListener { viewModel.append("%") }
+        sci.btnDotSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append(".") }
+        sci.btnPlusSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("+") }
+        sci.btnMinusSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("−") }
+        sci.btnMulSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("×") }
+        sci.btnDivSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("÷") }
+        sci.btnPercentSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("%") }
         
-        sci.btnACSci.setOnClickListener { viewModel.clear() }
-        sci.btnEqualSci.setOnClickListener { viewModel.calculate() }
-        sci.btnBackspaceSci.setOnClickListener { viewModel.backspace() }
+        sci.btnACSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.clear() }
+        sci.btnEqualSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.calculate() }
+        sci.btnBackspaceSci.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.backspace() }
         
         sci.btnToggle.setOnClickListener { toggleScientificMode() }
 
-        sci.btnParOpen.setOnClickListener { viewModel.append("(") }
-        sci.btnParClose.setOnClickListener { viewModel.append(")") }
-        sci.btnSqrt.setOnClickListener { viewModel.append("√") }
-        sci.btnPi.setOnClickListener { viewModel.append("π") }
-        sci.btnE.setOnClickListener { viewModel.append("e") }
-        sci.btnFact.setOnClickListener { viewModel.append("!") }
-        sci.btnPower.setOnClickListener { viewModel.append("^") }
-        sci.btnLog.setOnClickListener { viewModel.append("log(") }
-        sci.btnLn.setOnClickListener { viewModel.append("ln(") }
-        sci.btnInvX.setOnClickListener { viewModel.append("1/") }
+        sci.btnParOpen.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("(") }
+        sci.btnParClose.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append(")") }
+        sci.btnSqrt.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("√") }
+        sci.btnPi.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("π") }
+        sci.btnE.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("e") }
+        sci.btnFact.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("!") }
+        sci.btnPower.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("^") }
+        sci.btnLog.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("log(") }
+        sci.btnLn.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("ln(") }
+        sci.btnInvX.setOnClickListener { com.shivam.simplecalculator.util.VibrationUtil.vibrate(this); viewModel.append("1/") }
 
         // Scientific Modes
         sci.btnDeg.setOnClickListener {

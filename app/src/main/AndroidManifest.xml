@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 
     <application
@@ -31,6 +32,7 @@
         <activity android:name=".GstCalculatorActivity" />
         <activity android:name=".FinancialActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".VibrationActivity" />
         <activity android:name=".AreaCalculatorActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".ChooseThemeActivity" />

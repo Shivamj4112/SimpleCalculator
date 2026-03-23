@@ -10,7 +10,6 @@ import com.shivam.simplecalculator.databinding.ActivitySettingsBinding
 import androidx.core.net.toUri
 
 class SettingsActivity : BaseActivity() {
-
     private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +27,9 @@ class SettingsActivity : BaseActivity() {
         setupRow(binding.itemVibration.root,
             getString(R.string.vibration),
             getString(R.string.vibrate_when_a_button_is_pressed), R.drawable.ic_vibration)
+        binding.itemVibration.root.setOnClickListener {
+            startActivity(Intent(this, VibrationActivity::class.java))
+        }
         setupRow(binding.itemCallerSettings.root,
             getString(R.string.caller_settings), "", R.drawable.ic_caller)
             
@@ -45,9 +47,10 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun shareApp() {
+        val link = "https://play.google.com/store/apps/details?id=${packageName}"
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        val shareMessage = "Check out this Simple Calculator app: https://play.google.com/store/apps/details?id=${packageName}"
+        val shareMessage = getString(R.string.check_out_this_simple_calculator_app, link)
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
         startActivity(Intent.createChooser(shareIntent, "Share via"))
     }

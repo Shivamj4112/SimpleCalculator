@@ -10,7 +10,7 @@ import com.shivam.simplecalculator.data.db.CurrencyDao
 import com.shivam.simplecalculator.data.db.Metadata
 import com.shivam.simplecalculator.data.db.MetadataDao
 
-@Database(entities = [CalculationHistory::class, CurrencyModel::class, Metadata::class], version = 2, exportSchema = false)
+@Database(entities = [CalculationHistory::class, CurrencyModel::class, Metadata::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
     abstract fun currencyDao(): CurrencyDao

@@ -9,11 +9,24 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.shivam.simplecalculator.databinding.LayoutCurrencyBottomSheetBinding
 import com.shivam.simplecalculator.models.CurrencyModel
 
-class CurrencyBottomSheetFragment(
-    private val currencies: List<CurrencyModel>,
-    private val selectedCurrency: CurrencyModel?,
-    private val onCurrencySelected: (CurrencyModel) -> Unit
-) : BottomSheetDialogFragment() {
+class CurrencyBottomSheetFragment : BottomSheetDialogFragment() {
+    private var currencies: List<CurrencyModel> = emptyList()
+    private var selectedCurrency: CurrencyModel? = null
+    private var onCurrencySelected: ((CurrencyModel) -> Unit)? = null
+
+    companion object {
+        fun newInstance(
+            currencies: List<CurrencyModel>,
+            selectedCurrency: CurrencyModel?,
+            onCurrencySelected: (CurrencyModel) -> Unit
+        ): CurrencyBottomSheetFragment {
+            val fragment = CurrencyBottomSheetFragment()
+            fragment.currencies = currencies
+            fragment.selectedCurrency = selectedCurrency
+            fragment.onCurrencySelected = onCurrencySelected
+            return fragment
+        }
+    }
 
     private var _binding: LayoutCurrencyBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -32,7 +45,7 @@ class CurrencyBottomSheetFragment(
 
         binding.rvCurrencies.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCurrencies.adapter = CurrencyAdapter(currencies, selectedCurrency) {
-            onCurrencySelected(it)
+            onCurrencySelected?.invoke(it)
             dismiss()
         }
     }

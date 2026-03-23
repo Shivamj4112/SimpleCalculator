@@ -43,16 +43,19 @@ class AreaCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
+                com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
                 onDigitPressed(getButtonText(button))
             }
         }
 
         binding.numpad.btnAC.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             currentInput = "0"
             updateUI()
         }
 
         binding.numpad.btnDel.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             if (currentInput.length > 1) {
                 currentInput = currentInput.substring(0, currentInput.length - 1)
             } else {

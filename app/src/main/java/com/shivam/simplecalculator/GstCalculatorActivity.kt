@@ -37,6 +37,7 @@ class GstCalculatorActivity : BaseActivity() {
 
         rateMap.forEach { (button, rate) ->
             button.setOnClickListener {
+                com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
                 selectedGstRate = rate
                 updateGstSelection()
                 calculateGst()
@@ -52,20 +53,23 @@ class GstCalculatorActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
+                com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
                 val char = getButtonText(it)
                 if (char == "." && originalPrice.contains(".")) return@setOnClickListener
-                if (originalPrice.length >= 20) return@setOnClickListener
+                if (originalPrice.length >= 11) return@setOnClickListener
                 originalPrice += char
                 updateDisplay()
             }
         }
 
         binding.numpad.btnAC.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             originalPrice = ""
             updateDisplay()
         }
 
         binding.numpad.btnDel.setOnClickListener {
+            com.shivam.simplecalculator.util.VibrationUtil.vibrate(this)
             if (originalPrice.isNotEmpty()) {
                 originalPrice = originalPrice.dropLast(1)
             }
@@ -76,6 +80,28 @@ class GstCalculatorActivity : BaseActivity() {
     private fun updateDisplay() {
         binding.tvOriginalPrice.text = originalPrice.ifEmpty { "0" }
         calculateGst()
+    }
+
+    private fun formatValue(valueStr: String): String {
+        if (valueStr.isEmpty() || valueStr == ".") return valueStr.ifEmpty { "0" }
+        val value = valueStr.toDoubleOrNull() ?: return valueStr
+        return when {
+            value >= 1_000_000_000 -> String.format(Locale.US, "%.1fB", value / 1_000_000_000.0)
+            value >= 1_000_000 -> String.format(Locale.US, "%.1fM", value / 1_000_000.0)
+            value >= 1_000 -> String.format(Locale.US, "%.1fk", value / 1_000.0)
+            else -> {
+                if (valueStr.contains(".")) {
+                    val parts = valueStr.split(".")
+                    if (parts.size == 2 && parts[1].length > 2) {
+                        String.format(Locale.US, "%.2f", value)
+                    } else {
+                        valueStr
+                    }
+                } else {
+                    valueStr
+                }
+            }
+        }.replace(".0k", "k").replace(".0M", "M").replace(".0B", "B")
     }
 
     private fun updateGstSelection() {
@@ -119,7 +145,7 @@ class GstCalculatorActivity : BaseActivity() {
             val halfGst = gstTotal.divide(java.math.BigDecimal("2"), 2, java.math.RoundingMode.HALF_UP)
 
             binding.tvFinalPrice.text = String.format(Locale.US, "%.2f", finalPrice.toDouble())
-            binding.tvGstSummary.text = String.format(Locale.US, "CGST/SGST\n%.2f", halfGst.toDouble())
+            binding.tvGstSummary.text = String.format(Locale.US, "CGST/SGST\n%s", formatValue(halfGst.toString()))
         } catch (e: Exception) {
             binding.tvFinalPrice.text = "Error"
             binding.tvGstSummary.text = "CGST/SGST\n0.00"

@@ -31,20 +31,6 @@ class ChooseThemeActivity : BaseActivity() {
             saveTheme(2)
         }
 
-        binding.llSystemDefault.setOnClickListener {
-            val isChecked = sharedPreferences.getInt("prefs_theme", 0) == 0
-            if (isChecked) {
-                // If already system default, maybe switch to light? 
-                // But the UI shows it as a toggle. Let's toggle between System Default and previous choice or just Light.
-                // According to requirements "it should toggle between this 3 themes".
-                // Usually "System default" is a separate toggle or the 3rd option.
-                // In the image, "System default" is at the bottom with a switch.
-                saveTheme(1) // Default to light if toggled off? Or just keep it as 3 options.
-            } else {
-                saveTheme(0)
-            }
-        }
-        
         // If they click the row, toggle it
         binding.llSystemDefault.setOnClickListener {
             val current = sharedPreferences.getInt("prefs_theme", 0)
@@ -70,7 +56,7 @@ class ChooseThemeActivity : BaseActivity() {
     private fun updateUI(theme: Int) {
         binding.ivLightSelected.setImageResource(if (theme == 1) R.drawable.ic_checked else R.drawable.ic_unchecked)
         binding.ivDarkSelected.setImageResource(if (theme == 2) R.drawable.ic_checked else R.drawable.ic_unchecked)
-        binding.ivSystemDefaultToggle.setImageResource(if (theme == 0) R.drawable.ic_checked else R.drawable.ic_unchecked)
+        binding.ivSystemDefaultToggle.setImageResource(if (theme == 0) R.drawable.ic_toggle_on else R.drawable.ic_toggle_off)
         
         // If system default is on, the light/dark cards should probably look disabled or just unselected.
         // The image shows "Light" selected while "System default" is off.

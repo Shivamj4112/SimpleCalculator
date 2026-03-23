@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:src="@drawable/ic_settings"/>
 
         <LinearLayout
@@ -30,24 +30,24 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="App language"
+                android:text="@string/app_language"
                 android:fontFamily="@font/inter_medium"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:textColor="@color/text_color"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="English"
+                android:text="@string/english"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:fontFamily="@font/inter_medium"
                 android:textColor="@color/age_calculator_stroke_color"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <ImageView
