@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context=".MainActivity">
-
+    tools:context=".ui.activites.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -69,7 +68,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -84,6 +82,7 @@
             android:id="@+id/displayContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
             android:gravity="bottom|end"
             android:paddingHorizontal="24dp"
             android:paddingTop="24dp"
@@ -96,6 +95,9 @@
                 android:layout_marginBottom="8dp"
                 android:background="@null"
                 android:hint="0"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
                 android:textColor="@color/text_expression"
                 android:textSize="32sp"
                 tools:text="7,861÷5" />
@@ -113,14 +115,22 @@
 
             <TextView
                 android:id="@+id/tvResult"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:ellipsize="none"
+                android:textAlignment="textEnd"
                 android:textColor="@color/text_color"
                 android:textSize="53sp"
+                android:breakStrategy="simple"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeMaxTextSize="53sp"
+                app:autoSizeStepGranularity="2sp"
                 tools:text="= 1,572.2" />
-        </LinearLayout>
 
+        </LinearLayout>
 
     </ScrollView>
 
@@ -146,7 +156,7 @@
 
         <include
             android:id="@+id/standardKeyboard"
-            layout="@layout/layout_standard_pad1"
+            layout="@layout/layout_standard_pad"
             android:visibility="visible" />
 
         <include

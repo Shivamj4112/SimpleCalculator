@@ -2,10 +2,7 @@ package com.shivam.simplecalculator.data.repository
 
 import com.shivam.simplecalculator.data.api.CurrencyApiService
 import com.shivam.simplecalculator.data.db.CurrencyDao
-import com.shivam.simplecalculator.data.db.Metadata
-import com.shivam.simplecalculator.data.db.MetadataDao
-import com.shivam.simplecalculator.models.CurrencyModel
-import com.shivam.simplecalculator.models.CurrencyResponse
+import com.shivam.simplecalculator.domain.models.CurrencyModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -14,22 +11,16 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyRepository @Inject constructor(
     private val apiService: CurrencyApiService,
-    private val currencyDao: CurrencyDao,
-    private val metadataDao: MetadataDao
+    private val currencyDao: CurrencyDao
 ) {
-    private val KEY_LAST_FETCH = "last_fetch_timestamp"
-    private val CACHE_EXPIRATION_MS = 24 * 60 * 60 * 1000L // 24 hours
 
     suspend fun getCurrencies(): Flow<List<CurrencyModel>> = flow {
-        val lastFetch = metadataDao.getValue(KEY_LAST_FETCH) ?: 0L
-        val currentTime = System.currentTimeMillis()
-
         val localData = currencyDao.getAllCurrencies()
         if (localData.isNotEmpty()) {
             emit(localData)
         }
 
-        if (currentTime - lastFetch > CACHE_EXPIRATION_MS || localData.isEmpty()) {
+        if (localData.isEmpty()) {
             try {
                 val response = apiService.getExchangeRates()
                 if (response.isSuccessful && response.body() != null) {
@@ -38,7 +29,6 @@ class CurrencyRepository @Inject constructor(
                     }
                     currencyDao.clearAll()
                     currencyDao.insertAll(currencies)
-                    metadataDao.insert(Metadata(KEY_LAST_FETCH, currentTime))
                     emit(currencies)
                 }
             } catch (e: Exception) {

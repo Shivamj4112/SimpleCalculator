@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.shivam.simplecalculator.models.CurrencyModel
+import com.shivam.simplecalculator.domain.models.CurrencyModel
 
 @Dao
 interface CurrencyDao {

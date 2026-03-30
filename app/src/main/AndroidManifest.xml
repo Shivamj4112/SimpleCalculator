@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleCalculator">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activites.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,21 +25,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".OtherCalculatorActivity" />
-        <activity android:name=".UnitConverterActivity" />
-        <activity android:name=".ConverterActivity" />
-        <activity android:name=".AgeCalculatorActivity" />
-        <activity android:name=".GstCalculatorActivity" />
-        <activity android:name=".FinancialActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".VibrationActivity" />
-        <activity android:name=".AreaCalculatorActivity" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".ChooseThemeActivity" />
-        <activity android:name=".ui.currency.CurrencyActivity" />
+        <activity android:name=".ui.activites.OtherCalculatorActivity" />
+        <activity android:name=".ui.activites.UnitConverterActivity" />
+        <activity android:name=".ui.activites.ConverterActivity" />
+        <activity android:name=".ui.activites.AgeCalculatorActivity" />
+        <activity android:name=".ui.activites.GstCalculatorActivity" />
+        <activity android:name=".ui.activites.FinancialActivity" />
+        <activity android:name=".ui.activites.SettingsActivity" />
+        <activity android:name=".ui.activites.VibrationActivity" />
+        <activity android:name=".ui.activites.AreaCalculatorActivity" />
+        <activity android:name=".ui.activites.HistoryActivity" />
+        <activity android:name=".ui.activites.ChooseThemeActivity" />
+        <activity android:name=".ui.activites.CurrencyActivity" />
 
         <service
-            android:name=".services.FloatingCalculatorService"
+            android:name=".domain.services.FloatingCalculatorService"
             android:enabled="true"
             android:exported="false" />
     </application>

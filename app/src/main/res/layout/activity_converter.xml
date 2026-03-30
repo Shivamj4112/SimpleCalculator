@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context=".ConverterActivity">
+    tools:context=".ui.activites.ConverterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clActionBar"
@@ -94,7 +94,7 @@
 
                 <LinearLayout
                     android:id="@+id/llTopValueBox"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:gravity="end"
@@ -143,11 +143,12 @@
 
                 <LinearLayout
                     android:id="@+id/llBottomLabel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -169,12 +170,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/linearLayout7"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llBottomLabel"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
@@ -218,7 +221,7 @@
             android:fontFamily="@font/inter_semibold"
             android:text="0.0"
             android:textColor="@color/text_color"
-            android:textSize="36sp"
+            android:textSize="20sp"
             android:visibility="invisible" />
 
         <TextView
@@ -231,6 +234,230 @@
             android:textSize="18sp"
             android:visibility="invisible" />
     </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvDateResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/keypad_number_bg"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/numpadDivider"
+        app:layout_constraintTop_toBottomOf="@+id/inputContainer"
+        app:strokeColor="@color/age_calculator_stroke_color"
+        app:strokeWidth="0.6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvDateResultLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Difference"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/llDaysDiff"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDateResultLabel">
+
+                    <TextView
+                        android:id="@+id/tvTotalDaysNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="40sp"
+                        tools:text="15" />
+
+                    <TextView
+                        android:id="@+id/tvDaysUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_gravity="bottom"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Days"
+                        android:textColor="@color/text_color"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/headerDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/age_calculator_stroke_color"
+                app:layout_constraintTop_toBottomOf="@+id/headerDate" />
+
+            <TextView
+                android:id="@+id/tvSummaryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/summary"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerDivider" />
+
+            <!-- Summary Table -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/summaryTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvSummaryTitle">
+
+                <LinearLayout
+                    android:id="@+id/llCol1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toStartOf="@+id/llCol2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="@string/years"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvResYears"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
+                        android:textSize="15sp"
+                        tools:text="0" />
+
+                    <TextView
+                        android:id="@+id/tvResWeeks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Weeks\n0"
+                        android:textColor="@color/age_calculator_stroke_color"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCol2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toStartOf="@+id/llCol3"
+                    app:layout_constraintStart_toEndOf="@+id/llCol1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="@string/months"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvResMonths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
+                        android:textSize="15sp"
+                        tools:text="0" />
+
+                    <TextView
+                        android:id="@+id/tvResHours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Hours\n0"
+                        android:textColor="@color/age_calculator_stroke_color"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCol3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llCol2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Days"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvResDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
+                        android:textSize="15sp"
+                        tools:text="0" />
+
+                    <TextView
+                        android:id="@+id/tvResMinutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Minutes\n0"
+                        android:textColor="@color/age_calculator_stroke_color"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
     <View
         android:id="@+id/numpadDivider"

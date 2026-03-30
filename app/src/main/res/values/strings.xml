@@ -86,4 +86,9 @@
     <string name="select_currency">Select Currency</string>
     <string name="loading">Loading...</string>
     <string name="check_out_this_simple_calculator_app">Check out this Simple Calculator app: %1$s</string>
+    <string name="please_grant_permission_to_resize_app">Please grant permission to resize app</string>
+    <string name="search">Search</string>
+    <string name="title_converter">%1$s Converter</string>
+    <string name="age_converter">Age Converter</string>
+    <string name="area_converter">Area Converter</string>
 </resources>

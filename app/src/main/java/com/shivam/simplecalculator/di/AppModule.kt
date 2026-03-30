@@ -1,11 +1,10 @@
 package com.shivam.simplecalculator.di
 
 import android.content.Context
-import com.shivam.simplecalculator.data.AppDatabase
-import com.shivam.simplecalculator.data.HistoryDao
+import com.shivam.simplecalculator.data.db.HistoryDao
 import com.shivam.simplecalculator.data.db.CurrencyDao
-import com.shivam.simplecalculator.data.db.MetadataDao
 import com.shivam.simplecalculator.data.api.CurrencyApiService
+import com.shivam.simplecalculator.data.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,8 +49,4 @@ object AppModule {
         return appDatabase.currencyDao()
     }
 
-    @Provides
-    fun provideMetadataDao(appDatabase: AppDatabase): MetadataDao {
-        return appDatabase.metadataDao()
-    }
 }

@@ -13,6 +13,7 @@ coroutines = "1.8.0"
 hilt = "2.50"
 retrofit = "2.9.0"
 coil = "2.6.0"
+exp4j = "0.4.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+exp4j = { group = "net.objecthunter", name = "exp4j", version.ref = "exp4j" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
