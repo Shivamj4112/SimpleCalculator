@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:backgroundTint="@color/keypad_number_bg"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp">
 
@@ -95,12 +96,16 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/tvValue1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0"
+                        android:background="@null"
+                        android:cursorVisible="true"
                         android:fontFamily="@font/inter_medium"
+                        android:hint="0"
+                        android:textColorHint="@color/unit_converter_icon_color"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp"/>
 
@@ -123,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:backgroundTint="@color/keypad_number_bg"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp">
 
@@ -173,6 +179,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
+                        android:gravity="end"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
                         android:fontFamily="@font/inter_medium"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp" />

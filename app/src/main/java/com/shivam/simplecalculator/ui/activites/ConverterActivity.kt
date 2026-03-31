@@ -108,32 +108,37 @@ class ConverterActivity : BaseActivity() {
     private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
+        binding.tvTopValue.showSoftInputOnFocus = false
         binding.cardTopInput.setOnClickListener {
             if (currentType == ConverterType.DATE) {
                 showDatePicker(true)
-            } else if (currentType !in listOf(ConverterType.BMI, ConverterType.DISCOUNT)) {
-                showUnitDialog(true)
             } else {
                 isTopFocused = true
                 updateFocus()
+                binding.tvTopValue.requestFocus()
             }
         }
 
         binding.cardBottomInput.setOnClickListener {
-            if (currentType == ConverterType.DATE) {
-                showDatePicker(false)
-            } else if (currentType !in listOf(ConverterType.BMI, ConverterType.DISCOUNT)) {
-                showUnitDialog(false)
-            } else {
+            // Only allow focusing/editing the bottom input for BMI and DISCOUNT.
+            // For Date, the End Date (To) is locked. For standard converters, Bottom is locked (output only).
+            if (currentType == ConverterType.BMI || currentType == ConverterType.DISCOUNT) {
                 isTopFocused = false
                 updateFocus()
             }
         }
 
-        binding.llTopLabel.setOnClickListener { binding.cardTopInput.performClick() }
-        binding.llTopValueBox.setOnClickListener { binding.cardTopInput.performClick() }
-        binding.ivBottomDropdown.setOnClickListener { binding.cardBottomInput.performClick() }
-        binding.linearLayout7.setOnClickListener { binding.cardBottomInput.performClick() }
+        binding.llTopLabel.setOnClickListener { 
+            if (currentType !in listOf(ConverterType.DATE, ConverterType.DISCOUNT)) {
+                showUnitDialog(true)
+            }
+        }
+
+        binding.llBottomLabel.setOnClickListener {
+            if (currentType !in listOf(ConverterType.DATE, ConverterType.DISCOUNT)) {
+                showUnitDialog(false)
+            }
+        }
 
 
         val numpad = binding.numpad
@@ -168,11 +173,37 @@ class ConverterActivity : BaseActivity() {
         numpad.btnDel.setOnClickListener {
             VibrationUtil.vibrate(this)
             if (isTopFocused) {
-                if (inputValue.isNotEmpty()) inputValue = inputValue.dropLast(1)
+                val et = binding.tvTopValue
+                var start = et.selectionStart
+                var end = et.selectionEnd
+                
+                if (start < 0) start = inputValue.length
+                if (end < 0) end = inputValue.length
+                
+                val min = minOf(start, end)
+                val max = maxOf(start, end)
+
+                if (inputValue.isNotEmpty()) {
+                    if (min == max) {
+                        if (min > 0) {
+                            val builder = java.lang.StringBuilder(inputValue)
+                            builder.deleteCharAt(min - 1)
+                            inputValue = builder.toString()
+                            updateDisplay()
+                            et.setSelection(min - 1)
+                        }
+                    } else {
+                        val builder = java.lang.StringBuilder(inputValue)
+                        builder.delete(min, max)
+                        inputValue = builder.toString()
+                        updateDisplay()
+                        et.setSelection(min)
+                    }
+                }
             } else {
                 if (outputValue.isNotEmpty()) outputValue = outputValue.dropLast(1)
+                updateDisplay()
             }
-            updateDisplay()
             performLiveCalculation()
         }
 
@@ -184,18 +215,43 @@ class ConverterActivity : BaseActivity() {
 
     private fun appendChar(char: String) {
         if (isTopFocused) {
+            val et = binding.tvTopValue
+            var start = et.selectionStart
+            var end = et.selectionEnd
+            
+            if (start < 0) start = inputValue.length
+            if (end < 0) end = inputValue.length
+            
+            val min = minOf(start, end)
+            val max = maxOf(start, end)
+
             if (char == "." && inputValue.contains(".")) return
-            inputValue += char
+            
+            if (inputValue.length - (max - min) + char.length > 10) return
+
+            val builder = java.lang.StringBuilder(inputValue)
+            builder.replace(min, max, char)
+            inputValue = builder.toString()
+            
+            updateDisplay()
+            
+            val newCursorPos = min + char.length
+            if (newCursorPos <= inputValue.length) {
+                et.setSelection(newCursorPos)
+            }
         } else {
             if (char == "." && outputValue.contains(".")) return
+            if (outputValue.length + char.length > 10) return
             outputValue += char
+            updateDisplay()
         }
-        updateDisplay()
         performLiveCalculation()
     }
 
     private fun updateDisplay() {
-        binding.tvTopValue.text = inputValue.ifEmpty { "0" }
+        if (binding.tvTopValue.text.toString() != inputValue) {
+            binding.tvTopValue.setText(inputValue)
+        }
         binding.tvBottomValue.text = outputValue.ifEmpty { "0" }
         binding.tvTopUnit.text = topUnit.name
         binding.tvBottomUnit.text = bottomUnit.name
@@ -211,30 +267,32 @@ class ConverterActivity : BaseActivity() {
             return
         }
 
-        if (currentType == ConverterType.NUMERAL) {
-            val strategy = ConverterConfig.getStrategy(currentType) as com.shivam.simplecalculator.domain.util.strategies.NumeralStrategy
-            val resultStr = strategy.convertBase(inputValue, topUnit.factor.toInt(), bottomUnit.factor.toInt())
-            outputValue = resultStr
-            binding.tvBottomValue.text = outputValue.ifEmpty { "0" }
-
-            if (inputValue.isEmpty() || inputValue == ".") {
-                binding.tvResultLabel.visibility = View.INVISIBLE
-                binding.tvResultValue.visibility = View.INVISIBLE
-                return
-            }
-
-            val otherResults = StringBuilder()
-            for (unit in availableUnits) {
-                if (unit == topUnit) continue
-                val otherRes = strategy.convertBase(inputValue, topUnit.factor.toInt(), unit.factor.toInt())
-                otherResults.append("${unit.name} : $otherRes\n")
-            }
-            binding.tvResultValue.text = otherResults.toString().trim()
-            binding.tvResultValue.setTextColor(getColor(R.color.text_color))
+        if (inputValue.isEmpty() || inputValue == ".") {
+            binding.tvResultValue.text = "Invalid"
+            binding.tvResultValue.setTextColor(Color.RED)
             binding.tvResultValue.visibility = View.VISIBLE
-            binding.tvResultLabel.visibility = View.INVISIBLE
+            binding.tvResultLabel.visibility = View.GONE
             binding.mcvDateResult.visibility = View.GONE
             binding.resultContainer.visibility = View.VISIBLE
+            binding.tvBottomValue.text = "0"
+            return
+        }
+
+        if (currentType == ConverterType.NUMERAL) {
+            val strategy = ConverterConfig.getStrategy(currentType) as com.shivam.simplecalculator.domain.util.strategies.NumeralStrategy
+            try {
+                val resultValue = strategy.convertBase(inputValue, topUnit.factor.toInt(), bottomUnit.factor.toInt())
+                outputValue = resultValue
+                binding.tvBottomValue.text = outputValue.ifEmpty { "0" }
+
+                binding.resultContainer.visibility = View.GONE
+            } catch (e: Exception) {
+                binding.tvResultValue.text = "Invalid"
+                binding.tvResultValue.setTextColor(Color.RED)
+                binding.tvResultValue.visibility = View.VISIBLE
+                binding.tvResultLabel.visibility = View.GONE
+                binding.resultContainer.visibility = View.VISIBLE
+            }
             return
         }
 
@@ -250,46 +308,16 @@ class ConverterActivity : BaseActivity() {
         }
         binding.tvBottomValue.text = outputValue.ifEmpty { "0" }
 
-        if (inputValue.isEmpty() || inputValue == ".") {
-            binding.tvResultLabel.visibility = View.INVISIBLE
-            binding.tvResultValue.visibility = View.INVISIBLE
-            return
-        }
-
-        val otherResults = StringBuilder()
-        for (unit in availableUnits) {
-            if (unit == topUnit) continue
-            val otherRes = strategy.convert(val1, 0.0, topUnit, unit)
-            val formatRes = if (otherRes % 1.0 == 0.0) {
-                String.format(java.util.Locale.US, "%.0f", otherRes)
-            } else {
-                decFormat.format(otherRes)
-            }
-            if (currentType == ConverterType.TEMPERATURE) {
-                val unitSymbol = when(unit.name) {
-                    "Celsius" -> "°C"
-                    "Fahrenheit" -> "°F"
-                    "Kelvin" -> "K"
-                    else -> ""
-                }
-                otherResults.append("${unit.name} : $formatRes $unitSymbol\n")
-            } else {
-                otherResults.append("${unit.name} : $formatRes\n")
-            }
-        }
-
-        binding.tvResultValue.text = otherResults.toString().trim()
-        binding.tvResultValue.setTextColor(getColor(R.color.text_color))
-        binding.tvResultValue.visibility = View.VISIBLE
-        binding.tvResultLabel.visibility = View.INVISIBLE
-        binding.mcvDateResult.visibility = View.GONE
-        binding.resultContainer.visibility = View.VISIBLE
+        binding.resultContainer.visibility = View.GONE
     }
 
 
     private fun updateFocus() {
         binding.cardTopInput.setCardBackgroundColor(if (isTopFocused) Color.parseColor("#E0E0E0") else Color.WHITE)
         binding.cardBottomInput.setCardBackgroundColor(if (!isTopFocused) Color.parseColor("#E0E0E0") else Color.WHITE)
+        if (isTopFocused) {
+            binding.tvTopValue.requestFocus()
+        }
     }
 
     private fun calculateResult() {
