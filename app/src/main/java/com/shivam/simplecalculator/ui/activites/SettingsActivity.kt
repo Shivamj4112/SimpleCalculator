@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.shivam.simplecalculator.databinding.ActivitySettingsBinding
 import androidx.core.net.toUri
 import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.databinding.ActivitySettingsBinding
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 
 class SettingsActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingsBinding
@@ -19,31 +20,67 @@ class SettingsActivity : BaseActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        setupRow(binding.itemLanguage.root, getString(R.string.app_language), getString(R.string.english), R.drawable.ic_language)
-        setupRow(binding.itemTheme.root, getString(R.string.choose_theme), getString(R.string.choose_theme), R.drawable.ic_choose_theme)
+        setupRow(
+            binding.itemLanguage.root,
+            getString(R.string.app_language),
+            getString(R.string.english),
+            R.drawable.ic_language
+        )
+
         binding.itemTheme.root.setOnClickListener {
             startActivity(Intent(this, ChooseThemeActivity::class.java))
         }
-        setupRow(binding.itemVibration.root,
+        setupRow(
+            binding.itemVibration.root,
             getString(R.string.vibration),
-            getString(R.string.vibrate_when_a_button_is_pressed), R.drawable.ic_vibration)
+            getString(R.string.vibrate_when_a_button_is_pressed), R.drawable.ic_vibration
+        )
         binding.itemVibration.root.setOnClickListener {
             startActivity(Intent(this, VibrationActivity::class.java))
         }
-        setupRow(binding.itemCallerSettings.root,
-            getString(R.string.caller_settings), "", R.drawable.ic_caller)
-            
-        setupRow(binding.itemShareApp.root,
-            getString(R.string.share_app), "", R.drawable.ic_share)
+        setupRow(
+            binding.itemCallerSettings.root,
+            getString(R.string.caller_settings), "", R.drawable.ic_caller
+        )
+        binding.itemCallerSettings.root.setOnClickListener {
+            startActivity(Intent(this, CallerSettingsActivity::class.java))
+        }
+
+        setupRow(
+            binding.itemShareApp.root,
+            getString(R.string.share_app), "", R.drawable.ic_share
+        )
         binding.itemShareApp.root.setOnClickListener { shareApp() }
 
-        setupRow(binding.itemRateUs.root,
-            getString(R.string.rate_us), "", R.drawable.ic_rate)
+        setupRow(
+            binding.itemRateUs.root,
+            getString(R.string.rate_us), "", R.drawable.ic_rate
+        )
         binding.itemRateUs.root.setOnClickListener { rateUs() }
 
-        setupRow(binding.itemPrivacyPolicy.root,
-            getString(R.string.privacy_policy), "", R.drawable.ic_privacy_policy)
+        setupRow(
+            binding.itemPrivacyPolicy.root,
+            getString(R.string.privacy_policy), "", R.drawable.ic_privacy_policy
+        )
         binding.itemPrivacyPolicy.root.setOnClickListener { openPrivacyPolicy() }
+
+        updateThemeRow()
+    }
+
+
+    private fun updateThemeRow() {
+        val theme = SharedPrefHelper.theme
+        val themeSubtitle = when (theme) {
+            1 -> getString(R.string.light)
+            2 -> getString(R.string.dark)
+            else -> getString(R.string.system_default)
+        }
+        setupRow(
+            binding.itemTheme.root,
+            getString(R.string.choose_theme),
+            themeSubtitle,
+            R.drawable.ic_choose_theme
+        )
     }
 
     private fun shareApp() {

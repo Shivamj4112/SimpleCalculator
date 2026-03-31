@@ -27,4 +27,9 @@ class OtherCalculatorActivity : BaseActivity() {
         }
 
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(com.shivam.simplecalculator.R.anim.slide_in_right, com.shivam.simplecalculator.R.anim.slide_out_left)
+    }
 }

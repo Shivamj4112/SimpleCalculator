@@ -537,6 +537,7 @@
             android:backgroundTint="@color/light_grey"
             android:fontFamily="@font/inter_medium"
             android:text="@string/add_to_calendar"
+            style="@style/SingleLineStyle"
             android:textAllCaps="false"
             android:textColor="@color/text_color"
             app:cornerRadius="28dp"
@@ -552,6 +553,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/primaryColor"
             android:fontFamily="@font/inter_medium"
+            style="@style/SingleLineStyle"
             android:text="@string/share"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -560,6 +562,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnAddCalendar"
             app:layout_constraintTop_toTopOf="@+id/btnAddCalendar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

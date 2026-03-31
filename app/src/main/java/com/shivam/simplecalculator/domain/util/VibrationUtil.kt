@@ -7,21 +7,17 @@ import android.os.Vibrator
 import android.os.VibratorManager
 
 object VibrationUtil {
-    private const val PREFS_NAME = "VibrationPrefs"
-    private const val KEY_VIBRATION_ENABLED = "is_vibration_enabled"
 
-    fun isVibrationEnabled(context: Context): Boolean {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getBoolean(KEY_VIBRATION_ENABLED, true)
+    fun isVibrationEnabled(): Boolean {
+        return SharedPrefHelper.vibrationEnabled
     }
 
-    fun setVibrationEnabled(context: Context, enabled: Boolean) {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putBoolean(KEY_VIBRATION_ENABLED, enabled).apply()
+    fun setVibrationEnabled(enabled: Boolean) {
+        SharedPrefHelper.vibrationEnabled = enabled
     }
 
     fun vibrate(context: Context) {
-        if (!isVibrationEnabled(context)) return
+        if (!isVibrationEnabled()) return
 
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager

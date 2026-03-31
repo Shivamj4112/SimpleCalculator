@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/selectableItemBackground">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/textContainer"
@@ -33,16 +32,19 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_marginTop="5dp"
             tools:text="8888888888"
             android:fontFamily="@font/inter_medium"
             android:textColor="@color/sub_text_color2"
             android:textSize="17sp" />
     </LinearLayout>
 
-    <CheckBox
+    <ImageView
         android:id="@+id/cbHistorySelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_unchecked"
+        android:layout_marginEnd="15dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/textContainer"
         app:layout_constraintEnd_toEndOf="parent"

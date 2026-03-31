@@ -39,10 +39,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <CheckBox
+        <ImageView
             android:id="@+id/cbSelectAll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_unchecked"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +52,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_history_found"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomActionContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistory"
@@ -73,7 +90,11 @@
             android:layout_height="56dp"
             android:layout_margin="16dp"
             android:text="@string/clear_history"
-            android:textAllCaps="false"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingHorizontal="10dp"
+            android:fontFamily="@font/inter_semibold"
             android:textSize="18sp"
             android:backgroundTint="@color/primaryColor"
             android:textColor="@color/white" />
@@ -83,9 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#FFFFFF"
-            android:paddingVertical="12dp"
+            android:background="@color/bg_color"
             android:visibility="gone"
+            android:paddingVertical="12dp"
             android:gravity="center_horizontal">
 
             <LinearLayout
@@ -95,17 +116,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_recalculate" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recalculate"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginTop="4dp" />
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color"
+                    android:layout_marginTop="8dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -115,17 +140,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_copy" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/copy"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginTop="4dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/text_color"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,17 +163,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_delete" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/delete"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginTop="4dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/text_color"
+                    android:layout_marginTop="8dp" />
+
             </LinearLayout>
 
         </LinearLayout>

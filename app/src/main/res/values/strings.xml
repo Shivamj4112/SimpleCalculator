@@ -91,4 +91,9 @@
     <string name="title_converter">%1$s Converter</string>
     <string name="age_converter">Age Converter</string>
     <string name="area_converter">Area Converter</string>
+    <string name="financial_amp_gst">Financial &amp; GST</string>
+    <string name="call_settings">Call settings</string>
+    <string name="after_call_option">After call option</string>
+    <string name="after_any_call_you_ll_see_options_to_call_back_message_or_save_the_contact">After any call, you’ll see options to call back, message, or save the contact.</string>
+    <string name="no_history_found">No history found</string>
 </resources>

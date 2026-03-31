@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.activity.result.contract.ActivityResultContracts
 import com.shivam.simplecalculator.databinding.ActivityMainBinding
@@ -83,6 +84,7 @@ class MainActivity : BaseActivity() {
         binding.btnMenu.setOnClickListener {
             val intent = Intent(this, OtherCalculatorActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
         binding.btnScientific.setOnClickListener {
@@ -93,11 +95,9 @@ class MainActivity : BaseActivity() {
             if (Settings.canDrawOverlays(this)) {
                 startFloatingService()
             } else {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    "package:$packageName".toUri())
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:$packageName".toUri())
                 startActivity(intent)
-                Toast.makeText(this,
-                    getString(R.string.please_grant_permission_to_resize_app), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_grant_permission_to_resize_app), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -195,15 +195,15 @@ class MainActivity : BaseActivity() {
         sci.btnInv.setOnClickListener {
             viewModel.isInverseMode = !viewModel.isInverseMode
             if (viewModel.isInverseMode) {
-//                sci.btnSin.text = "sin-1"
-//                sci.btnCos.text = "cos-1"
-//                sci.btnTan.text = "tan-1"
-                sci.btnInv.setBackgroundColor(Color.LTGRAY)
+                sci.imgSin.setImageResource(R.drawable.ic_sin_minus)
+                sci.imgCos.setImageResource(R.drawable.ic_con_minus)
+                sci.imgTan.setImageResource(R.drawable.ic_tan_minus)
+                sci.imgInv.imageTintList = ColorStateList.valueOf(getColor(R.color.diable_color))
             } else {
-//                sci.btnSin.text = "sin"
-//                sci.btnCos.text = "cos"
-//                sci.btnTan.text = "tan"
-                sci.btnInv.setBackgroundColor(Color.WHITE)
+                sci.imgSin.setImageResource(R.drawable.ic_sin)
+                sci.imgCos.setImageResource(R.drawable.ic_con)
+                sci.imgTan.setImageResource(R.drawable.ic_tan)
+                sci.imgInv.imageTintList = ColorStateList.valueOf(getColor(R.color.text_color))
             }
         }
 
@@ -260,7 +260,7 @@ class MainActivity : BaseActivity() {
                         if (res == "Error") {
                             binding.tvResult.setTextColor(Color.RED)
                         } else {
-                            binding.tvResult.setTextColor(Color.BLACK)
+                            binding.tvResult.setTextColor(getColor(R.color.text_color))
                         }
                     }
                 }

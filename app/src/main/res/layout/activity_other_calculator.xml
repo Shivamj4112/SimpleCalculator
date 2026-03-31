@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/bg_color">
+    android:background="@color/bg_color"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clActionBar"
@@ -20,9 +20,9 @@
             android:id="@+id/btnBack"
             android:layout_width="38dp"
             android:layout_height="38dp"
+            android:layout_marginStart="10dp"
             android:padding="6dp"
             android:src="@drawable/ic_back"
-            android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,27 +36,86 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/btnUnitConverter"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="5dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/img_unit_converter"
+        android:backgroundTint="@color/keypad_number_bg"
+        app:cardCornerRadius="18dp"
         app:layout_constraintEnd_toStartOf="@+id/btnFinancial"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clActionBar" />
+        app:layout_constraintTop_toBottomOf="@+id/clActionBar"
+        app:strokeWidth="0dp">
 
-    <ImageView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_unit_converter"
+                app:tint="@color/unit_converter_icon_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:layout_marginHorizontal="10dp"
+                style="@style/SingleLineStyle"
+                android:text="@string/unit_converter"
+                android:textColor="@color/unit_converter_icon_color"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/btnFinancial"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/img_financial"
+        android:layout_height="150dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/keypad_number_bg"
+        android:layout_marginStart="25dp"
+        app:cardCornerRadius="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnUnitConverter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnUnitConverter"
-        app:layout_constraintTop_toTopOf="@+id/btnUnitConverter" />
+        app:layout_constraintTop_toTopOf="@+id/btnUnitConverter"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_financial"
+                app:tint="@color/unit_converter_icon_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:layout_marginHorizontal="10dp"
+                style="@style/SingleLineStyle"
+                android:text="@string/financial_amp_gst"
+                android:textColor="@color/unit_converter_icon_color"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

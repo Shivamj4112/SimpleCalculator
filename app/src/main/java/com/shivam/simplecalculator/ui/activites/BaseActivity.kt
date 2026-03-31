@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
-import com.shivam.simplecalculator.R
 
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val theme = sharedPreferences.getInt("prefs_theme", 0)
+        val theme = SharedPrefHelper.theme
         when (theme) {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

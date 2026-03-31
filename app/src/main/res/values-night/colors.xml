@@ -29,5 +29,7 @@
     <color name="theme_selection_bg_color">#242424</color>
     <color name="toggle_off_color">#373636</color>
     <color name="toggle_on_color">#5B5B5B</color>
+    <color name="call_icon_color">#FFFFFF</color>
+    <color name="diable_color">#878787</color>
 
 </resources>

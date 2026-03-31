@@ -888,6 +888,7 @@
             app:tint="@color/keypad_number_bg" />
 
         <ImageView
+            android:id="@+id/imgInv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -945,6 +946,7 @@
             app:tint="@color/keypad_number_bg" />
 
         <ImageView
+            android:id="@+id/imgSin"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -973,6 +975,7 @@
             app:tint="@color/keypad_number_bg" />
 
         <ImageView
+            android:id="@+id/imgCos"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -1003,6 +1006,7 @@
             app:tint="@color/keypad_number_bg" />
 
         <ImageView
+            android:id="@+id/imgTan"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

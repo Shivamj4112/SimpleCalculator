@@ -12,14 +12,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_color">
 
         <!-- Header / Drag Handle -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#F8F9FA"
+            android:layout_height="56dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -79,6 +79,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:hint="0"
+                android:fontFamily="@font/inter_light"
                 android:textColor="@color/text_expression"
                 android:textSize="20sp"
                 tools:text="1,572.2" />
@@ -89,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
                 android:textSize="28sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
+                android:textAlignment="textEnd"
                 tools:text="= 1,572.2" />
         </LinearLayout>
 

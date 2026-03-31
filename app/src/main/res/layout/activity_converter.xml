@@ -52,6 +52,7 @@
             android:id="@+id/cardTopInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/keypad_number_bg"
             android:layout_marginBottom="12dp"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp">
@@ -59,7 +60,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/keypad_number_bg"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="13dp">
 
@@ -104,12 +104,16 @@
                     app:layout_constraintStart_toEndOf="@+id/llTopLabel"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/tvTopValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:cursorVisible="true"
                         android:fontFamily="@font/inter_medium"
-                        android:text="@string/_0"
+                        android:hint="0"
+                        android:textColorHint="@color/unit_converter_icon_color"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp" />
 
@@ -131,6 +135,7 @@
             android:id="@+id/cardBottomInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/keypad_number_bg"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp">
 
@@ -186,6 +191,11 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
                         android:text="0"
+                        android:gravity="end"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp" />
 
@@ -290,7 +300,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:textColor="@color/primaryColor"
+                        android:textColor="@color/text_color"
                         android:textSize="40sp"
                         tools:text="15" />
 
@@ -373,7 +383,8 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="Weeks\n0"
-                        android:textColor="@color/age_calculator_stroke_color"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -411,8 +422,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
                         android:text="Hours\n0"
-                        android:textColor="@color/age_calculator_stroke_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -451,7 +463,8 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="Minutes\n0"
-                        android:textColor="@color/age_calculator_stroke_color"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

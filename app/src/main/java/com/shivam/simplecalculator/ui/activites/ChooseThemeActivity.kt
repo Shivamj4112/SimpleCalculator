@@ -1,7 +1,7 @@
 package com.shivam.simplecalculator.ui.activites
 
-import android.content.SharedPreferences
 import android.os.Bundle
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import androidx.appcompat.app.AppCompatDelegate
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityChooseThemeBinding
@@ -9,18 +9,15 @@ import com.shivam.simplecalculator.databinding.ActivityChooseThemeBinding
 class ChooseThemeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChooseThemeBinding
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChooseThemeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
-
         binding.btnBack.setOnClickListener { finish() }
 
-        val currentTheme = sharedPreferences.getInt("prefs_theme", 0) // 0: Default, 1: Light, 2: Dark
+        val currentTheme = SharedPrefHelper.theme
         updateUI(currentTheme)
 
         binding.llLightTheme.setOnClickListener {
@@ -33,7 +30,7 @@ class ChooseThemeActivity : BaseActivity() {
 
         // If they click the row, toggle it
         binding.llSystemDefault.setOnClickListener {
-            val current = sharedPreferences.getInt("prefs_theme", 0)
+            val current = SharedPrefHelper.theme
             if (current == 0) {
                 saveTheme(1) // Switch to Light if System Default is turned off
             } else {
@@ -43,7 +40,7 @@ class ChooseThemeActivity : BaseActivity() {
     }
 
     private fun saveTheme(theme: Int) {
-        sharedPreferences.edit().putInt("prefs_theme", theme).apply()
+        SharedPrefHelper.theme = theme
         updateUI(theme)
         
         when (theme) {

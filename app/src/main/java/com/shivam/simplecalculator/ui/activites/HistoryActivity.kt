@@ -22,6 +22,7 @@ import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
 import com.shivam.simplecalculator.ui.adapter.HistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class HistoryActivity : BaseActivity() {
@@ -42,11 +43,8 @@ class HistoryActivity : BaseActivity() {
 
     private fun setupRecyclerView() {
         historyAdapter = HistoryAdapter(
-            onItemClick = { history ->
-                finish()
-            },
-            onItemLongClick = {
-                // Handled in adapter, selection mode toggled
+            onItemClick = { item ->
+                sendExpressionAndFinish(item.expression)
             },
             onSelectionChange = { count ->
                 updateHistorySelectionUI(count)
@@ -68,12 +66,14 @@ class HistoryActivity : BaseActivity() {
             binding.btnClearHistory.visibility = View.GONE
             binding.selectionActionBar.visibility = View.VISIBLE
             
-            // Update Checkbox state
-            binding.cbSelectAll.isChecked = count > 0 && count == historyAdapter.currentList.size
+            val isAllSelected = count > 0 && count == historyAdapter.currentList.size
+            binding.cbSelectAll.setImageResource(
+                if (isAllSelected) R.drawable.ic_checked else R.drawable.ic_unchecked
+            )
         } else {
             binding.tvHistoryTitle.text = getString(R.string.history)
             binding.cbSelectAll.visibility = View.GONE
-            binding.cbSelectAll.isChecked = false
+            binding.cbSelectAll.setImageResource(R.drawable.ic_unchecked)
             binding.btnClearHistory.visibility = View.VISIBLE
             binding.selectionActionBar.visibility = View.GONE
         }
@@ -114,11 +114,7 @@ class HistoryActivity : BaseActivity() {
         binding.actionRecalculate.setOnClickListener {
             val selected = historyAdapter.getSelectedItems()
             if (selected.size == 1) {
-                val expr = selected.first().expression
-                val intent = Intent()
-                intent.putExtra("EXTRA_EXPRESSION", expr)
-                setResult(RESULT_OK, intent)
-                finish()
+                sendExpressionAndFinish(selected.first().expression)
             }
         }
     }
@@ -142,7 +138,7 @@ class HistoryActivity : BaseActivity() {
         dialog.window?.let { window ->
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             window.setGravity(Gravity.BOTTOM)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
 
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
@@ -160,5 +156,12 @@ class HistoryActivity : BaseActivity() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun sendExpressionAndFinish(expression: String) {
+        val intent = Intent()
+        intent.putExtra("EXTRA_EXPRESSION", expression)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

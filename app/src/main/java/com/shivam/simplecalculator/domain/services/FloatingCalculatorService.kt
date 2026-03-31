@@ -1,5 +1,6 @@
 package com.shivam.simplecalculator.domain.services
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -7,6 +8,8 @@ import android.os.Build
 import android.os.IBinder
 import android.view.*
 import android.graphics.Color
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.shivam.simplecalculator.ui.activites.MainActivity
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.LayoutFloatingCalculatorBinding
@@ -38,6 +41,11 @@ class FloatingCalculatorService : Service() {
     private var isCalculated = false
 
     private val formatter = DecimalFormat("#.##########")
+
+    private var initialX = 0
+    private var initialY = 0
+    private var initialTouchX = 0f
+    private var initialTouchY = 0f
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -46,8 +54,10 @@ class FloatingCalculatorService : Service() {
         super.onCreate()
         
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-        
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        val themedContext = ContextThemeWrapper(this, R.style.Theme_SimpleCalculator)
+
+        val inflater = LayoutInflater.from(themedContext)
         floatingView = inflater.inflate(R.layout.layout_floating_calculator, null)
         binding = LayoutFloatingCalculatorBinding.bind(floatingView)
 
@@ -57,10 +67,7 @@ class FloatingCalculatorService : Service() {
         val params = WindowManager.LayoutParams(
             widthPx,
             WindowManager.LayoutParams.WRAP_CONTENT,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            else
-                WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
         )
@@ -69,38 +76,38 @@ class FloatingCalculatorService : Service() {
         params.x = 100
         params.y = 100
 
+        binding.tvExpression.typeface = ResourcesCompat.getFont(this, R.font.inter_light)
+        binding.tvResult.typeface = ResourcesCompat.getFont(this, R.font.inter_regular)
+
+
         windowManager.addView(floatingView, params)
 
         setupListeners(params)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupListeners(params: WindowManager.LayoutParams) {
-        // Dragging logic
-        binding.header.setOnTouchListener(object : View.OnTouchListener {
-            private var initialX = 0
-            private var initialY = 0
-            private var initialTouchX = 0f
-            private var initialTouchY = 0f
 
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        initialX = params.x
-                        initialY = params.y
-                        initialTouchX = event.rawX
-                        initialTouchY = event.rawY
-                        return true
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        params.x = initialX + (event.rawX - initialTouchX).toInt()
-                        params.y = initialY + (event.rawY - initialTouchY).toInt()
-                        windowManager.updateViewLayout(floatingView, params)
-                        return true
-                    }
+        binding.header.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    initialX = params.x
+                    initialY = params.y
+                    initialTouchX = event.rawX
+                    initialTouchY = event.rawY
+                    true
                 }
-                return false
+
+                MotionEvent.ACTION_MOVE -> {
+                    params.x = initialX + (event.rawX - initialTouchX).toInt()
+                    params.y = initialY + (event.rawY - initialTouchY).toInt()
+                    windowManager.updateViewLayout(floatingView, params)
+                    true
+                }
+
+                else -> false
             }
-        })
+        }
 
         binding.btnClose.setOnClickListener {
             stopSelf()
@@ -139,12 +146,10 @@ class FloatingCalculatorService : Service() {
         pad.btnAC.setOnClickListener { clear() }
         pad.btnEqual.setOnClickListener { calculate() }
         
-        // Handling parenthese logic correctly from generic button
         var parCount = 0
         pad.btnPar.setOnClickListener { 
             if (parCount % 2 == 0) append("(") else append(")")
             parCount++
-            // Note: expression Manager handles multiple ( and ) efficiently too!
         }
     }
 
@@ -233,7 +238,7 @@ class FloatingCalculatorService : Service() {
         if (resultDisplay == "Error") {
             binding.tvResult.setTextColor(Color.RED)
         } else {
-            binding.tvResult.setTextColor(Color.BLACK)
+            binding.tvResult.setTextColor(ContextCompat.getColor(this, R.color.text_color))
         }
     }
 

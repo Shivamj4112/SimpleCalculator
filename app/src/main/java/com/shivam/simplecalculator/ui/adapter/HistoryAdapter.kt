@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.data.repository.CalculationHistory
 import com.shivam.simplecalculator.databinding.ItemHistoryBinding
 
 class HistoryAdapter(
     private val onItemClick: (CalculationHistory) -> Unit,
-    private val onItemLongClick: () -> Unit,
     private val onSelectionChange: (Int) -> Unit
 ) : ListAdapter<CalculationHistory, HistoryAdapter.HistoryViewHolder>(HistoryDiffCallback()) {
 
@@ -62,10 +62,12 @@ class HistoryAdapter(
 
             if (isSelectionMode) {
                 binding.cbHistorySelect.visibility = View.VISIBLE
-                binding.cbHistorySelect.isChecked = selectedItemIds.contains(history.id)
+                binding.cbHistorySelect.setImageResource(
+                    if (selectedItemIds.contains(history.id)) R.drawable.ic_checked else R.drawable.ic_unchecked
+                )
             } else {
                 binding.cbHistorySelect.visibility = View.GONE
-                binding.cbHistorySelect.isChecked = false
+                binding.cbHistorySelect.setImageResource(R.drawable.ic_unchecked)
             }
 
             binding.root.setOnClickListener {
@@ -80,7 +82,6 @@ class HistoryAdapter(
                 if (!isSelectionMode) {
                     toggleSelectionMode()
                     toggleSelection(history.id)
-                    onItemLongClick()
                 }
                 true
             }
@@ -96,7 +97,9 @@ class HistoryAdapter(
             } else {
                 selectedItemIds.add(id)
             }
-            binding.cbHistorySelect.isChecked = selectedItemIds.contains(id)
+            binding.cbHistorySelect.setImageResource(
+                if (selectedItemIds.contains(id)) R.drawable.ic_checked else R.drawable.ic_unchecked
+            )
             onSelectionChange(selectedItemIds.size)
         }
     }
