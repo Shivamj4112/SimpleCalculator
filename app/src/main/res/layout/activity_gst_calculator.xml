@@ -81,7 +81,7 @@
                     android:text="@string/_0"
                     android:maxLength="20"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/negative_button_text_color"
+                    android:textColor="@color/text_color"
                     android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -183,7 +183,7 @@
                     android:textAlignment="textEnd"
                     android:layout_weight="1"
                     android:fontFamily="@font/inter_medium"
-                    android:textColor="@color/negative_button_text_color"
+                    android:textColor="@color/text_color"
                     android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

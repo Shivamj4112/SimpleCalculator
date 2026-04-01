@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context=".ui.activites.ConverterActivity">
+    tools:context=".ui.activites.BmiCalculatorActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clActionBar"
@@ -29,15 +29,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvConverterTitle"
+            android:id="@+id/tvTitle"
             style="@style/ScreenTitle"
-            android:text="Converter"
+            android:text="Bmi Calculator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <LinearLayout
         android:id="@+id/inputContainer"
@@ -47,7 +46,7 @@
         android:paddingHorizontal="16dp"
         app:layout_constraintTop_toBottomOf="@id/clActionBar">
 
-        <!-- Top Input -->
+        <!-- Top Input (Weight) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardTopInput"
             android:layout_width="match_parent"
@@ -80,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="From"
+                        android:text="Weight"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
@@ -121,15 +120,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Unit"
+                        android:text="Kilograms"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="12sp" />
                 </LinearLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Bottom Input -->
+        <!-- Bottom Input (Height) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBottomInput"
             android:layout_width="match_parent"
@@ -161,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="To"
+                        android:text="Height"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
@@ -184,17 +182,15 @@
                     app:layout_constraintStart_toEndOf="@+id/llBottomLabel"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
+                    <com.shivam.simplecalculator.ui.custom.NoPasteEditText
                         android:id="@+id/tvBottomValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:cursorVisible="true"
                         android:fontFamily="@font/inter_medium"
-                        android:text="0"
-                        android:gravity="end"
-                        android:singleLine="true"
-                        android:maxLines="1"
-                        android:layout_gravity="end"
-                        android:textAlignment="textEnd"
+                        android:hint="0"
+                        android:textColorHint="@color/unit_converter_icon_color"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="18sp" />
 
@@ -203,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Unit"
+                        android:text="Centimeters"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -244,9 +240,6 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-
-
-
     <View
         android:id="@+id/numpadDivider"
         android:layout_width="match_parent"
@@ -262,6 +255,5 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

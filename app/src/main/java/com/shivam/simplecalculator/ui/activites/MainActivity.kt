@@ -71,12 +71,10 @@ class MainActivity : BaseActivity() {
         binding.tvExpression.showSoftInputOnFocus = false
         binding.tvExpression.customSelectionActionModeCallback = disablePasteCallback
         binding.tvExpression.customInsertionActionModeCallback = disablePasteCallback
-        binding.tvExpression.keyListener = null // Prevent physical keyboard input from bypassing validation
 
         binding.tvError.showSoftInputOnFocus = false
         binding.tvError.customSelectionActionModeCallback = disablePasteCallback
         binding.tvError.customInsertionActionModeCallback = disablePasteCallback
-        binding.tvError.keyListener = null // Prevent physical keyboard input
     }
 
     private fun setupListeners() {
@@ -189,7 +187,12 @@ class MainActivity : BaseActivity() {
 
         // Scientific Modes
         sci.btnDeg.setOnClickListener {
-            viewModel.isDegMode = !viewModel.isDegMode
+            viewModel.toggleDegMode()
+            if (viewModel.isDegMode) {
+                sci.tvDeg.imageTintList = ColorStateList.valueOf(getColor(R.color.text_color))
+            } else {
+                sci.tvDeg.imageTintList = ColorStateList.valueOf(getColor(R.color.diable_color))
+            }
         }
 
         sci.btnInv.setOnClickListener {
@@ -251,7 +254,7 @@ class MainActivity : BaseActivity() {
                         if (binding.tvExpression.text.toString() != formattedExpr) {
                             binding.tvExpression.setText(formattedExpr)
                         }
-                        binding.tvExpression.setSelection(formattedSel.coerceIn(0, binding.tvExpression.text.length))
+                        binding.tvExpression.setSelection(formattedSel.coerceIn(0, binding.tvExpression.text?.length ?: 0))
                     }
                 }
                 launch {

@@ -43,7 +43,7 @@
         app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/tvBottomSheetTitle">
 
-        <EditText
+        <com.shivam.simplecalculator.ui.custom.NoPasteEditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="48dp"

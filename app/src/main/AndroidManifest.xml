@@ -92,6 +92,21 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.activites.BmiCalculatorActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activites.DiscountCalculatorActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activites.DateCalculatorActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".domain.services.FloatingCalculatorService"
             android:enabled="true"

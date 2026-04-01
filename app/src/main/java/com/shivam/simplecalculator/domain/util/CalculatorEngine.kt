@@ -16,8 +16,25 @@ object CalculatorEngine {
             return Result.failure(Exception("Invalid Expression"))
         }
 
-        // Handle percentages: convert 50% to (50/100)
-        val finalExpression = readyToValidate.replace(Regex("([\\d.]+)(%+)")) { matchResult ->
+        var finalExpression = readyToValidate
+        
+        // Handle contextual percentage offsets: e.g. 90 - 10% -> 90 - (90 * 10 / 100)
+        val offsetRegex = Regex("([\\d.]+)\\s*([+\\-])\\s*([\\d.]+)(%+)")
+        while (offsetRegex.containsMatchIn(finalExpression)) {
+            finalExpression = finalExpression.replace(offsetRegex) { matchResult ->
+                val base = matchResult.groupValues[1]
+                val operator = matchResult.groupValues[2]
+                val percentValueStr = matchResult.groupValues[3]
+                var percentValue = percentValueStr.toDoubleOrNull() ?: 0.0
+                for (i in 1..matchResult.groupValues[4].length) {
+                    percentValue /= 100
+                }
+                "$base $operator ($base * $percentValue)"
+            }
+        }
+
+        // Handle remaining isolated percentages: e.g. 10% -> 0.1
+        finalExpression = finalExpression.replace(Regex("([\\d.]+)(%+)")) { matchResult ->
             val numberStr = matchResult.groupValues[1]
             val percentString = matchResult.groupValues[2]
             var number = numberStr.toDoubleOrNull() ?: 0.0

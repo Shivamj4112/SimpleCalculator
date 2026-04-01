@@ -36,11 +36,16 @@ class CalculatorViewModel @Inject constructor(
     var isDegMode = true
     var isInverseMode = false // 2nd button
 
+    fun toggleDegMode() {
+        isDegMode = !isDegMode
+        updateRealTimeResult()
+    }
+
     val history = repository.getAllHistory()
 
     private val symbols = DecimalFormatSymbols(Locale.US)
-    private val formatter = DecimalFormat("#,###.###########", symbols)
-    private val scientificFormatter = DecimalFormat("0.##########E0", symbols)
+    private val formatter = DecimalFormat("#,###.###############", symbols)
+    private val scientificFormatter = DecimalFormat("0.##############E0", symbols)
 
     private var isCalculated = false
 
@@ -104,9 +109,12 @@ class CalculatorViewModel @Inject constructor(
 
     private fun formatResult(value: Double): String {
         var formatted = formatter.format(value)
-        if (formatted.length > 19) {
+        
+        // If the string length exceeds display area, or if we lost all precision to "0" but the value isn't exactly 0
+        if (formatted.length > 19 || (value != 0.0 && (formatted == "0" || formatted == "-0"))) {
             formatted = scientificFormatter.format(value)
         }
+        
         return formatted
     }
 

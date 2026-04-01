@@ -1,15 +1,12 @@
 package com.shivam.simplecalculator.domain.models
 
-import com.shivam.simplecalculator.domain.util.strategies.BmiStrategy
 import com.shivam.simplecalculator.domain.util.strategies.ConverterStrategy
-import com.shivam.simplecalculator.domain.util.strategies.DateStrategy
-import com.shivam.simplecalculator.domain.util.strategies.DiscountStrategy
 import com.shivam.simplecalculator.domain.util.strategies.GeneralUnitStrategy
 import com.shivam.simplecalculator.domain.util.strategies.NumeralStrategy
 import com.shivam.simplecalculator.domain.util.strategies.TemperatureStrategy
 
 enum class ConverterType {
-    BMI, DISCOUNT, LENGTH, MASS, NUMERAL, SPEED, TEMPERATURE, TIME, VOLUME, DATA, DATE
+    LENGTH, MASS, NUMERAL, SPEED, TEMPERATURE, TIME, VOLUME, DATA
 }
 
 data class UnitOption(val name: String, val factor: Double)
@@ -68,30 +65,13 @@ object ConverterConfig {
             UnitOption("Celsius", 1.0),
             UnitOption("Fahrenheit", 2.0),
             UnitOption("Kelvin", 3.0)
-        ),
-        ConverterType.DISCOUNT to listOf(
-            UnitOption("Amount", 1.0),
-            UnitOption("Percentage", 1.0)
-        ),
-        ConverterType.BMI to listOf(
-            UnitOption("Kilograms", 1.0),
-            UnitOption("Pounds", 0.453592),
-            UnitOption("Centimeters", 0.01),
-            UnitOption("Inches", 0.0254)
-        ),
-        ConverterType.DATE to listOf(
-            UnitOption("Start Date", 1.0),
-            UnitOption("End Date", 1.0)
         )
     )
 
     fun getStrategy(type: ConverterType): ConverterStrategy {
         return when (type) {
-            ConverterType.BMI -> BmiStrategy()
             ConverterType.TEMPERATURE -> TemperatureStrategy()
-            ConverterType.DISCOUNT -> DiscountStrategy()
             ConverterType.NUMERAL -> NumeralStrategy()
-            ConverterType.DATE -> DateStrategy()
             else -> GeneralUnitStrategy()
         }
     }

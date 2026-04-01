@@ -96,11 +96,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <EditText
+                    <com.shivam.simplecalculator.ui.custom.NoPasteEditText
                         android:id="@+id/tvValue1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
                         android:cursorVisible="true"
                         android:fontFamily="@font/inter_medium"
                         android:hint="0"

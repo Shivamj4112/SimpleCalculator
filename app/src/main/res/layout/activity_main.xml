@@ -88,28 +88,29 @@
             android:paddingTop="24dp"
             android:orientation="vertical">
 
-            <EditText
+            <com.shivam.simplecalculator.ui.custom.NoPasteEditText
                 android:id="@+id/tvExpression"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:background="@null"
                 android:hint="0"
                 android:singleLine="true"
                 android:maxLines="1"
+                android:cursorVisible="true"
+                android:inputType="textNoSuggestions"
                 android:textAlignment="textEnd"
                 android:textColor="@color/text_expression"
                 android:textSize="32sp"
                 tools:text="7,861÷5" />
 
-            <EditText
+            <com.shivam.simplecalculator.ui.custom.NoPasteEditText
                 android:id="@+id/tvError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:textColor="@color/red"
                 android:textSize="35sp"
-                android:background="@null"
+                android:inputType="textNoSuggestions"
                 android:visibility="gone"
                 tools:text="Input Error" />
 

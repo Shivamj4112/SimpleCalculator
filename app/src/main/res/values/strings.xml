@@ -96,4 +96,11 @@
     <string name="after_call_option">After call option</string>
     <string name="after_any_call_you_ll_see_options_to_call_back_message_or_save_the_contact">After any call, you’ll see options to call back, message, or save the contact.</string>
     <string name="no_history_found">No history found</string>
+    <string name="end_date">End Date</string>
+    <string name="price">Price</string>
+    <string name="_discount">Discount %</string>
+    <string name="percentage">Percentage</string>
+    <string name="amount">Amount</string>
+    <string name="date_difference">Date Difference</string>
+    <string name="invalid_date_range">Invalid Date Range</string>
 </resources>

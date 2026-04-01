@@ -23,12 +23,7 @@ class UnitConverterActivity : BaseActivity() {
         }
 
         binding.btnBmi.setOnClickListener {
-            val intent = Intent(this, ConverterActivity::class.java)
-            intent.putExtra(
-                ConverterActivity.EXTRA_TYPE,
-                ConverterType.BMI.name
-            )
-            startActivity(intent)
+            startActivity(Intent(this, BmiCalculatorActivity::class.java))
         }
 
         binding.btnArea.setOnClickListener {
@@ -42,8 +37,8 @@ class UnitConverterActivity : BaseActivity() {
         }
 
         binding.btnData?.setOnClickListener { launchConverter(ConverterType.DATA) }
-        binding.btnDate?.setOnClickListener { launchConverter(ConverterType.DATE) }
-        binding.btnDiscount?.setOnClickListener { launchConverter(ConverterType.DISCOUNT) }
+        binding.btnDate?.setOnClickListener { startActivity(Intent(this, DateCalculatorActivity::class.java)) }
+        binding.btnDiscount?.setOnClickListener { startActivity(Intent(this, DiscountCalculatorActivity::class.java)) }
         binding.btnLength?.setOnClickListener { launchConverter(ConverterType.LENGTH) }
         binding.btnMass?.setOnClickListener { launchConverter(ConverterType.MASS) }
         binding.btnNumeral?.setOnClickListener { launchConverter(ConverterType.NUMERAL) }
