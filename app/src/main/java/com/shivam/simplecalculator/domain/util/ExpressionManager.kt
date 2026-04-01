@@ -234,9 +234,16 @@ class ExpressionManager {
             val func3 = listOf("sin(", "cos(", "tan(", "log(")
             val func4 = listOf("asin(", "acos(", "atan(")
             val func5 = listOf("sin-1(", "cos-1(", "tan-1(")
+            val func6 = listOf("sin⁻¹(", "cos⁻¹(", "tan⁻¹(")
             
             val substringBefore = expression.substring(0, pos)
             
+            for (f in func6) {
+               if (substringBefore.endsWith(f)) {
+                   expression = expression.substring(0, pos - f.length) + expression.substring(pos)
+                   return pos - f.length
+               }
+            }
             for (f in func5) {
                if (substringBefore.endsWith(f)) {
                    expression = expression.substring(0, pos - f.length) + expression.substring(pos)

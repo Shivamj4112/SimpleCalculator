@@ -212,15 +212,15 @@ class MainActivity : BaseActivity() {
 
         sci.btnSin.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("asin(", pos) else viewModel.append("sin(", pos)
+            if (viewModel.isInverseMode) viewModel.append("sin⁻¹(", pos) else viewModel.append("sin(", pos)
         }
         sci.btnCos.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("acos(", pos) else viewModel.append("cos(", pos)
+            if (viewModel.isInverseMode) viewModel.append("cos⁻¹(", pos) else viewModel.append("cos(", pos)
         }
         sci.btnTan.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("atan(", pos) else viewModel.append("tan(", pos)
+            if (viewModel.isInverseMode) viewModel.append("tan⁻¹(", pos) else viewModel.append("tan(", pos)
         }
     }
 

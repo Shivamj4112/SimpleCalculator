@@ -162,12 +162,17 @@ object ExpressionFormatter {
         // 3. Implicit multiplication e.g., 2sin(30) -> 2*sin(30), 2(3) -> 2*(3), e(5) -> e*(5)
         processed = applyImplicitMultiplication(processed)
 
-        // 4. Translate mathematical symbols to exp4j standard symbols
+        // 4. Translate mathematical functions to exp4j standard names
         processed = processed
             .replace("×", "*")
             .replace("÷", "/")
             .replace("−", "-")
-            // Exp4j does not natively know 'π' or '√', we will register them or replace them
+            .replace("sin⁻¹", "asin")
+            .replace("cos⁻¹", "acos")
+            .replace("tan⁻¹", "atan")
+            .replace("sin-1", "asin")
+            .replace("cos-1", "acos")
+            .replace("tan-1", "atan")
             .replace("π", "pi")
             .replace("√", "sqrt")
         
@@ -184,7 +189,7 @@ object ExpressionFormatter {
     private fun applyImplicitMultiplication(expr: String): String {
         var res = expr
         // Number followed by function: 2sin -> 2*sin
-        res = res.replace(Regex("(\\d|π|e)(sin|cos|tan|asin|acos|atan|log|ln|sqrt|√)"), "$1*$2")
+        res = res.replace(Regex("(\\d|π|e)(sin|cos|tan|sin⁻¹|cos⁻¹|tan⁻¹|asin|acos|atan|log|ln|sqrt|√)"), "$1*$2")
         // Number or constant followed by parenthesis: 2( -> 2*(
         res = res.replace(Regex("(\\d|π|e|\\))\\("), "$1*(")
         // Parenthesis followed by number or constant: )2 -> )*2

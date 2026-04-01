@@ -57,27 +57,39 @@ object CalculatorEngine {
         return try {
             val sinFunc = object : Function("sin", 1) {
                 override fun apply(vararg args: Double): Double {
-                    return sin(if (isDeg) Math.toRadians(args[0]) else args[0])
+                    val angle = if (isDeg) Math.toRadians(args[0]) else args[0]
+                    val res = sin(angle)
+                    return if (abs(res) < 1e-15) 0.0 else res
                 }
             }
             val cosFunc = object : Function("cos", 1) {
                 override fun apply(vararg args: Double): Double {
-                    return cos(if (isDeg) Math.toRadians(args[0]) else args[0])
+                    val angle = if (isDeg) Math.toRadians(args[0]) else args[0]
+                    val res = cos(angle)
+                    return if (abs(res) < 1e-15) 0.0 else res
                 }
             }
             val tanFunc = object : Function("tan", 1) {
                 override fun apply(vararg args: Double): Double {
-                    return tan(if (isDeg) Math.toRadians(args[0]) else args[0])
+                    if (isDeg) {
+                        val mod = args[0] % 180
+                        if (abs(abs(mod) - 90) < 1e-9) throw ArithmeticException("Error")
+                    }
+                    val angle = if (isDeg) Math.toRadians(args[0]) else args[0]
+                    val res = tan(angle)
+                    return if (abs(res) < 1e-15) 0.0 else res
                 }
             }
             val asinFunc = object : Function("asin", 1) {
                 override fun apply(vararg args: Double): Double {
+                    if (args[0] < -1.0 || args[0] > 1.0) throw ArithmeticException("Error")
                     val res = asin(args[0])
                     return if (isDeg) Math.toDegrees(res) else res
                 }
             }
             val acosFunc = object : Function("acos", 1) {
                 override fun apply(vararg args: Double): Double {
+                    if (args[0] < -1.0 || args[0] > 1.0) throw ArithmeticException("Error")
                     val res = acos(args[0])
                     return if (isDeg) Math.toDegrees(res) else res
                 }
@@ -90,11 +102,13 @@ object CalculatorEngine {
             }
             val lnFunc = object : Function("ln", 1) {
                 override fun apply(vararg args: Double): Double {
+                    if (args[0] <= 0) throw ArithmeticException("Error")
                     return ln(args[0])
                 }
             }
             val logFunc = object : Function("log", 1) {
                 override fun apply(vararg args: Double): Double {
+                    if (args[0] <= 0) throw ArithmeticException("Error")
                     return log10(args[0])
                 }
             }
