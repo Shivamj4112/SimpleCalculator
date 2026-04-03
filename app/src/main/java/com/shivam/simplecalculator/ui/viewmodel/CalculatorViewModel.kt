@@ -32,9 +32,8 @@ class CalculatorViewModel @Inject constructor(
     private val _result = MutableStateFlow("")
     val result: StateFlow<String> = _result.asStateFlow()
 
-    // Configuration modes
     var isDegMode = true
-    var isInverseMode = false // 2nd button
+    var isInverseMode = false
 
     fun toggleDegMode() {
         isDegMode = !isDegMode
@@ -54,7 +53,6 @@ class CalculatorViewModel @Inject constructor(
             _result.value = ""
         }
 
-        // Auto-clear if result was present and user types a number or function
         if (isCalculated) {
             isCalculated = false
         }
@@ -103,14 +101,13 @@ class CalculatorViewModel @Inject constructor(
             val res = resultAttempt.getOrNull() ?: 0.0
             _result.value = formatResult(res)
         } else {
-            _result.value = "" // Don't show error in real-time, just keep it clean or show nothing
+            _result.value = ""
         }
     }
 
     private fun formatResult(value: Double): String {
         var formatted = formatter.format(value)
         
-        // If the string length exceeds display area, or if we lost all precision to "0" but the value isn't exactly 0
         if (formatted.length > 19 || (value != 0.0 && (formatted == "0" || formatted == "-0"))) {
             formatted = scientificFormatter.format(value)
         }
@@ -126,7 +123,6 @@ class CalculatorViewModel @Inject constructor(
             val res = resultAttempt.getOrNull() ?: 0.0
             val parsedResult = formatResult(res)
             
-            // Log original expression to history
             val originalExpression = expressionManager.expression
             viewModelScope.launch {
                 repository.insert(
@@ -137,14 +133,12 @@ class CalculatorViewModel @Inject constructor(
                 )
             }
 
-            // Auto close brackets visually in expression (not strictly needed now as we move result to EXPR)
             autoCloseBrackets(originalExpression)
             
-            // Move result to expression field
             expressionManager.setExpression(parsedResult.replace(",", ""))
             _expression.value = expressionManager.expression
             _selection.value = expressionManager.expression.length
-            _result.value = "" // Clear result field as it's now in expression
+            _result.value = ""
             
             isCalculated = true
         } else {

@@ -32,4 +32,5 @@
     <color name="toggle_on_color">#5B5B5B</color>
     <color name="call_icon_color">#4F525E</color>
     <color name="diable_color">#919191</color>
+    <color name="ic_language_selected">#EAEAEA</color>
 </resources>

@@ -7,11 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.domain.util.SharedPrefHelper
+import com.shivam.simplecalculator.domain.util.LocaleHelper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
+import android.content.Context
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleHelper.onAttach(it) })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val theme = SharedPrefHelper.theme

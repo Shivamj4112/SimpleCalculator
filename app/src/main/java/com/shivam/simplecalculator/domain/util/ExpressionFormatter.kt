@@ -2,10 +2,6 @@ package com.shivam.simplecalculator.domain.util
 
 object ExpressionFormatter {
 
-    /**
-     * Formats a raw expression, keeping all logic characters identical
-     * but adding thousand-separator commas to the number portions.
-     */
     fun format(rawExpression: String): String {
         val result = java.lang.StringBuilder()
         var currentNumber = java.lang.StringBuilder()
@@ -28,10 +24,6 @@ object ExpressionFormatter {
         return result.toString()
     }
 
-    /**
-     * Translates a cursor position from the formatted UI string back exactly to the 
-     * corresponding index in the raw, unformatted string.
-     */
     fun getRawPosition(rawExpression: String, formattedPosition: Int): Int {
         val formattedExp = format(rawExpression)
         val validFormattedPos = formattedPosition.coerceIn(0, formattedExp.length)
@@ -39,15 +31,9 @@ object ExpressionFormatter {
         val substring = formattedExp.substring(0, validFormattedPos)
         val commaCount = substring.count { it == ',' }
 
-        // Since commas are the only characters added during formatting,
-        // removing the comma count gives the exact raw position.
         return validFormattedPos - commaCount
     }
 
-    /**
-     * Translates a cursor position from the raw string exactly to the 
-     * corresponding index in the formatted UI string.
-     */
     fun getFormattedPosition(rawExpression: String, rawPosition: Int): Int {
         val validRawPos = rawPosition.coerceIn(0, rawExpression.length)
         val result = java.lang.StringBuilder()
@@ -99,7 +85,8 @@ object ExpressionFormatter {
         return formattedCursorPos
     }
 
-    private fun formatNumberToken(numberRaw: String): String {
+
+    fun formatNumberToken(numberRaw: String): String {
         val dotIndex = numberRaw.indexOf('.')
         val integerPart = if (dotIndex == -1) numberRaw else numberRaw.substring(0, dotIndex)
         val decimalPart = if (dotIndex == -1) "" else numberRaw.substring(dotIndex)
@@ -109,7 +96,6 @@ object ExpressionFormatter {
         for (i in integerPart.length - 1 downTo 0) {
             formattedInteger.append(integerPart[i])
             count++
-            // Don't add a comma if it's the very first character (like a negative sign, though '-' shouldn't be here)
             if (count == 3 && i > 0 && integerPart[i - 1].isDigit()) {
                 formattedInteger.append(",")
                 count = 0
@@ -134,10 +120,6 @@ object ExpressionFormatter {
         }
     }
 
-    /**
-     * Translates a display expression to an evaluate-ready format.
-     * Applies auto-close, implicit multiplication, Operator replacement, etc.
-     */
     fun preprocessForEvaluation(expression: String): String {
         var processed = expression.trim()
 
@@ -189,11 +171,13 @@ object ExpressionFormatter {
     private fun applyImplicitMultiplication(expr: String): String {
         var res = expr
         // Number followed by function: 2sin -> 2*sin
-        res = res.replace(Regex("(\\d|π|e)(sin|cos|tan|sin⁻¹|cos⁻¹|tan⁻¹|asin|acos|atan|log|ln|sqrt|√)"), "$1*$2")
-        // Number or constant followed by parenthesis: 2( -> 2*(
-        res = res.replace(Regex("(\\d|π|e|\\))\\("), "$1*(")
-        // Parenthesis followed by number or constant: )2 -> )*2
-        res = res.replace(Regex("\\)(\\d|π|e)"), ")*$1")
+        res = res.replace(Regex("(\\d|π|e|%)(sin|cos|tan|sin⁻¹|cos⁻¹|tan⁻¹|asin|acos|atan|log|ln|sqrt|√)"), "$1*$2")
+        // Postfix % followed by prefix √
+        res = res.replace(Regex("%(√)"), "%*$1")
+        // Number or constant or % followed by parenthesis: 2( -> 2*(, %( -> %*(
+        res = res.replace(Regex("(\\d|π|e|\\)|%)\\("), "$1*(")
+        // Parenthesis or % followed by number or constant: )2 -> )*2, %2 -> %*2
+        res = res.replace(Regex("([\\)%])(\\d|π|e)"), "$1*$2")
         // Number followed by constant: 2π -> 2*π
         res = res.replace(Regex("(\\d)(π|e)"), "$1*$2")
         // Constant followed by Number: π2 -> π*2

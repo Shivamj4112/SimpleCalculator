@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityAreaCalculatorBinding
 import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -46,8 +47,8 @@ class AreaCalculatorActivity : BaseActivity() {
         binding = ActivityAreaCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        topUnit = areaUnits[0] // m2
-        bottomUnit = areaUnits[2] // cm2
+        topUnit = areaUnits[0]
+        bottomUnit = areaUnits[2]
 
         setupInitialState()
         setupListeners()
@@ -106,20 +107,24 @@ class AreaCalculatorActivity : BaseActivity() {
             val max = maxOf(start, end)
 
             if (inputValue.isNotEmpty()) {
+                val rawPos = ExpressionFormatter.getRawPosition(inputValue, min)
                 if (min == max) {
-                    if (min > 0) {
+                    if (rawPos > 0) {
                         val builder = java.lang.StringBuilder(inputValue)
-                        builder.deleteCharAt(min - 1)
+                        builder.deleteCharAt(rawPos - 1)
                         inputValue = builder.toString()
                         updateDisplay()
-                        et.setSelection(min - 1)
+                        val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos - 1)
+                        et.setSelection(newFormattedPos)
                     }
                 } else {
+                    val rawEnd = ExpressionFormatter.getRawPosition(inputValue, max)
                     val builder = java.lang.StringBuilder(inputValue)
-                    builder.delete(min, max)
+                    builder.delete(rawPos, rawEnd)
                     inputValue = builder.toString()
                     updateDisplay()
-                    et.setSelection(min)
+                    val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos)
+                    et.setSelection(newFormattedPos)
                 }
                 calculateResult()
             }
@@ -136,26 +141,29 @@ class AreaCalculatorActivity : BaseActivity() {
 
         val min = minOf(start, end)
         val max = maxOf(start, end)
+        val rawPos = ExpressionFormatter.getRawPosition(inputValue, min)
+        val rawEnd = ExpressionFormatter.getRawPosition(inputValue, max)
 
         if (char == "." && inputValue.contains(".")) return
-        if (inputValue.length - (max - min) + char.length > 10) return
+        if (inputValue.length - (rawEnd - rawPos) + char.length > 15) return
 
         val builder = java.lang.StringBuilder(inputValue)
-        builder.replace(min, max, char)
+        builder.replace(rawPos, rawEnd, char)
         inputValue = builder.toString()
 
         updateDisplay()
 
-        val newCursorPos = min + char.length
-        if (newCursorPos <= inputValue.length) {
-            et.setSelection(newCursorPos)
+        val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos + char.length)
+        if (newFormattedPos <= (binding.tvValue1.text?.length ?: 0)) {
+            et.setSelection(newFormattedPos)
         }
         calculateResult()
     }
 
     private fun updateDisplay() {
-        if (binding.tvValue1.text.toString() != inputValue) {
-            binding.tvValue1.setText(inputValue)
+        val formattedInput = ExpressionFormatter.format(inputValue)
+        if (binding.tvValue1.text.toString() != formattedInput) {
+            binding.tvValue1.setText(formattedInput)
         }
         binding.tvUnitName1.text = topUnit.name
         binding.tvUnitSymbol1.text = topUnit.symbol
@@ -180,9 +188,9 @@ class AreaCalculatorActivity : BaseActivity() {
             val decFormat = DecimalFormat("#.######", DecimalFormatSymbols(Locale.US))
             
             val formattedResult = if (resultD % 1.0 == 0.0) {
-                String.format(Locale.US, "%.0f", resultD)
+                ExpressionFormatter.formatNumberToken(String.format(Locale.US, "%.0f", resultD))
             } else {
-                decFormat.format(resultD)
+                ExpressionFormatter.formatNumberToken(decFormat.format(resultD))
             }
             
             binding.tvValue2.text = formattedResult

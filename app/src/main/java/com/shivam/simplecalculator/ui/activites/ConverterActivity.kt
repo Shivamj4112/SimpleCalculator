@@ -16,6 +16,7 @@ import com.shivam.simplecalculator.domain.models.ConverterConfig
 import com.shivam.simplecalculator.domain.models.ConverterType
 import com.shivam.simplecalculator.domain.models.UnitOption
 import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 
 class ConverterActivity : BaseActivity() {
 
@@ -49,7 +50,6 @@ class ConverterActivity : BaseActivity() {
     }
 
     private fun setupInitialState() {
-        // Set title based on type name
         val titleText = currentType.name.lowercase().replaceFirstChar { it.uppercase() }
         binding.tvConverterTitle.text = getString(R.string.title_converter, titleText)
 
@@ -123,20 +123,24 @@ class ConverterActivity : BaseActivity() {
                 val max = maxOf(start, end)
 
                 if (inputValue.isNotEmpty()) {
+                    val rawPos = ExpressionFormatter.getRawPosition(inputValue, min)
                     if (min == max) {
-                        if (min > 0) {
+                        if (rawPos > 0) {
                             val builder = java.lang.StringBuilder(inputValue)
-                            builder.deleteCharAt(min - 1)
+                            builder.deleteCharAt(rawPos - 1)
                             inputValue = builder.toString()
                             updateDisplay()
-                            et.setSelection(min - 1)
+                            val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos - 1)
+                            et.setSelection(newFormattedPos)
                         }
                     } else {
+                        val rawEnd = ExpressionFormatter.getRawPosition(inputValue, max)
                         val builder = java.lang.StringBuilder(inputValue)
-                        builder.delete(min, max)
+                        builder.delete(rawPos, rawEnd)
                         inputValue = builder.toString()
                         updateDisplay()
-                        et.setSelection(min)
+                        val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos)
+                        et.setSelection(newFormattedPos)
                     }
                 }
             } else {
@@ -163,20 +167,22 @@ class ConverterActivity : BaseActivity() {
             
             val min = minOf(start, end)
             val max = maxOf(start, end)
+            val rawPos = ExpressionFormatter.getRawPosition(inputValue, min)
+            val rawEnd = ExpressionFormatter.getRawPosition(inputValue, max)
 
             if (char == "." && inputValue.contains(".")) return
             
-            if (inputValue.length - (max - min) + char.length > 10) return
+            if (inputValue.length - (rawEnd - rawPos) + char.length > 15) return
 
             val builder = java.lang.StringBuilder(inputValue)
-            builder.replace(min, max, char)
+            builder.replace(rawPos, rawEnd, char)
             inputValue = builder.toString()
             
             updateDisplay()
             
-            val newCursorPos = min + char.length
-            if (newCursorPos <= inputValue.length) {
-                et.setSelection(newCursorPos)
+            val newFormattedPos = ExpressionFormatter.getFormattedPosition(inputValue, rawPos + char.length)
+            if (newFormattedPos <= (binding.tvTopValue.text?.length ?: 0)) {
+                et.setSelection(newFormattedPos)
             }
         } else {
             if (char == "." && outputValue.contains(".")) return
@@ -188,10 +194,16 @@ class ConverterActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        if (binding.tvTopValue.text.toString() != inputValue) {
-            binding.tvTopValue.setText(inputValue)
+        val formattedInput = ExpressionFormatter.format(inputValue)
+        if (binding.tvTopValue.text.toString() != formattedInput) {
+            binding.tvTopValue.setText(formattedInput)
         }
-        binding.tvBottomValue.text = outputValue.ifEmpty { "0" }
+        
+        val displayOutput = if (outputValue.isEmpty()) "0" else {
+            if (currentType == ConverterType.NUMERAL) outputValue else ExpressionFormatter.formatNumberToken(outputValue)
+        }
+        binding.tvBottomValue.text = displayOutput
+        
         binding.tvTopUnit.text = topUnit.name
         binding.tvBottomUnit.text = bottomUnit.name
         updateKeypadState()

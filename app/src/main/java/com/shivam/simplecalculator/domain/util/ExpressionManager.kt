@@ -25,7 +25,6 @@ class ExpressionManager {
         } else if (input == "(" || input == ")") {
             currentPos = appendParenthesis(input, currentPos)
         } else {
-            // Function or constant
             currentPos = appendFunctionOrConstant(input, currentPos)
         }
         return currentPos
@@ -40,7 +39,6 @@ class ExpressionManager {
 
         val lastChar = if (pos > 0) expression[pos - 1] else null
         
-        // Auto convert leading "0" to new number if not a decimal
         var tokenStart = pos - 1
         while (tokenStart >= 0 && !expression[tokenStart].toString().matches(Regex(OP_PARENS))) {
             tokenStart--
@@ -49,7 +47,7 @@ class ExpressionManager {
         val currentToken = expression.substring(tokenStart, pos)
         
         if (currentToken == "0") {
-            if (number == "0" || number == "00") return pos // Prevent "00" on "0"
+            if (number == "0" || number == "00") return pos
             expression = expression.substring(0, pos - 1) + number + expression.substring(pos)
             return pos - 1 + number.length
         }
@@ -113,10 +111,8 @@ class ExpressionManager {
         val lastChar = if (pos > 0) expression[pos - 1] else null
         val nextChar = if (pos < expression.length) expression[pos] else null
 
-        // If trying to insert before another operator, replace the next operator instead
         if (nextChar != null && nextChar.toString().matches(Regex(OP))) {
             if (operator == "−" || operator == "-") {
-                // Allow e.g. typing minus before an operator if it makes sense, but normally we just replace
             }
             expression = expression.substring(0, pos) + operator + expression.substring(pos + 1)
             return pos + 1
@@ -149,7 +145,6 @@ class ExpressionManager {
                 expression = expression.substring(0, pos) + "−" + expression.substring(pos)
                 return pos + 1
             }
-            // MODIFIED: Don't agressively block operators after '(' anymore. Enable free typing.
         }
         
         var newPos = pos
@@ -168,7 +163,6 @@ class ExpressionManager {
             if (pos > 0) {
                 val lastChar = expression[pos - 1]
                 if (lastChar.isDigit() || lastChar == ')' || lastChar == '.' || lastChar == 'π' || lastChar == 'e' || lastChar == '!') {
-            // Remove aggressive '×' insertion so it looks like 2( instead of 2×(
                     var finalPos = pos
                     if (lastChar == '.') {
                         expression = expression.substring(0, pos - 1) + expression.substring(pos)
@@ -178,14 +172,12 @@ class ExpressionManager {
                     expression = expression.substring(0, finalPos) + toInsert + expression.substring(finalPos)
                     return finalPos + toInsert.length
                 }
-                // MODIFIED: We no longer aggressively block multiple consecutive `(`. Wait, actually (( is valid.
             }
             expression = expression.substring(0, pos) + "(" + expression.substring(pos)
             return pos + 1
         } else if (paren == ")") {
             val openCount = expression.substring(0, pos).count { it == '(' }
             val closeCount = expression.substring(0, pos).count { it == ')' }
-            // MODIFIED: Allow natural typing of ) even if openCount <= closeCount
             if (pos > 0) {
                 val lastChar = expression[pos - 1]
                 var finalPos = pos

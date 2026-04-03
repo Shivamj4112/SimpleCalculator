@@ -73,7 +73,6 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_checked"
-        android:visibility="gone"
-        app:tint="@color/blue_link" />
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -18,8 +18,7 @@ object CalculatorEngine {
 
         var finalExpression = readyToValidate
         
-        // Handle contextual percentage offsets: e.g. 90 - 10% -> 90 - (90 * 10 / 100)
-        val offsetRegex = Regex("([\\d.]+)\\s*([+\\-])\\s*([\\d.]+)(%+)")
+        val offsetRegex = Regex("([\\d.]+)\\s*([+\\-])\\s*([\\d.]+)(%+)(?!\\s*[\\d.πe(* /^])")
         while (offsetRegex.containsMatchIn(finalExpression)) {
             finalExpression = finalExpression.replace(offsetRegex) { matchResult ->
                 val base = matchResult.groupValues[1]
@@ -33,7 +32,6 @@ object CalculatorEngine {
             }
         }
 
-        // Handle remaining isolated percentages: e.g. 10% -> 0.1
         finalExpression = finalExpression.replace(Regex("([\\d.]+)(%+)")) { matchResult ->
             val numberStr = matchResult.groupValues[1]
             val percentString = matchResult.groupValues[2]
@@ -125,7 +123,6 @@ object CalculatorEngine {
                 Result.success(result)
             }
         } catch (e: ArithmeticException) {
-            // Divide by zero or math errors
             Result.failure(Exception("Error"))
         } catch (e: Exception) {
             Result.failure(Exception("Error"))

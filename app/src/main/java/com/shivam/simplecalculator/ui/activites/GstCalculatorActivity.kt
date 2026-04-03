@@ -6,15 +6,17 @@ import androidx.core.content.ContextCompat
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityGstCalculatorBinding
 import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Locale
+import androidx.core.graphics.toColorInt
 
 class GstCalculatorActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGstCalculatorBinding
     private var originalPrice = ""
-    private var selectedGstRate = 12 // Default 12%
+    private var selectedGstRate = 12
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,6 @@ class GstCalculatorActivity : BaseActivity() {
     private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
-        // GST Rates
         val rateMap = mapOf(
             binding.btnGst3 to 3,
             binding.btnGst5 to 5,
@@ -81,30 +82,14 @@ class GstCalculatorActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        binding.tvOriginalPrice.text = originalPrice.ifEmpty { "0" }
+        binding.tvOriginalPrice.text = ExpressionFormatter.format(originalPrice).ifEmpty { "0" }
         calculateGst()
     }
 
     private fun formatValue(valueStr: String): String {
         if (valueStr.isEmpty() || valueStr == ".") return valueStr.ifEmpty { "0" }
-        val value = valueStr.toDoubleOrNull() ?: return valueStr
-        return when {
-            value >= 1_000_000_000 -> String.format(Locale.US, "%.1fB", value / 1_000_000_000.0)
-            value >= 1_000_000 -> String.format(Locale.US, "%.1fM", value / 1_000_000.0)
-            value >= 1_000 -> String.format(Locale.US, "%.1fk", value / 1_000.0)
-            else -> {
-                if (valueStr.contains(".")) {
-                    val parts = valueStr.split(".")
-                    if (parts.size == 2 && parts[1].length > 2) {
-                        String.format(Locale.US, "%.2f", value)
-                    } else {
-                        valueStr
-                    }
-                } else {
-                    valueStr
-                }
-            }
-        }.replace(".0k", "k").replace(".0M", "M").replace(".0B", "B")
+        
+        return ExpressionFormatter.formatNumberToken(valueStr)
     }
 
     private fun updateGstSelection() {
@@ -147,7 +132,7 @@ class GstCalculatorActivity : BaseActivity() {
             val finalPrice = price.add(gstTotal)
             val halfGst = gstTotal.divide(BigDecimal("2"), 2, RoundingMode.HALF_UP)
 
-            binding.tvFinalPrice.text = String.format(Locale.US, "%.2f", finalPrice.toDouble())
+            binding.tvFinalPrice.text = ExpressionFormatter.formatNumberToken(String.format(Locale.US, "%.2f", finalPrice.toDouble()))
             binding.tvGstSummary.text = String.format(Locale.US, "CGST/SGST\n%s", formatValue(halfGst.toString()))
         } catch (e: Exception) {
             binding.tvFinalPrice.text = "Error"
@@ -155,8 +140,7 @@ class GstCalculatorActivity : BaseActivity() {
         }
     }
 
-    // Helper for non-context Color.parseColor
     private object Color {
-        fun parseColor(colorString: String): Int = android.graphics.Color.parseColor(colorString)
+        fun parseColor(colorString: String): Int = colorString.toColorInt()
     }
 }

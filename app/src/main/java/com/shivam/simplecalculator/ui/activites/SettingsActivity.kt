@@ -20,12 +20,16 @@ class SettingsActivity : BaseActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
+        val currentLang = getLanguageList().find { it.code == SharedPrefHelper.languageCode }?.name ?: getString(R.string.english)
         setupRow(
             binding.itemLanguage.root,
             getString(R.string.app_language),
-            getString(R.string.english),
+            currentLang,
             R.drawable.ic_language
         )
+        binding.itemLanguage.root.setOnClickListener {
+            startActivity(Intent(this, LanguageActivity::class.java))
+        }
 
         binding.itemTheme.root.setOnClickListener {
             startActivity(Intent(this, ChooseThemeActivity::class.java))
@@ -66,7 +70,6 @@ class SettingsActivity : BaseActivity() {
 
         updateThemeRow()
     }
-
 
     private fun updateThemeRow() {
         val theme = SharedPrefHelper.theme
@@ -122,4 +125,6 @@ class SettingsActivity : BaseActivity() {
         }
         view.findViewById<ImageView>(R.id.ivIcon).setImageResource(icon)
     }
+
+    private fun getLanguageList() = com.shivam.simplecalculator.domain.util.Util.getLanguageList()
 }

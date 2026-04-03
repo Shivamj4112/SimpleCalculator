@@ -14,14 +14,16 @@ class NoPasteEditText @JvmOverloads constructor(
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
 
     init {
-        // Remove background underline / highlight indicator if present
         background = null
         highlightColor = Color.TRANSPARENT
         
-        // Disable spell check (red underline indicator)
+        setPadding(0, 0, 0, 0)
+        includeFontPadding = false
+        minHeight = 0
+        minimumHeight = 0
+        
         inputType = inputType or android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
-        // Prevent the long-press contextual action bar (copy/paste menu) from showing
         val disablePasteCallback = object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
             override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false

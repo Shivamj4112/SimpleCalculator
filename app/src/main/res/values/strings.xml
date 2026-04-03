@@ -28,7 +28,7 @@
     <string name="weeks">Weeks</string>
     <string name="months">Months</string>
     <string name="ok">Ok</string>
-    <string name="financial_gst"><![CDATA[Financial & GST]]></string>
+    <string name="financial_gst">Financial &amp; GST></string>
     <string name="gst">GST</string>
     <string name="currency">Currency</string>
     <string name="_0">0</string>
@@ -103,4 +103,6 @@
     <string name="amount">Amount</string>
     <string name="date_difference">Date Difference</string>
     <string name="invalid_date_range">Invalid Date Range</string>
+    <string name="unit">Unit</string>
+    <string name="select_language">Select Language</string>
 </resources>

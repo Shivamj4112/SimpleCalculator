@@ -1,55 +1,56 @@
 package com.shivam.simplecalculator.ui.activites
 
-import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.activity.result.contract.ActivityResultContracts
-import com.shivam.simplecalculator.databinding.ActivityMainBinding
-import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
-import com.shivam.simplecalculator.domain.services.FloatingCalculatorService
-import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import android.os.Bundle
 import android.provider.Settings
-import android.net.Uri
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
-import com.shivam.simplecalculator.R
-import com.shivam.simplecalculator.domain.util.VibrationUtil
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.combine
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.databinding.ActivityMainBinding
+import com.shivam.simplecalculator.domain.services.FloatingCalculatorService
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
+import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    
+
     private val viewModel: CalculatorViewModel by viewModels()
 
     private var isScientificMode = false
 
-    private val historyLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val expr = result.data?.getStringExtra("EXTRA_EXPRESSION")
-            if (expr != null) {
-                viewModel.clear()
-                viewModel.setExpression(expr)
+    private val historyLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val expr = result.data?.getStringExtra("EXTRA_EXPRESSION")
+                if (expr != null) {
+                    viewModel.clear()
+                    viewModel.setExpression(expr)
+                }
             }
         }
-    }
 
     private fun startFloatingService() {
         val intent = Intent(this, FloatingCalculatorService::class.java)
         startService(intent)
-        moveTaskToBack(true) // Minimize the app
+        moveTaskToBack(true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,6 @@ class MainActivity : BaseActivity() {
         setupListeners()
         setupObservers()
 
-        // Disable system keyboard and context menu (pasting) for expression fields
         val disablePasteCallback = object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
             override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
@@ -78,7 +78,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupListeners() {
-        // Mode Switches
         binding.btnMenu.setOnClickListener {
             val intent = Intent(this, OtherCalculatorActivity::class.java)
             startActivity(intent)
@@ -93,9 +92,16 @@ class MainActivity : BaseActivity() {
             if (Settings.canDrawOverlays(this)) {
                 startFloatingService()
             } else {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:$packageName".toUri())
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    "package:$packageName".toUri()
+                )
                 startActivity(intent)
-                Toast.makeText(this, getString(R.string.please_grant_permission_to_resize_app), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.please_grant_permission_to_resize_app),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -113,31 +119,115 @@ class MainActivity : BaseActivity() {
             viewModel.backspace(getRawSelection())
         }
 
-        // Standard Keyboard
-        binding.standardKeyboard.btn0.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("0", getRawSelection()) }
-        binding.standardKeyboard.btn00.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("00", getRawSelection()) }
-        binding.standardKeyboard.btn1.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("1", getRawSelection()) }
-        binding.standardKeyboard.btn2.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("2", getRawSelection()) }
-        binding.standardKeyboard.btn3.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("3", getRawSelection()) }
-        binding.standardKeyboard.btn4.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("4", getRawSelection()) }
-        binding.standardKeyboard.btn5.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("5", getRawSelection()) }
-        binding.standardKeyboard.btn6.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("6", getRawSelection()) }
-        binding.standardKeyboard.btn7.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("7", getRawSelection()) }
-        binding.standardKeyboard.btn8.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("8", getRawSelection()) }
-        binding.standardKeyboard.btn9.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("9", getRawSelection()) }
-        
-        binding.standardKeyboard.btnDot.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append(".", getRawSelection()) }
-        binding.standardKeyboard.btnPlus.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("+", getRawSelection()) }
-        binding.standardKeyboard.btnMinus.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("−", getRawSelection()) }
-        binding.standardKeyboard.btnMul.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("×", getRawSelection()) }
-        binding.standardKeyboard.btnDiv.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("÷", getRawSelection()) }
-        binding.standardKeyboard.btnPercent.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("%", getRawSelection()) }
-        
+        binding.standardKeyboard.btn0.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "0",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn00.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "00",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn1.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "1",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn2.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "2",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn3.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "3",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn4.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "4",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn5.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "5",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn6.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "6",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn7.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "7",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn8.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "8",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btn9.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "9",
+            getRawSelection()
+        )
+        }
+
+        binding.standardKeyboard.btnDot.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            ".",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btnPlus.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "+",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btnMinus.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "−",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btnMul.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "×",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btnDiv.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "÷",
+            getRawSelection()
+        )
+        }
+        binding.standardKeyboard.btnPercent.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "%",
+            getRawSelection()
+        )
+        }
+
         binding.standardKeyboard.btnAC.setOnClickListener { VibrationUtil.vibrate(this); viewModel.clear() }
         binding.standardKeyboard.btnEqual.setOnClickListener { VibrationUtil.vibrate(this); viewModel.calculate() }
-        
+
         var parCount = 0
-        binding.standardKeyboard.btnPar.setOnClickListener { 
+        binding.standardKeyboard.btnPar.setOnClickListener {
             VibrationUtil.vibrate(this)
             val pos = getRawSelection()
             if (parCount % 2 == 0) {
@@ -147,43 +237,176 @@ class MainActivity : BaseActivity() {
             }
             parCount++
         }
-        
-        // Scientific Keyboard Setup (snake_case IDs in XML -> camelCase in Binding)
+
         val sci = binding.scientificKeyboard
-        sci.btn0.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("0", getRawSelection()) }
-        sci.btn1.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("1", getRawSelection()) }
-        sci.btn2.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("2", getRawSelection()) }
-        sci.btn3.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("3", getRawSelection()) }
-        sci.btn4.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("4", getRawSelection()) }
-        sci.btn5.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("5", getRawSelection()) }
-        sci.btn6.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("6", getRawSelection()) }
-        sci.btn7.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("7", getRawSelection()) }
-        sci.btn8.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("8", getRawSelection()) }
-        sci.btn9.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("9", getRawSelection()) }
-        
-        sci.btnDot.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append(".", getRawSelection()) }
-        sci.btnPlus.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("+", getRawSelection()) }
-        sci.btnMinus.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("−", getRawSelection()) }
-        sci.btnMul.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("×", getRawSelection()) }
-        sci.btnDiv.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("÷", getRawSelection()) }
-        sci.btnPercent.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("%", getRawSelection()) }
-        
+        sci.btn0.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "0",
+            getRawSelection()
+        )
+        }
+        sci.btn1.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "1",
+            getRawSelection()
+        )
+        }
+        sci.btn2.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "2",
+            getRawSelection()
+        )
+        }
+        sci.btn3.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "3",
+            getRawSelection()
+        )
+        }
+        sci.btn4.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "4",
+            getRawSelection()
+        )
+        }
+        sci.btn5.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "5",
+            getRawSelection()
+        )
+        }
+        sci.btn6.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "6",
+            getRawSelection()
+        )
+        }
+        sci.btn7.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "7",
+            getRawSelection()
+        )
+        }
+        sci.btn8.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "8",
+            getRawSelection()
+        )
+        }
+        sci.btn9.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "9",
+            getRawSelection()
+        )
+        }
+
+        sci.btnDot.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            ".",
+            getRawSelection()
+        )
+        }
+        sci.btnPlus.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "+",
+            getRawSelection()
+        )
+        }
+        sci.btnMinus.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "−",
+            getRawSelection()
+        )
+        }
+        sci.btnMul.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "×",
+            getRawSelection()
+        )
+        }
+        sci.btnDiv.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "÷",
+            getRawSelection()
+        )
+        }
+        sci.btnPercent.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "%",
+            getRawSelection()
+        )
+        }
+
         sci.btnAC.setOnClickListener { VibrationUtil.vibrate(this); viewModel.clear() }
         sci.btnEqual.setOnClickListener { VibrationUtil.vibrate(this); viewModel.calculate() }
-        sci.btnBackspace.setOnClickListener { VibrationUtil.vibrate(this); viewModel.backspace(getRawSelection()) }
-        
+        sci.btnBackspace.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.backspace(
+            getRawSelection()
+        )
+        }
+
         sci.btnToggleContainer.setOnClickListener { toggleScientificMode() }
 
-        sci.btnParOpen.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("(", getRawSelection()) }
-        sci.btnParClose.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append(")", getRawSelection()) }
-        sci.btnSqrt.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("√", getRawSelection()) }
-        sci.btnPi.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("π", getRawSelection()) }
-        sci.btnE.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("e", getRawSelection()) }
-        sci.btnFact.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("!", getRawSelection()) }
-        sci.btnPower.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("^", getRawSelection()) }
-        sci.btnLog.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("log(", getRawSelection()) }
-        sci.btnLn.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("ln(", getRawSelection()) }
-        sci.btnInvX.setOnClickListener { VibrationUtil.vibrate(this); viewModel.append("1/", getRawSelection()) }
+        sci.btnParOpen.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "(",
+            getRawSelection()
+        )
+        }
+        sci.btnParClose.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            ")",
+            getRawSelection()
+        )
+        }
+        sci.btnSqrt.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "√",
+            getRawSelection()
+        )
+        }
+        sci.btnPi.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "π",
+            getRawSelection()
+        )
+        }
+        sci.btnE.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "e",
+            getRawSelection()
+        )
+        }
+        sci.btnFact.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "!",
+            getRawSelection()
+        )
+        }
+        sci.btnPower.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "^",
+            getRawSelection()
+        )
+        }
+        sci.btnLog.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "log(",
+            getRawSelection()
+        )
+        }
+        sci.btnLn.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "ln(",
+            getRawSelection()
+        )
+        }
+        sci.btnInvX.setOnClickListener {
+            VibrationUtil.vibrate(this); viewModel.append(
+            "1/",
+            getRawSelection()
+        )
+        }
 
         // Scientific Modes
         sci.btnDeg.setOnClickListener {
@@ -212,20 +435,32 @@ class MainActivity : BaseActivity() {
 
         sci.btnSin.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("sin⁻¹(", pos) else viewModel.append("sin(", pos)
+            if (viewModel.isInverseMode) viewModel.append(
+                "sin⁻¹(",
+                pos
+            ) else viewModel.append("sin(", pos)
         }
         sci.btnCos.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("cos⁻¹(", pos) else viewModel.append("cos(", pos)
+            if (viewModel.isInverseMode) viewModel.append(
+                "cos⁻¹(",
+                pos
+            ) else viewModel.append("cos(", pos)
         }
         sci.btnTan.setOnClickListener {
             val pos = getRawSelection()
-            if (viewModel.isInverseMode) viewModel.append("tan⁻¹(", pos) else viewModel.append("tan(", pos)
+            if (viewModel.isInverseMode) viewModel.append(
+                "tan⁻¹(",
+                pos
+            ) else viewModel.append("tan(", pos)
         }
     }
 
     private fun getRawSelection(): Int {
-        return ExpressionFormatter.getRawPosition(viewModel.expression.value, binding.tvExpression.selectionStart)
+        return ExpressionFormatter.getRawPosition(
+            viewModel.expression.value,
+            binding.tvExpression.selectionStart
+        )
     }
 
     private fun toggleScientificMode() {
@@ -245,16 +480,21 @@ class MainActivity : BaseActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    combine(viewModel.expression, viewModel.selection) { expr, sel -> 
-                        expr to sel 
+                    combine(viewModel.expression, viewModel.selection) { expr, sel ->
+                        expr to sel
                     }.collect { (expr, sel) ->
                         val formattedExpr = ExpressionFormatter.format(expr)
                         val formattedSel = ExpressionFormatter.getFormattedPosition(expr, sel)
-                        
+
                         if (binding.tvExpression.text.toString() != formattedExpr) {
                             binding.tvExpression.setText(formattedExpr)
                         }
-                        binding.tvExpression.setSelection(formattedSel.coerceIn(0, binding.tvExpression.text?.length ?: 0))
+                        binding.tvExpression.setSelection(
+                            formattedSel.coerceIn(
+                                0,
+                                binding.tvExpression.text?.length ?: 0
+                            )
+                        )
                     }
                 }
                 launch {

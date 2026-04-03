@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.toDrawable
 import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.databinding.ActivityDateCalculatorBinding
 import com.shivam.simplecalculator.domain.util.strategies.DateStrategy
 import java.util.Calendar
@@ -68,13 +69,13 @@ class DateCalculatorActivity : BaseActivity() {
             binding.tvErrorMsg.visibility = View.GONE
             binding.mcvDateResult.visibility = View.VISIBLE
 
-            binding.tvTotalDaysNumber.text = result.totalDays.toString()
+            binding.tvTotalDaysNumber.text = ExpressionFormatter.formatNumberToken(result.totalDays.toString())
             binding.tvResYears.text = result.years.toString()
             binding.tvResMonths.text = result.months.toString()
             binding.tvResDays.text = result.days.toString()
-            binding.tvResWeeks.text = "Weeks\n${result.weeks}"
-            binding.tvResHours.text = "Hours\n${result.hours}"
-            binding.tvResMinutes.text = "Minutes\n${result.minutes}"
+            binding.tvResWeeks.text = "Weeks\n${ExpressionFormatter.formatNumberToken(result.weeks.toString())}"
+            binding.tvResHours.text = "Hours\n${ExpressionFormatter.formatNumberToken(result.hours.toString())}"
+            binding.tvResMinutes.text = "Minutes\n${ExpressionFormatter.formatNumberToken(result.minutes.toString())}"
         } else {
             showError()
         }

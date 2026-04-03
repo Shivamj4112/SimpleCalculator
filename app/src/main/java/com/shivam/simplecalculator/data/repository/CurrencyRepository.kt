@@ -14,13 +14,16 @@ class CurrencyRepository @Inject constructor(
     private val currencyDao: CurrencyDao
 ) {
 
-    suspend fun getCurrencies(): Flow<List<CurrencyModel>> = flow {
+    fun getCurrencies(): Flow<List<CurrencyModel>> = flow {
         val localData = currencyDao.getAllCurrencies()
         if (localData.isNotEmpty()) {
             emit(localData)
         }
 
-        if (localData.isEmpty()) {
+        val lastUpdate = com.shivam.simplecalculator.domain.util.SharedPrefHelper.lastCurrencyUpdateDate
+        val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+
+        if (lastUpdate != today && com.shivam.simplecalculator.domain.util.NetworkUtils.hasInternetAccess()) {
             try {
                 val response = apiService.getExchangeRates()
                 if (response.isSuccessful && response.body() != null) {
@@ -29,11 +32,10 @@ class CurrencyRepository @Inject constructor(
                     }
                     currencyDao.clearAll()
                     currencyDao.insertAll(currencies)
+                    com.shivam.simplecalculator.domain.util.SharedPrefHelper.lastCurrencyUpdateDate = today
                     emit(currencies)
                 }
             } catch (e: Exception) {
-                // If offline and no local data, we might want to emit empty or error
-                // But current logic emits whatever is in local storage first.
             }
         }
     }

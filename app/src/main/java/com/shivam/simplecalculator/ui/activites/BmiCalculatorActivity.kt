@@ -14,6 +14,7 @@ import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityBmiCalculatorBinding
 import com.shivam.simplecalculator.domain.models.UnitOption
 import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.domain.util.strategies.BmiStrategy
 import java.util.Locale
 
@@ -105,20 +106,24 @@ class BmiCalculatorActivity : BaseActivity() {
             val max = maxOf(start, end)
 
             if (currentVal.isNotEmpty()) {
+                val rawPos = ExpressionFormatter.getRawPosition(currentVal, min)
                 if (min == max) {
-                    if (min > 0) {
-                        val builder = StringBuilder(currentVal).deleteCharAt(min - 1)
+                    if (rawPos > 0) {
+                        val builder = StringBuilder(currentVal).deleteCharAt(rawPos - 1)
                         currentVal = builder.toString()
                         if (isTopFocused) topValue = currentVal else bottomValue = currentVal
                         updateDisplay()
-                        et.setSelection(min - 1)
+                        val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos - 1)
+                        et.setSelection(newFormattedPos)
                     }
                 } else {
-                    val builder = StringBuilder(currentVal).delete(min, max)
+                    val rawEnd = ExpressionFormatter.getRawPosition(currentVal, max)
+                    val builder = StringBuilder(currentVal).delete(rawPos, rawEnd)
                     currentVal = builder.toString()
                     if (isTopFocused) topValue = currentVal else bottomValue = currentVal
                     updateDisplay()
-                    et.setSelection(min)
+                    val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos)
+                    et.setSelection(newFormattedPos)
                 }
             }
             calculateResult()
@@ -142,20 +147,22 @@ class BmiCalculatorActivity : BaseActivity() {
 
         val min = minOf(start, end)
         val max = maxOf(start, end)
+        val rawPos = ExpressionFormatter.getRawPosition(currentVal, min)
+        val rawEnd = ExpressionFormatter.getRawPosition(currentVal, max)
 
         if (char == "." && currentVal.contains(".")) return
-        if (currentVal.length - (max - min) + char.length > 10) return
+        if (currentVal.length - (rawEnd - rawPos) + char.length > 15) return
 
         val builder = java.lang.StringBuilder(currentVal)
-        builder.replace(min, max, char)
+        builder.replace(rawPos, rawEnd, char)
         currentVal = builder.toString()
 
         if (isTopFocused) topValue = currentVal else bottomValue = currentVal
         updateDisplay()
 
-        val newCursorPos = min + char.length
-        if (newCursorPos <= currentVal.length) {
-            et.setSelection(newCursorPos)
+        val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos + char.length)
+        if (newFormattedPos <= (et.text?.length ?: 0)) {
+            et.setSelection(newFormattedPos)
         }
         calculateResult()
     }
@@ -171,8 +178,12 @@ class BmiCalculatorActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        if (binding.tvTopValue.text.toString() != topValue) binding.tvTopValue.setText(topValue)
-        if (binding.tvBottomValue.text.toString() != bottomValue) binding.tvBottomValue.setText(bottomValue)
+        val formattedTop = ExpressionFormatter.format(topValue)
+        val formattedBottom = ExpressionFormatter.format(bottomValue)
+        
+        if (binding.tvTopValue.text.toString() != formattedTop) binding.tvTopValue.setText(formattedTop)
+        if (binding.tvBottomValue.text.toString() != formattedBottom) binding.tvBottomValue.setText(formattedBottom)
+        
         binding.tvTopUnit.text = topUnit.name
         binding.tvBottomUnit.text = bottomUnit.name
     }
@@ -189,7 +200,7 @@ class BmiCalculatorActivity : BaseActivity() {
         
         if (weight > 0 && height > 0) {
             val result = strategy.convert(weight, height, topUnit, bottomUnit)
-            val roundedResult = String.format(Locale.US, "%.1f", result)
+            val roundedResult = ExpressionFormatter.formatNumberToken(String.format(Locale.US, "%.1f", result))
             val (category, color) = getBmiCategory(result)
 
             binding.tvResultValue.text = roundedResult

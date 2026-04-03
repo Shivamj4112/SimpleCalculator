@@ -12,13 +12,13 @@ class TemperatureStrategy : ConverterStrategy {
         val celsius = when (fName) {
             "Fahrenheit" -> (value1 - 32.0) * 5.0 / 9.0
             "Kelvin" -> value1 - 273.15
-            else -> value1 // Celsius
+            else -> value1
         }
 
         return when (tName) {
             "Fahrenheit" -> celsius * 9.0 / 5.0 + 32.0
             "Kelvin" -> celsius + 273.15
-            else -> celsius // Celsius
+            else -> celsius
         }
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.shivam.simplecalculator.databinding.ActivityDiscountCalculatorBinding
 import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.domain.util.strategies.DiscountStrategy
 import com.shivam.simplecalculator.domain.models.UnitOption
 import java.text.DecimalFormat
@@ -85,20 +86,24 @@ class DiscountCalculatorActivity : BaseActivity() {
             val max = maxOf(start, end)
 
             if (currentVal.isNotEmpty()) {
+                val rawPos = ExpressionFormatter.getRawPosition(currentVal, min)
                 if (min == max) {
-                    if (min > 0) {
-                        val builder = StringBuilder(currentVal).deleteCharAt(min - 1)
+                    if (rawPos > 0) {
+                        val builder = StringBuilder(currentVal).deleteCharAt(rawPos - 1)
                         currentVal = builder.toString()
                         if (isTopFocused) priceValue = currentVal else discountValue = currentVal
                         updateDisplay()
-                        et.setSelection(min - 1)
+                        val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos - 1)
+                        et.setSelection(newFormattedPos)
                     }
                 } else {
-                    val builder = StringBuilder(currentVal).delete(min, max)
+                    val rawEnd = ExpressionFormatter.getRawPosition(currentVal, max)
+                    val builder = StringBuilder(currentVal).delete(rawPos, rawEnd)
                     currentVal = builder.toString()
                     if (isTopFocused) priceValue = currentVal else discountValue = currentVal
                     updateDisplay()
-                    et.setSelection(min)
+                    val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos)
+                    et.setSelection(newFormattedPos)
                 }
             }
             calculateResult()
@@ -122,12 +127,14 @@ class DiscountCalculatorActivity : BaseActivity() {
 
         val min = minOf(start, end)
         val max = maxOf(start, end)
+        val rawPos = ExpressionFormatter.getRawPosition(currentVal, min)
+        val rawEnd = ExpressionFormatter.getRawPosition(currentVal, max)
 
         if (char == "." && currentVal.contains(".")) return
-        if (currentVal.length - (max - min) + char.length > 10) return
+        if (currentVal.length - (rawEnd - rawPos) + char.length > 15) return
 
         val builder = java.lang.StringBuilder(currentVal)
-        builder.replace(min, max, char)
+        builder.replace(rawPos, rawEnd, char)
         val newVal = builder.toString()
 
         if (!isTopFocused) {
@@ -143,9 +150,9 @@ class DiscountCalculatorActivity : BaseActivity() {
         if (isTopFocused) priceValue = currentVal else discountValue = currentVal
         updateDisplay()
 
-        val newCursorPos = min + char.length
-        if (newCursorPos <= currentVal.length) {
-            et.setSelection(newCursorPos)
+        val newFormattedPos = ExpressionFormatter.getFormattedPosition(currentVal, rawPos + char.length)
+        if (newFormattedPos <= (et.text?.length ?: 0)) {
+            et.setSelection(newFormattedPos)
         }
         calculateResult()
     }
@@ -161,8 +168,11 @@ class DiscountCalculatorActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        if (binding.tvTopValue.text.toString() != priceValue) binding.tvTopValue.setText(priceValue)
-        if (binding.tvBottomValue.text.toString() != discountValue) binding.tvBottomValue.setText(discountValue)
+        val formattedTop = ExpressionFormatter.format(priceValue)
+        val formattedBottom = ExpressionFormatter.format(discountValue)
+        
+        if (binding.tvTopValue.text.toString() != formattedTop) binding.tvTopValue.setText(formattedTop)
+        if (binding.tvBottomValue.text.toString() != formattedBottom) binding.tvBottomValue.setText(formattedBottom)
     }
 
     private fun calculateResult() {
@@ -182,7 +192,10 @@ class DiscountCalculatorActivity : BaseActivity() {
             val discStr = if (discountAmount % 1.0 == 0.0) String.format(Locale.US, "%.0f", discountAmount) else decFormat.format(discountAmount)
             val finalStr = if (result % 1.0 == 0.0) String.format(Locale.US, "%.0f", result) else decFormat.format(result)
             
-            binding.tvResultValue.text = "Discount = ₹$discStr\nFinal Price = ₹$finalStr"
+            val formattedDisc = ExpressionFormatter.formatNumberToken(discStr)
+            val formattedFinal = ExpressionFormatter.formatNumberToken(finalStr)
+            
+            binding.tvResultValue.text = "Discount = ₹$formattedDisc\nFinal Price = ₹$formattedFinal"
             binding.tvResultValue.visibility = View.VISIBLE
         } else {
             binding.tvResultValue.visibility = View.INVISIBLE

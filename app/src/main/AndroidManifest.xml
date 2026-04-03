@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="DiscouragedApi,LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -16,21 +16,26 @@
         android:theme="@style/Theme.SimpleCalculator">
 
         <activity
+            android:name=".ui.activites.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
             android:name=".ui.activites.CallerSettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activites.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.activites.OtherCalculatorActivity"
@@ -89,6 +94,11 @@
 
         <activity
             android:name=".ui.activites.CurrencyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activites.LanguageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

@@ -15,6 +15,7 @@ import android.content.Intent
 import android.provider.CalendarContract
 import android.view.View
 import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -86,7 +87,6 @@ class AgeCalculatorActivity : BaseActivity() {
         binding.tvYearsNumber.text = years.toString()
         binding.tvMonthsDays.text = "$months Month\n$days Day"
 
-        // Next Birthday
         val nextBirthday = dobCalendar.clone() as Calendar
         nextBirthday.set(Calendar.YEAR, todayCalendar.get(Calendar.YEAR))
         if (nextBirthday.before(todayCalendar) || nextBirthday == todayCalendar) {
@@ -108,24 +108,22 @@ class AgeCalculatorActivity : BaseActivity() {
 
         binding.tvNextBirthdayCountdown.text = "$nbMonths Months\n$nbDays Day"
 
-        // Summary
         val diffMillis = todayCalendar.timeInMillis - dobCalendar.timeInMillis
         val totalDays = TimeUnit.MILLISECONDS.toDays(diffMillis)
         val totalWeeks = totalDays / 7
         val totalHours = TimeUnit.MILLISECONDS.toHours(diffMillis)
         val totalMinutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis)
         
-        // Approximate months
         val totalMonths = (years * 12) + months
 
         binding.tvSumYears.text = years.toString()
-        binding.tvSumDaysFull.text = "Days\n$totalDays"
+        binding.tvSumDaysFull.text = "Days\n${ExpressionFormatter.formatNumberToken(totalDays.toString())}"
         
         binding.tvSumMonths.text = totalMonths.toString()
-        binding.tvSumHours.text = "Hours\n$totalHours"
+        binding.tvSumHours.text = "Hours\n${ExpressionFormatter.formatNumberToken(totalHours.toString())}"
         
         binding.tvSumWeeks.text = totalWeeks.toString()
-        binding.tvSumMinutes.text = "Minutes\n$totalMinutes"
+        binding.tvSumMinutes.text = "Minutes\n${ExpressionFormatter.formatNumberToken(totalMinutes.toString())}"
     }
 
     private fun addToCalendar() {
@@ -139,7 +137,7 @@ class AgeCalculatorActivity : BaseActivity() {
             data = CalendarContract.Events.CONTENT_URI
             putExtra(CalendarContract.Events.TITLE, "Birthday")
             putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, nextBirthday.timeInMillis)
-            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, nextBirthday.timeInMillis + 60 * 60 * 1000) // 1 hour duration
+            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, nextBirthday.timeInMillis + 60 * 60 * 1000)
             putExtra(CalendarContract.Events.ALL_DAY, true)
         }
         startActivity(intent)

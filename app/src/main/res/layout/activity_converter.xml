@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Unit"
+                        android:text="@string/unit"
                         android:textColor="@color/unit_converter_icon_color"
                         android:textSize="12sp" />
                 </LinearLayout>
