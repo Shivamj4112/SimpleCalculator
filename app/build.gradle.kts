@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.coil)
     implementation(libs.exp4j)
+    implementation(libs.localbroadcastmanager)
 }

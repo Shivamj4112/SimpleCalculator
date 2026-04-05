@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.shivam.simplecalculator.databinding.ActivityLanguageBinding
 import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import com.shivam.simplecalculator.domain.util.Util.getLanguageList
@@ -80,10 +81,16 @@ class LanguageActivity : BaseActivity() {
             SharedPrefHelper.languageCode = selected.code
             SharedPrefHelper.isLanguageSet = true
             
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            finish()
+            if (isFirstLaunch) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
+            } else {
+                LocalBroadcastManager.getInstance(this)
+                    .sendBroadcast(Intent(BaseActivity.ACTION_LANGUAGE_CHANGED))
+                finish()
+            }
         }
     }
 
