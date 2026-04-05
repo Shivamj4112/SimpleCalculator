@@ -1,14 +1,8 @@
 package com.shivam.simplecalculator.ui.activites
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityCallerSettingsBinding
-import com.shivam.simplecalculator.databinding.ActivityVibrationBinding
-import com.shivam.simplecalculator.domain.util.VibrationUtil
 
 class CallerSettingsActivity : BaseActivity() {
 

@@ -8,7 +8,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/clActionBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -26,13 +26,16 @@
             android:padding="6dp"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvHistoryTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvHistoryTitle"
+            android:layout_weight="1"
             style="@style/ScreenTitle"
             android:text="@string/history"
+            android:gravity="start|center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cbSelectAll"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -43,14 +46,16 @@
             android:id="@+id/cbSelectAll"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:layout_marginStart="9dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/ic_unchecked"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvHistoryTitle"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvEmpty"
@@ -72,10 +77,12 @@
         android:id="@+id/rvHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingBottom="10dp"
         android:paddingTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toTopOf="@id/bottomActionContainer"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/item_history" />
 
     <FrameLayout

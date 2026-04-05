@@ -5,15 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityAreaCalculatorBinding
-import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.VibrationUtil
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat

@@ -1,7 +1,6 @@
 package com.shivam.simplecalculator.domain.util.strategies
 
 import com.shivam.simplecalculator.domain.models.UnitOption
-import java.lang.Long
 
 class NumeralStrategy : ConverterStrategy {
     override fun convert(value1: Double, value2: Double, from: UnitOption, to: UnitOption): Double {

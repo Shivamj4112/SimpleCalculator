@@ -6,19 +6,15 @@ import com.shivam.simplecalculator.data.model.CurrencyState
 import com.shivam.simplecalculator.data.repository.CurrencyRepository
 import com.shivam.simplecalculator.domain.models.CurrencyModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import com.shivam.simplecalculator.domain.util.NetworkUtils
-import kotlinx.coroutines.flow.collectLatest
 import java.util.Locale
 import javax.inject.Inject
-
 
 
 @HiltViewModel
@@ -40,17 +36,17 @@ class CurrencyViewModel @Inject constructor(
             var hasEmittedData = false
             
             repository.getCurrencies()
-                .catch { e -> 
+                .catch { e ->
                     if (!hasEmittedData) {
                         _uiState.value = _uiState.value.copy(
-                            isLoading = false, 
+                            isLoading = false,
                             error = e.message ?: "An error occurred"
-                        ) 
+                        )
                     }
                 }
-                .onCompletion { 
-                    _uiState.value = _uiState.value.copy(isLoading = false) 
-                    if (!hasEmittedData) {
+                .onCompletion {
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    if (!hasEmittedData && _uiState.value.currencies.isEmpty()) {
                         _uiState.value = _uiState.value.copy(error = "Connect to internet to fetch initial rates")
                     }
                 }

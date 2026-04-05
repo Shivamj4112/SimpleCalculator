@@ -20,7 +20,6 @@ import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityMainBinding
 import com.shivam.simplecalculator.domain.services.FloatingCalculatorService
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
-import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -2,7 +2,15 @@ package com.shivam.simplecalculator.domain.util
 
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.acos
+import kotlin.math.asin
+import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.ln
+import kotlin.math.log10
+import kotlin.math.sin
+import kotlin.math.tan
 
 object CalculatorEngine {
 

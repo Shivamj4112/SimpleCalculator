@@ -2,8 +2,6 @@ package com.shivam.simplecalculator.domain.util
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Build
 import java.util.Locale
 

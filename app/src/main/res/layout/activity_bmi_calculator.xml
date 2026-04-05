@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/tvTitle"
             style="@style/ScreenTitle"
-            android:text="Bmi Calculator"
+            android:text="@string/bmi_calculator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Weight"
+                        android:text="@string/weight"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
@@ -159,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Height"
+                        android:text="@string/height"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 

@@ -1,20 +1,20 @@
 package com.shivam.simplecalculator.ui.activites
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
-import com.shivam.simplecalculator.databinding.ActivityAgeCalculatorBinding
 import androidx.core.graphics.drawable.toDrawable
-import android.content.Intent
-import android.provider.CalendarContract
-import android.view.View
 import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.databinding.ActivityAgeCalculatorBinding
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -47,8 +47,14 @@ class AgeCalculatorActivity : BaseActivity() {
     }
 
     private fun updateDisplay() {
-        binding.tvDobValue.text = dateFormat.format(dobCalendar.time)
-        binding.tvTodayValue.text = dateFormat.format(todayCalendar.time)
+        val dobMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(dobCalendar.time)
+        val dobDayYear = SimpleDateFormat(" d, yyyy", Locale.US).format(dobCalendar.time)
+        binding.tvDobValue.text = "$dobMonth$dobDayYear"
+
+        val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(todayCalendar.time)
+        val todayDayYear = SimpleDateFormat(" d, yyyy", Locale.US).format(todayCalendar.time)
+        binding.tvTodayValue.text = "$todayMonth$todayDayYear"
+
         calculateAge()
     }
 
@@ -65,7 +71,7 @@ class AgeCalculatorActivity : BaseActivity() {
 
         if (dobCalendar.after(todayCalendar)) {
             binding.tvYearsNumber.text = "0"
-            binding.tvMonthsDays.text = "Error\nInvalid Date"
+            binding.tvMonthsDays.text = getString(R.string.error_invalid_date)
             return
         }
 
@@ -85,7 +91,7 @@ class AgeCalculatorActivity : BaseActivity() {
         }
 
         binding.tvYearsNumber.text = years.toString()
-        binding.tvMonthsDays.text = "$months Month\n$days Day"
+        binding.tvMonthsDays.text = String.format(Locale.US, getString(R.string.month_day), months, days)
 
         val nextBirthday = dobCalendar.clone() as Calendar
         nextBirthday.set(Calendar.YEAR, todayCalendar.get(Calendar.YEAR))
@@ -93,7 +99,7 @@ class AgeCalculatorActivity : BaseActivity() {
             nextBirthday.add(Calendar.YEAR, 1)
         }
 
-        val dayOfWeek = SimpleDateFormat("EEEE", Locale.US).format(nextBirthday.time)
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(nextBirthday.time)
         binding.tvNextBirthdayDay.text = dayOfWeek
 
         var nbMonths = nextBirthday.get(Calendar.MONTH) - todayCalendar.get(Calendar.MONTH)
@@ -106,7 +112,7 @@ class AgeCalculatorActivity : BaseActivity() {
         }
         if (nbMonths < 0) nbMonths += 12
 
-        binding.tvNextBirthdayCountdown.text = "$nbMonths Months\n$nbDays Day"
+        binding.tvNextBirthdayCountdown.text = String.format(Locale.US, getString(R.string.month_day), nbMonths, nbDays)
 
         val diffMillis = todayCalendar.timeInMillis - dobCalendar.timeInMillis
         val totalDays = TimeUnit.MILLISECONDS.toDays(diffMillis)
@@ -117,13 +123,19 @@ class AgeCalculatorActivity : BaseActivity() {
         val totalMonths = (years * 12) + months
 
         binding.tvSumYears.text = years.toString()
-        binding.tvSumDaysFull.text = "Days\n${ExpressionFormatter.formatNumberToken(totalDays.toString())}"
+        binding.tvSumDaysFull.text =
+            String.format(Locale.US, getString(R.string.days_), ExpressionFormatter.formatNumberToken(totalDays.toString()))
         
         binding.tvSumMonths.text = totalMonths.toString()
-        binding.tvSumHours.text = "Hours\n${ExpressionFormatter.formatNumberToken(totalHours.toString())}"
+        binding.tvSumHours.text =
+            String.format(Locale.US, getString(R.string.hours), ExpressionFormatter.formatNumberToken(totalHours.toString()))
         
         binding.tvSumWeeks.text = totalWeeks.toString()
-        binding.tvSumMinutes.text = "Minutes\n${ExpressionFormatter.formatNumberToken(totalMinutes.toString())}"
+        binding.tvSumMinutes.text = String.format(
+            Locale.US,
+            getString(R.string.minutes),
+            ExpressionFormatter.formatNumberToken(totalMinutes.toString())
+        )
     }
 
     private fun addToCalendar() {
@@ -177,13 +189,12 @@ class AgeCalculatorActivity : BaseActivity() {
         }
 
         val title = dialogView.findViewById<TextView>(R.id.tvPickerTitle)
-        val npDay = dialogView.findViewById<NumberPicker>(R.id.npDay)
-        val npMonth = dialogView.findViewById<NumberPicker>(R.id.npMonth)
-        val npYear = dialogView.findViewById<NumberPicker>(R.id.npYear)
+        val npDay = dialogView.findViewById<com.shivam.simplecalculator.domain.util.CustomNumberPicker>(R.id.npDay)
+        val npMonth = dialogView.findViewById<com.shivam.simplecalculator.domain.util.CustomNumberPicker>(R.id.npMonth)
+        val npYear = dialogView.findViewById<com.shivam.simplecalculator.domain.util.CustomNumberPicker>(R.id.npYear)
         val btnOk = dialogView.findViewById<Button>(R.id.btnOk)
         val btnClose = dialogView.findViewById<ImageView>(R.id.btnClosePicker)
 
-        title.text = if (isDob) "Date of birth" else "Today"
         val currentCal = if (isDob) dobCalendar else todayCalendar
 
         npYear.minValue = 1900

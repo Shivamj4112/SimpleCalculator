@@ -15,8 +15,8 @@ import com.shivam.simplecalculator.databinding.ActivityConverterBinding
 import com.shivam.simplecalculator.domain.models.ConverterConfig
 import com.shivam.simplecalculator.domain.models.ConverterType
 import com.shivam.simplecalculator.domain.models.UnitOption
-import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.VibrationUtil
 
 class ConverterActivity : BaseActivity() {
 
@@ -50,11 +50,20 @@ class ConverterActivity : BaseActivity() {
     }
 
     private fun setupInitialState() {
-        val titleText = currentType.name.lowercase().replaceFirstChar { it.uppercase() }
-        binding.tvConverterTitle.text = getString(R.string.title_converter, titleText)
+        val titleRes = when (currentType) {
+            ConverterType.LENGTH -> R.string.length_converter
+            ConverterType.MASS -> R.string.mass_converter
+            ConverterType.NUMERAL -> R.string.numeral_converter
+            ConverterType.SPEED -> R.string.speed_converter
+            ConverterType.TEMPERATURE -> R.string.temperature_converter
+            ConverterType.TIME -> R.string.time_converter
+            ConverterType.VOLUME -> R.string.volume_converter
+            ConverterType.DATA -> R.string.data_converter
+        }
+        binding.tvConverterTitle.text = getString(titleRes)
 
-        binding.tvTopLabelText.text = "From"
-        binding.tvBottomLabelText.text = "To"
+        binding.tvTopLabelText.text = getString(R.string.from)
+        binding.tvBottomLabelText.text = getString(R.string.to)
 
         availableUnits = ConverterConfig.unitMap[currentType] ?: emptyList()
         
@@ -96,7 +105,7 @@ class ConverterActivity : BaseActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
-                com.shivam.simplecalculator.domain.util.VibrationUtil.vibrate(this)
+                VibrationUtil.vibrate(this)
                 appendChar(getButtonText(it))
             }
         }
@@ -243,7 +252,7 @@ class ConverterActivity : BaseActivity() {
 
 
         if (inputValue.isEmpty() || inputValue == ".") {
-            binding.tvResultValue.text = "Invalid"
+            binding.tvResultValue.text = getString(R.string.invalid)
             binding.tvResultValue.setTextColor(Color.RED)
             binding.tvResultValue.visibility = View.VISIBLE
             binding.tvResultLabel.visibility = View.GONE
@@ -261,7 +270,7 @@ class ConverterActivity : BaseActivity() {
 
                 binding.resultContainer.visibility = View.GONE
             } catch (e: Exception) {
-                binding.tvResultValue.text = "Invalid"
+                binding.tvResultValue.text = getString(R.string.invalid)
                 binding.tvResultValue.setTextColor(Color.RED)
                 binding.tvResultValue.visibility = View.VISIBLE
                 binding.tvResultLabel.visibility = View.GONE
@@ -295,7 +304,7 @@ class ConverterActivity : BaseActivity() {
     private fun calculateResult() {
         if (inputValue.isEmpty() || outputValue.isEmpty() || inputValue == "." || outputValue == ".") {
             binding.tvResultLabel.visibility = View.INVISIBLE
-            binding.tvResultValue.text = "Invalid input"
+            binding.tvResultValue.text = getString(R.string.invalid_input)
             binding.tvResultValue.setTextColor(Color.RED)
             binding.tvResultValue.visibility = View.VISIBLE
             return
@@ -307,7 +316,7 @@ class ConverterActivity : BaseActivity() {
         val val2 = outputValue.toDoubleOrNull() ?: 0.0
         
         val strategy = ConverterConfig.getStrategy(currentType)
-        val result = strategy.convert(val1, val2, topUnit, bottomUnit)
+        strategy.convert(val1, val2, topUnit, bottomUnit)
 
         performLiveCalculation()
     }

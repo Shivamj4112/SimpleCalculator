@@ -6,13 +6,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
-import com.shivam.simplecalculator.databinding.ActivityCurrencyConverterBinding
-import com.shivam.simplecalculator.ui.viewmodel.CurrencyBottomSheetFragment
+import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.data.model.CurrencyState
-import com.shivam.simplecalculator.ui.viewmodel.CurrencyViewModel
+import com.shivam.simplecalculator.databinding.ActivityCurrencyConverterBinding
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.domain.util.LoadingDialog
 import com.shivam.simplecalculator.domain.util.VibrationUtil
-import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.ui.viewmodel.CurrencyBottomSheetFragment
+import com.shivam.simplecalculator.ui.viewmodel.CurrencyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -117,19 +118,19 @@ class CurrencyActivity : BaseActivity() {
         binding.tvBaseValue.text = ExpressionFormatter.format(state.inputAmount)
         binding.tvBaseFullName.text = state.baseCurrency?.let {
             "${it.currencyName} (${it.currencySign}) - ${it.countryName ?: ""}"
-        } ?: "Select Currency"
+        } ?: getString(R.string.select_currency)
 
         binding.tvConverted1Code.text = state.convertedCurrency1?.currencyCode ?: "---"
         binding.tvConverted1Value.text = ExpressionFormatter.formatNumberToken(state.result1)
         binding.tvConverted1FullName.text = state.convertedCurrency1?.let {
             "${it.currencyName} (${it.currencySign}) - ${it.countryName ?: ""}"
-        } ?: "Select Currency"
+        } ?: getString(R.string.select_currency)
 
         binding.tvConverted2Code.text = state.convertedCurrency2?.currencyCode ?: "---"
         binding.tvConverted2Value.text = ExpressionFormatter.formatNumberToken(state.result2)
         binding.tvConverted2FullName.text = state.convertedCurrency2?.let {
             "${it.currencyName} (${it.currencySign}) - ${it.countryName ?: ""}"
-        } ?: "Select Currency"
+        } ?: getString(R.string.select_currency)
 
     }
 

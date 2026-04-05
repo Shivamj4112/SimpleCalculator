@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/tvTitle"
             style="@style/ScreenTitle"
-            android:text="@string/date_difference"
+            android:text="@string/date_difference_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Start Date"
+                        android:text="@string/start_date"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
                 </LinearLayout>
@@ -207,7 +207,6 @@
         app:cardBackgroundColor="@color/keypad_number_bg"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputContainer"
         app:strokeColor="@color/age_calculator_stroke_color"
@@ -232,7 +231,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Difference"
+                    android:text="@string/difference"
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -244,6 +243,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
+                    android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDateResultLabel">
@@ -254,20 +254,19 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
                         android:textColor="@color/text_color"
-                        android:textSize="40sp"
+                        android:textSize="35sp"
                         tools:text="15" />
 
                     <TextView
                         android:id="@+id/tvDaysUnit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="center"
                         android:layout_marginStart="10dp"
-                        android:layout_marginBottom="7dp"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Days"
+                        android:text="@string/days"
                         android:textColor="@color/text_color"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -336,7 +335,7 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/inter_medium"
                         android:gravity="center"
-                        android:text="Weeks\n0"
+                        android:text="@string/weeks_"
                         android:textColor="@color/text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -376,7 +375,7 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/inter_medium"
                         android:gravity="center"
-                        android:text="Hours\n0"
+                        android:text="@string/hours"
                         android:textColor="@color/text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -395,7 +394,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Days"
+                        android:text="@string/days"
                         android:textColor="@color/text_color"
                         android:textSize="14sp" />
 
@@ -416,7 +415,7 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/inter_medium"
                         android:gravity="center"
-                        android:text="Minutes\n0"
+                        android:text="@string/minutes"
                         android:textColor="@color/text_color"
                         android:textSize="11sp" />
                 </LinearLayout>

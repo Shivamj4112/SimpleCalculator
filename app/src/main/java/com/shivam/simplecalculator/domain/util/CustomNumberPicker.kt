@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.NumberPicker
 import com.shivam.simplecalculator.R
+import java.util.Locale
 
 @SuppressLint("SoonBlockedPrivateApi")
 class CustomNumberPicker @JvmOverloads constructor(
@@ -19,6 +20,7 @@ class CustomNumberPicker @JvmOverloads constructor(
         removeDivider()
         reduceItemHeight()
         styleText()
+        setFormatter { value -> String.format(Locale.US, "%d", value) }
     }
 
     private fun styleText() {

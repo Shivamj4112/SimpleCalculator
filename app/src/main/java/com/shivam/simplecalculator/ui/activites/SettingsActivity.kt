@@ -20,7 +20,7 @@ class SettingsActivity : BaseActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        val currentLang = getLanguageList().find { it.code == SharedPrefHelper.languageCode }?.name ?: getString(R.string.english)
+        val currentLang = getLanguageList().find { it.code == SharedPrefHelper.languageCode }?.subName ?: getString(R.string.english)
         setupRow(
             binding.itemLanguage.root,
             getString(R.string.app_language),

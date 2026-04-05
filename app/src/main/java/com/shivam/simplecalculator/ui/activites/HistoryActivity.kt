@@ -1,28 +1,27 @@
 package com.shivam.simplecalculator.ui.activites
 
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import android.app.Dialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityHistoryBinding
-import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
 import com.shivam.simplecalculator.ui.adapter.HistoryAdapter
+import com.shivam.simplecalculator.ui.viewmodel.CalculatorViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class HistoryActivity : BaseActivity() {

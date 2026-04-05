@@ -13,8 +13,8 @@ import android.widget.TextView
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityBmiCalculatorBinding
 import com.shivam.simplecalculator.domain.models.UnitOption
-import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.domain.util.strategies.BmiStrategy
 import java.util.Locale
 

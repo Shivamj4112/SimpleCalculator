@@ -1,10 +1,10 @@
 package com.shivam.simplecalculator.ui.activites
 
 import android.os.Bundle
-import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import androidx.appcompat.app.AppCompatDelegate
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityChooseThemeBinding
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 
 class ChooseThemeActivity : BaseActivity() {
 

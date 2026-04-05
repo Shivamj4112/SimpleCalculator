@@ -4,10 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.shivam.simplecalculator.databinding.ActivityDiscountCalculatorBinding
-import com.shivam.simplecalculator.domain.util.VibrationUtil
-import com.shivam.simplecalculator.domain.util.ExpressionFormatter
-import com.shivam.simplecalculator.domain.util.strategies.DiscountStrategy
 import com.shivam.simplecalculator.domain.models.UnitOption
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.VibrationUtil
+import com.shivam.simplecalculator.domain.util.strategies.DiscountStrategy
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale

@@ -1,16 +1,15 @@
 package com.shivam.simplecalculator.ui.activites
 
 import android.os.Bundle
-
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityGstCalculatorBinding
-import com.shivam.simplecalculator.domain.util.VibrationUtil
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
+import com.shivam.simplecalculator.domain.util.VibrationUtil
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Locale
-import androidx.core.graphics.toColorInt
 
 class GstCalculatorActivity : BaseActivity() {
 

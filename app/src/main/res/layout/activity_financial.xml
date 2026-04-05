@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/ScreenTitle"
-            android:text="@string/financial_gst"
+            android:text="@string/financial_amp_gst"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"

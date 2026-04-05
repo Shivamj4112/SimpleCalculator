@@ -2,15 +2,13 @@ package com.shivam.simplecalculator.ui.activites
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.shivam.simplecalculator.R
 import com.shivam.simplecalculator.databinding.ActivityLanguageBinding
 import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 import com.shivam.simplecalculator.domain.util.Util.getLanguageList
 import com.shivam.simplecalculator.ui.adapters.LanguageAdapter
-import com.shivam.simplecalculator.ui.models.LanguageModel
-import android.view.View
 import java.util.Locale
 
 class LanguageActivity : BaseActivity() {
@@ -32,7 +30,11 @@ class LanguageActivity : BaseActivity() {
         setupRecyclerView()
 
         binding.btnBack.setOnClickListener {
-            saveSelectedLanguage()
+            if (isFirstLaunch) {
+                saveSelectedLanguage()
+            } else {
+                finish()
+            }
         }
 
         binding.btnSave.setOnClickListener {
@@ -41,7 +43,11 @@ class LanguageActivity : BaseActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                saveSelectedLanguage()
+                if (isFirstLaunch) {
+                    saveSelectedLanguage()
+                } else {
+                    finish()
+                }
             }
         })
     }

@@ -2,22 +2,28 @@ package com.shivam.simplecalculator.domain.services
 
 import android.annotation.SuppressLint
 import android.app.Service
+import android.content.Context
 import android.content.Intent
-import android.graphics.PixelFormat
-import android.os.Build
-import android.os.IBinder
-import android.view.*
 import android.graphics.Color
+import android.graphics.PixelFormat
+import android.os.IBinder
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.shivam.simplecalculator.ui.activites.MainActivity
 import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.data.repository.CalculationHistory
+import com.shivam.simplecalculator.data.repository.HistoryRepository
 import com.shivam.simplecalculator.databinding.LayoutFloatingCalculatorBinding
 import com.shivam.simplecalculator.domain.util.CalculatorEngine
-import com.shivam.simplecalculator.domain.util.ExpressionManager
 import com.shivam.simplecalculator.domain.util.ExpressionFormatter
-import com.shivam.simplecalculator.data.repository.HistoryRepository
-import com.shivam.simplecalculator.data.repository.CalculationHistory
+import com.shivam.simplecalculator.domain.util.ExpressionManager
+import com.shivam.simplecalculator.domain.util.LocaleHelper
+import com.shivam.simplecalculator.ui.activites.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +55,10 @@ class FloatingCalculatorService : Service() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onBind(intent: Intent?): IBinder? = null
+    
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleHelper.onAttach(it) })
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -156,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardBackgroundColor="@color/keypad_number_bg"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
@@ -228,15 +228,15 @@
 
                                 <TextView
                                     android:id="@+id/tvYearMonth"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
                                     android:layout_marginBottom="7dp"
                                     android:fontFamily="@font/inter_regular"
                                     android:text="@string/years"
                                     android:textColor="@color/text_color"
                                     android:textSize="20sp"
                                     app:layout_constraintBottom_toBottomOf="@+id/tvYearsNumber"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/tvYearsNumber" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,13 +283,15 @@
                                 android:id="@+id/textView4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
                                 android:layout_marginTop="20dp"
+                                android:layout_marginEnd="10dp"
+                                android:paddingHorizontal="18dp"
                                 android:fontFamily="@font/inter_medium"
                                 android:text="@string/next_birthday"
                                 android:textColor="@color/text_color"
                                 android:textSize="20sp"
                                 app:layout_constraintBottom_toTopOf="@+id/imageView"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 

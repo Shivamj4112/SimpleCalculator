@@ -2,9 +2,7 @@ package com.shivam.simplecalculator.ui.activites
 
 import android.content.Intent
 import android.os.Bundle
-
 import com.shivam.simplecalculator.databinding.ActivityFinancialBinding
-import com.shivam.simplecalculator.ui.activites.CurrencyActivity
 
 class FinancialActivity : BaseActivity() {
 

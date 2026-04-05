@@ -1,10 +1,10 @@
 package com.shivam.simplecalculator.di
 
 import android.content.Context
-import com.shivam.simplecalculator.data.db.HistoryDao
-import com.shivam.simplecalculator.data.db.CurrencyDao
 import com.shivam.simplecalculator.data.api.CurrencyApiService
 import com.shivam.simplecalculator.data.db.AppDatabase
+import com.shivam.simplecalculator.data.db.CurrencyDao
+import com.shivam.simplecalculator.data.db.HistoryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

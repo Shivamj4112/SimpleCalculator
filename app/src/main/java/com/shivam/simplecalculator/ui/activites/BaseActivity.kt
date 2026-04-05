@@ -1,17 +1,17 @@
 package com.shivam.simplecalculator.ui.activites
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.shivam.simplecalculator.R
-import com.shivam.simplecalculator.domain.util.SharedPrefHelper
-import com.shivam.simplecalculator.domain.util.LocaleHelper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
-import android.content.Context
+import com.shivam.simplecalculator.R
+import com.shivam.simplecalculator.domain.util.LocaleHelper
+import com.shivam.simplecalculator.domain.util.SharedPrefHelper
 
 abstract class BaseActivity : AppCompatActivity() {
 

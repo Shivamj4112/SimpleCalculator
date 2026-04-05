@@ -3,8 +3,8 @@
     <string name="selected">%1$d Selected</string>
     <string name="select_items">Select Items</string>
     <string name="history">History</string>
-    <string name="other_calculator">Other calculator</string>
-    <string name="unit_converter">Unit converter</string>
+    <string name="other_calculator">Other Calculator</string>
+    <string name="unit_converter">Unit Converter</string>
     <string name="age">Age</string>
     <string name="area">Area</string>
     <string name="bmi">BMI</string>
@@ -28,7 +28,7 @@
     <string name="weeks">Weeks</string>
     <string name="months">Months</string>
     <string name="ok">Ok</string>
-    <string name="financial_gst">Financial &amp; GST></string>
+    <string name="financial_gst">Financial &amp; GST</string>
     <string name="gst">GST</string>
     <string name="currency">Currency</string>
     <string name="_0">0</string>
@@ -48,6 +48,7 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="weight">Weight</string>
     <string name="kilograms">Kilograms</string>
+    <string name="height">Height</string>
     <string name="clear_history">Clear History</string>
     <string name="recalculate">Recalculate</string>
     <string name="copy">Copy</string>
@@ -91,7 +92,20 @@
     <string name="title_converter">%1$s Converter</string>
     <string name="age_converter">Age Converter</string>
     <string name="area_converter">Area Converter</string>
+    <string name="data_converter">Data Converter</string>
+    <string name="length_converter">Length Converter</string>
+    <string name="mass_converter">Mass Converter</string>
+    <string name="numeral_converter">Numeral Converter</string>
+    <string name="speed_converter">Speed Converter</string>
+    <string name="temperature_converter">Temperature Converter</string>
+    <string name="time_converter">Time Converter</string>
+    <string name="volume_converter">Volume Converter</string>
     <string name="financial_amp_gst">Financial &amp; GST</string>
+    <string name="bmi_calculator">BMI Calculator</string>
+    <string name="discount_calculator">Discount Calculator</string>
+    <string name="currency_converter">Currency Converter</string>
+    <string name="gst_calculator">GST Calculator</string>
+    <string name="date_difference_title">Date Difference</string>
     <string name="call_settings">Call settings</string>
     <string name="after_call_option">After call option</string>
     <string name="after_any_call_you_ll_see_options_to_call_back_message_or_save_the_contact">After any call, you’ll see options to call back, message, or save the contact.</string>
@@ -105,4 +119,17 @@
     <string name="invalid_date_range">Invalid Date Range</string>
     <string name="unit">Unit</string>
     <string name="select_language">Select Language</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="invalid">Invalid</string>
+    <string name="error_invalid_date">Error\nInvalid Date</string>
+    <string name="month_day">%1$d Month\n%2$d Day</string>
+    <string name="days_">Days\n%1$s</string>
+    <string name="hours">Hours\n%1$s</string>
+    <string name="minutes">Minutes\n%1$s</string>
+    <string name="start_date">Start Date</string>
+    <string name="difference">Difference</string>
+    <string name="weeks_">Weeks\n%s</string>
+    <string name="days">Days</string>
 </resources>

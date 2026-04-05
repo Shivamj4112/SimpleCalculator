@@ -30,7 +30,7 @@
         <TextView
             android:id="@+id/tvConverterTitle"
             style="@style/ScreenTitle"
-            android:text="@string/currency"
+            android:text="@string/currency_converter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -271,6 +271,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_regular"
         android:gravity="center"
+        android:layout_marginHorizontal="10dp"
         android:text="@string/exchange_rates_are_provided_by_webull_connect_nto_the_network_to_get_the_latest_info"
         android:textColor="@color/sub_text_color"
         android:layout_marginBottom="20dp"

@@ -11,9 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.toDrawable
 import com.shivam.simplecalculator.R
-import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.databinding.ActivityDateCalculatorBinding
+import com.shivam.simplecalculator.domain.util.ExpressionFormatter
 import com.shivam.simplecalculator.domain.util.strategies.DateStrategy
+import java.text.DateFormatSymbols
 import java.util.Calendar
 import java.util.Locale
 
@@ -73,9 +74,21 @@ class DateCalculatorActivity : BaseActivity() {
             binding.tvResYears.text = result.years.toString()
             binding.tvResMonths.text = result.months.toString()
             binding.tvResDays.text = result.days.toString()
-            binding.tvResWeeks.text = "Weeks\n${ExpressionFormatter.formatNumberToken(result.weeks.toString())}"
-            binding.tvResHours.text = "Hours\n${ExpressionFormatter.formatNumberToken(result.hours.toString())}"
-            binding.tvResMinutes.text = "Minutes\n${ExpressionFormatter.formatNumberToken(result.minutes.toString())}"
+            binding.tvResWeeks.text = String.format(
+                Locale.US,
+                getString(R.string.weeks_),
+                ExpressionFormatter.formatNumberToken(result.weeks.toString())
+            )
+            binding.tvResHours.text = String.format(
+                Locale.US,
+                getString(R.string.hours),
+                ExpressionFormatter.formatNumberToken(result.hours.toString())
+            )
+            binding.tvResMinutes.text = String.format(
+                Locale.US,
+                getString(R.string.minutes),
+                ExpressionFormatter.formatNumberToken(result.minutes.toString())
+            )
         } else {
             showError()
         }
@@ -103,7 +116,7 @@ class DateCalculatorActivity : BaseActivity() {
         val btnOk = dialogView.findViewById<Button>(R.id.btnOk)
         val btnClose = dialogView.findViewById<ImageView>(R.id.btnClosePicker)
 
-        title.text = if (isStart) "Start Date" else "End Date"
+        title.text = if (isStart) getString(R.string.start_date) else getString(R.string.end_date)
 
         val currentStr = if (isStart) startDate else endDate
         val calendar = Calendar.getInstance()
@@ -120,7 +133,7 @@ class DateCalculatorActivity : BaseActivity() {
         npYear.maxValue = 2100
         npYear.value = calendar.get(Calendar.YEAR)
 
-        val monthsArray = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        val monthsArray = DateFormatSymbols.getInstance().shortMonths
         npMonth.minValue = 0
         npMonth.maxValue = 11
         npMonth.displayedValues = monthsArray
